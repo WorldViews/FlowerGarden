@@ -4,24 +4,15 @@
 
 "use strict";
 
-var c = document.getElementById("flowerCanvas");
-var ctx = c.getContext("2d");
-var cw = c.width = window.innerWidth;
-var ch = c.height = window.innerHeight;
-var cX = cw / 2,
-  cY = ch / 2;
+var ctx;
+var cw, ch, cX, cY;
 var rad = Math.PI / 180;
 var howMany = 10;
 // size of the tangent
 var t = 1 / 5;
-var requestId;
+var petals;
+var flowers;
 
-ctx.strokeStyle = "white";
-ctx.shadowBlur = 5;
-ctx.shadowOffsetX = 2;
-ctx.shadowOffsetY = 2;
-ctx.shadowColor = "#333";
-ctx.globalAlpha = .85;
 
 function randomIntFromInterval(mn, mx) {
   return ~~(Math.random() * (mx - mn + 1) + mn);
@@ -58,10 +49,6 @@ function addFlower(pt) {
 }
 
 var colors = ["#930c37", "#ea767a", "#ee6133", "#ecac43", "#fb9983", "#f9bc9f", "#f8ed38", "#a8e3f9", "#d1f2fd", "#ecd5f5", "#fee4fd", "#8520b4", "#FA2E59", "#FF703F", "#FF703F", "#F7BC05", "#ECF6BB", "#76BCAD"];
-var flowers = [];
-for (var hm = 0; hm < howMany; hm++) {
-  addFlower();
-}
 
 function buildRy(R, k, cx, cy, nP, spacing) {
   var r = R * k;
@@ -116,37 +103,6 @@ function buildRy(R, k, cx, cy, nP, spacing) {
   return petals
 }
 
-function update() {
-  ctx.clearRect(0, 0, cw, ch);
-
-  for (var f = 0; f < flowers.length; f++) {
-
-    if (flowers[f].k < flowers[f].K) {
-      flowers[f].R += flowers[f].Ri;
-      flowers[f].k += flowers[f].ki;
-    }
-    var R = flowers[f].R;
-    var Ri = flowers[f].Ri;
-    var k = flowers[f].k;
-    var ki = flowers[f].ki;
-    var K = flowers[f].K;
-    var cx = flowers[f].cx;
-    var cy = flowers[f].cy;
-    var fs = colors[flowers[f].fs];
-    var cs = colors[flowers[f].cs];
-    var nP = flowers[f].nP;
-    var spacing = flowers[f].spacing;
-
-    for (var petal = 0; petal < petals.length; petal++) { //console.log(petals[petal])
-      petals = buildRy(R, k, cx, cy, nP, spacing);
-      ctx.fillStyle = fs;
-      drawCurve(petals[petal]);
-    }
-    drawCenter(k, cx, cy, cs);
-  }
-
-  requestId = window.requestAnimationFrame(update);
-}
 
 function drawCenter(k, cx, cy, cs) {
   ctx.beginPath();
@@ -209,26 +165,7 @@ function controlPoints(p) {
 
 
 
-for (var f = 0; f < flowers.length; f++) {
-  var R = flowers[f].R;
-  var Ri = flowers[f].Ri;
-  var k = flowers[f].k;
-  var ki = flowers[f].ki;
-  var K = flowers[f].K;
-  var cx = flowers[f].cx;
-  var cy = flowers[f].cy;
-  var fs = colors[flowers[f].fs];
-  var cs = colors[flowers[f].cs];
-  var nP = flowers[f].nP;
-  var spacing = flowers[f].spacing;
-  var petals = buildRy(R, k, cx, cy, nP, spacing);
-  ctx.fillStyle = colors[flowers[f].fs];
-  for (var i = 0; i < petals.length; i++) {
-    drawCurve(petals[i]);
-  }
-}
 
-requestId = window.requestAnimationFrame(update);
 
 /*
 window.setTimeout(function() {
@@ -239,29 +176,102 @@ window.setTimeout(function() {
 }, 6000)
 
 */
-window.setInterval(e => {
-  if (flowers.length < 200)
-    addFlower();
-  }, 1000);
-
-
-function handleClick(e) {
-  var offset = $(this).offset();
-  var x = e.pageX - offset.left;
-  var y = e.pageY - offset.top;
-  console.log("click ", x, y);
-  addFlower({x,y});
-}
-
-
 
 class FlowerGarden {
   constructor(canvasName) {
-    canvasName = canvasName || "flowerCanvas";
-    $("#"+canvasName).click(handleClick);
+    this.canvasName = canvasName || "flowerCanvas";
+    this.init();
   }
 
   init() {
-
+    var inst = this;
+    this.requestId = window.requestAnimationFrame(e => inst.update(e));
+    window.setInterval(e => {
+      if (flowers.length < 200)
+        addFlower();
+      }, 1000);
+    //$("#"+this.canvasName).click(e => inst.handleClick(e));
+    $("#"+this.canvasName).mousedown(e => inst.handleClick(e));
+    var c = document.getElementById(this.canvasName);
+    this.canvas = c;
+    cw = c.width = window.innerWidth;
+    ch = c.height = window.innerHeight;
+    cX = cw / 2,
+    cY = ch / 2;
+    ctx = this.canvas.getContext("2d");
+    ctx.strokeStyle = "white";
+    ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+    ctx.shadowColor = "#333";
+    ctx.globalAlpha = .85;
+    this.init2();
   }
+
+  init2() {
+    flowers = [];
+    for (var hm = 0; hm < howMany; hm++) {
+      addFlower();
+    }
+    
+    for (var f = 0; f < flowers.length; f++) {
+      var R = flowers[f].R;
+      var Ri = flowers[f].Ri;
+      var k = flowers[f].k;
+      var ki = flowers[f].ki;
+      var K = flowers[f].K;
+      var cx = flowers[f].cx;
+      var cy = flowers[f].cy;
+      var fs = colors[flowers[f].fs];
+      var cs = colors[flowers[f].cs];
+      var nP = flowers[f].nP;
+      var spacing = flowers[f].spacing;
+      petals = buildRy(R, k, cx, cy, nP, spacing);
+      ctx.fillStyle = colors[flowers[f].fs];
+      for (var i = 0; i < petals.length; i++) {
+        drawCurve(petals[i]);
+      }
+    }
+  }
+  
+  handleClick(e) {
+    var pt = {x: e.clientX, y: e.clientY};
+    console.log("click ",pt);
+    addFlower(pt);
+  }
+  
+  
+  update() {
+    var inst = this;
+    ctx.clearRect(0, 0, cw, ch);
+  
+    for (var f = 0; f < flowers.length; f++) {
+  
+      if (flowers[f].k < flowers[f].K) {
+        flowers[f].R += flowers[f].Ri;
+        flowers[f].k += flowers[f].ki;
+      }
+      var R = flowers[f].R;
+      var Ri = flowers[f].Ri;
+      var k = flowers[f].k;
+      var ki = flowers[f].ki;
+      var K = flowers[f].K;
+      var cx = flowers[f].cx;
+      var cy = flowers[f].cy;
+      var fs = colors[flowers[f].fs];
+      var cs = colors[flowers[f].cs];
+      var nP = flowers[f].nP;
+      var spacing = flowers[f].spacing;
+  
+      for (var petal = 0; petal < petals.length; petal++) { //console.log(petals[petal])
+        petals = buildRy(R, k, cx, cy, nP, spacing);
+        ctx.fillStyle = fs;
+        drawCurve(petals[petal]);
+      }
+      drawCenter(k, cx, cy, cs);
+    }
+  
+    this.requestId = window.requestAnimationFrame(e => inst.update());
+  }
+  
 }
