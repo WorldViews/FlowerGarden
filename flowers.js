@@ -25,31 +25,6 @@ function getRanPt() {
   }
 }
 
-function getFlower(pt) {
-    var f = {};
-    if (!pt)
-      pt = getRanPt();
-    f.cx = pt.x;
-    f.cy = pt.y;
-    f.R = randomIntFromInterval(20, 50);
-    f.Ri = randomIntFromInterval(5, 7) / 10;
-    f.k = randomIntFromInterval(5, 10) / 10;
-    f.ki = randomIntFromInterval(2, 7) / 100;
-    f.K = randomIntFromInterval(5, 16) / 10;
-    f.fs = ~~(Math.random() * colors.length) + 1;
-    f.cs = ~~(Math.random() * colors.length) + 1;
-    f.nP = randomIntFromInterval(4, 10);
-    f.spacing = randomIntFromInterval(4, 10);
-    return f;
-}
-
-function addFlower(pt) {
-  console.log("Adding flower");
-  flowers.push(getFlower(pt));
-}
-
-var colors = ["#930c37", "#ea767a", "#ee6133", "#ecac43", "#fb9983", "#f9bc9f", "#f8ed38", "#a8e3f9", "#d1f2fd", "#ecd5f5", "#fee4fd", "#8520b4", "#FA2E59", "#FF703F", "#FF703F", "#F7BC05", "#ECF6BB", "#76BCAD"];
-
 function buildRy(R, k, cx, cy, nP, spacing) {
   var r = R * k;
   var A = 360 / nP; //nP num petals
@@ -180,6 +155,11 @@ window.setTimeout(function() {
 class FlowerGarden {
   constructor(canvasName) {
     this.canvasName = canvasName || "flowerCanvas";
+    this.colors = [
+      "#930c37", "#ea767a", "#ee6133", "#ecac43", "#fb9983",
+      "#f9bc9f", "#f8ed38", "#a8e3f9", "#d1f2fd", "#ecd5f5",
+      "#fee4fd", "#8520b4", "#FA2E59", "#FF703F", "#FF703F",
+      "#F7BC05", "#ECF6BB", "#76BCAD"];
     this.init();
   }
 
@@ -188,16 +168,16 @@ class FlowerGarden {
     this.requestId = window.requestAnimationFrame(e => inst.update(e));
     window.setInterval(e => {
       if (flowers.length < 200)
-        addFlower();
-      }, 1000);
+        inst.addFlower();
+    }, 1000);
     //$("#"+this.canvasName).click(e => inst.handleClick(e));
-    $("#"+this.canvasName).mousedown(e => inst.handleClick(e));
+    $("#" + this.canvasName).mousedown(e => inst.handleClick(e));
     var c = document.getElementById(this.canvasName);
     this.canvas = c;
     cw = c.width = window.innerWidth;
     ch = c.height = window.innerHeight;
     cX = cw / 2,
-    cY = ch / 2;
+      cY = ch / 2;
     ctx = this.canvas.getContext("2d");
     ctx.strokeStyle = "white";
     ctx.shadowBlur = 5;
@@ -205,15 +185,15 @@ class FlowerGarden {
     ctx.shadowOffsetY = 2;
     ctx.shadowColor = "#333";
     ctx.globalAlpha = .85;
-    this.init2();
+    this.initFlowers();
   }
 
-  init2() {
+  initFlowers() {
     flowers = [];
     for (var hm = 0; hm < howMany; hm++) {
-      addFlower();
+      this.addFlower();
     }
-    
+
     for (var f = 0; f < flowers.length; f++) {
       var R = flowers[f].R;
       var Ri = flowers[f].Ri;
@@ -222,31 +202,54 @@ class FlowerGarden {
       var K = flowers[f].K;
       var cx = flowers[f].cx;
       var cy = flowers[f].cy;
-      var fs = colors[flowers[f].fs];
-      var cs = colors[flowers[f].cs];
+      var fs = this.colors[flowers[f].fs];
+      var cs = this.colors[flowers[f].cs];
       var nP = flowers[f].nP;
       var spacing = flowers[f].spacing;
       petals = buildRy(R, k, cx, cy, nP, spacing);
-      ctx.fillStyle = colors[flowers[f].fs];
+      ctx.fillStyle = this.colors[flowers[f].fs];
       for (var i = 0; i < petals.length; i++) {
         drawCurve(petals[i]);
       }
     }
   }
-  
-  handleClick(e) {
-    var pt = {x: e.clientX, y: e.clientY};
-    console.log("click ",pt);
-    addFlower(pt);
+
+  getFlower(pt) {
+    var f = {};
+    if (!pt)
+      pt = getRanPt();
+    f.cx = pt.x;
+    f.cy = pt.y;
+    f.R = randomIntFromInterval(20, 50);
+    f.Ri = randomIntFromInterval(5, 7) / 10;
+    f.k = randomIntFromInterval(5, 10) / 10;
+    f.ki = randomIntFromInterval(2, 7) / 100;
+    f.K = randomIntFromInterval(5, 16) / 10;
+    f.fs = ~~(Math.random() * this.colors.length) + 1;
+    f.cs = ~~(Math.random() * this.colors.length) + 1;
+    f.nP = randomIntFromInterval(4, 10);
+    f.spacing = randomIntFromInterval(4, 10);
+    return f;
   }
-  
-  
+
+  addFlower(pt) {
+    console.log("Adding flower");
+    flowers.push(this.getFlower(pt));
+  }
+
+  handleClick(e) {
+    var pt = { x: e.clientX, y: e.clientY };
+    console.log("click ", pt);
+    this.addFlower(pt);
+  }
+
+
   update() {
     var inst = this;
     ctx.clearRect(0, 0, cw, ch);
-  
+
     for (var f = 0; f < flowers.length; f++) {
-  
+
       if (flowers[f].k < flowers[f].K) {
         flowers[f].R += flowers[f].Ri;
         flowers[f].k += flowers[f].ki;
@@ -258,11 +261,11 @@ class FlowerGarden {
       var K = flowers[f].K;
       var cx = flowers[f].cx;
       var cy = flowers[f].cy;
-      var fs = colors[flowers[f].fs];
-      var cs = colors[flowers[f].cs];
+      var fs = this.colors[flowers[f].fs];
+      var cs = this.colors[flowers[f].cs];
       var nP = flowers[f].nP;
       var spacing = flowers[f].spacing;
-  
+
       for (var petal = 0; petal < petals.length; petal++) { //console.log(petals[petal])
         petals = buildRy(R, k, cx, cy, nP, spacing);
         ctx.fillStyle = fs;
@@ -270,8 +273,8 @@ class FlowerGarden {
       }
       drawCenter(k, cx, cy, cs);
     }
-  
+
     this.requestId = window.requestAnimationFrame(e => inst.update());
   }
-  
+
 }
