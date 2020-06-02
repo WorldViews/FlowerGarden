@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Blinky</title>
+        <script src="js/libs/jquery-3.1.0.min.js"></script>
+        <script src="js/libs/sprintf.js"></script>
+        <script src="js/libs/dat.gui.js"></script>
+        <script src="js/CanvasTool.js"></script>
+        <script src="js/Blinky.js"></script>
+
+    </head>
+    <body>
+        <h1>Welcome to Blinky</h1>
+        <div id="stats"></div>
+        <canvas id="canvas1" width=600 height=600></canvas>
+        <div id="canvasStat"></div>
+        <script>
+            var blinky = null;
+
+            $(document).ready(() =>{
+                console.log("started");
+                blinky = new Blinky("canvas1");
+                blinky.start();
+            })
+        </script>
+    </body>
+</html>
