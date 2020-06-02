@@ -11,7 +11,6 @@ var howMany = 10;
 // size of the tangent
 var t = 1 / 5;
 var petals;
-var flowers;
 
 
 function randomIntFromInterval(mn, mx) {
@@ -155,6 +154,7 @@ window.setTimeout(function() {
 class FlowerGarden {
   constructor(canvasName) {
     this.canvasName = canvasName || "flowerCanvas";
+    this.flowers = [];
     this.colors = [
       "#930c37", "#ea767a", "#ee6133", "#ecac43", "#fb9983",
       "#f9bc9f", "#f8ed38", "#a8e3f9", "#d1f2fd", "#ecd5f5",
@@ -167,7 +167,7 @@ class FlowerGarden {
     var inst = this;
     this.requestId = window.requestAnimationFrame(e => inst.update(e));
     window.setInterval(e => {
-      if (flowers.length < 200)
+      if (inst.flowers.length < 200)
         inst.addFlower();
     }, 1000);
     //$("#"+this.canvasName).click(e => inst.handleClick(e));
@@ -189,7 +189,7 @@ class FlowerGarden {
   }
 
   initFlowers() {
-    flowers = [];
+    var flowers = this.flowers;
     for (var hm = 0; hm < howMany; hm++) {
       this.addFlower();
     }
@@ -234,7 +234,7 @@ class FlowerGarden {
 
   addFlower(pt) {
     console.log("Adding flower");
-    flowers.push(this.getFlower(pt));
+    this.flowers.push(this.getFlower(pt));
   }
 
   handleClick(e) {
@@ -246,6 +246,7 @@ class FlowerGarden {
 
   update() {
     var inst = this;
+    var flowers = this.flowers;
     ctx.clearRect(0, 0, cw, ch);
 
     for (var f = 0; f < flowers.length; f++) {
