@@ -138,7 +138,40 @@ function controlPoints(p) {
 }
 
 
+class Flower {
+  constructor(garden, opts) {
+    this.garden = garden;
+    opts = opts || {};
+    var pt = opts.pt || getRanPt();
+    var f = this;
+    f.cx = pt.x;
+    f.cy = pt.y;
+    f.R = randomIntFromInterval(20, 50);
+    f.Ri = randomIntFromInterval(5, 7) / 10;
+    f.k = randomIntFromInterval(5, 10) / 10;
+    f.ki = randomIntFromInterval(2, 7) / 100;
+    f.K = randomIntFromInterval(5, 16) / 10;
+    f.fs = ~~(Math.random() * garden.colors.length) + 1;
+    f.cs = ~~(Math.random() * garden.colors.length) + 1;
+    f.nP = randomIntFromInterval(4, 10);
+    f.spacing = randomIntFromInterval(4, 10);
+  }
 
+  update() {
+    var f = this;
+     if (f.k < f.K) {
+      f.R += f.Ri;
+      f.k += f.ki;
+    }
+    var fs = this.garden.colors[f.fs];
+    for (var petal = 0; petal < petals.length; petal++) { //console.log(petals[petal])
+      petals = buildRy(f.R, f.k, f.cx, f.cy, f.nP, f.spacing);
+      ctx.fillStyle = fs;
+      drawCurve(petals[petal]);
+    }
+    drawCenter(f.k, f.cx, f.cy, f.cs);
+  }
+}
 
 
 /*
@@ -202,20 +235,10 @@ class FlowerGarden {
       this.addFlower();
     }
 
-    for (var f = 0; f < flowers.length; f++) {
-      var R = flowers[f].R;
-      var Ri = flowers[f].Ri;
-      var k = flowers[f].k;
-      var ki = flowers[f].ki;
-      var K = flowers[f].K;
-      var cx = flowers[f].cx;
-      var cy = flowers[f].cy;
-      var fs = this.colors[flowers[f].fs];
-      var cs = this.colors[flowers[f].cs];
-      var nP = flowers[f].nP;
-      var spacing = flowers[f].spacing;
-      petals = buildRy(R, k, cx, cy, nP, spacing);
-      ctx.fillStyle = this.colors[flowers[f].fs];
+    for (var i = 0; i < flowers.length; i++) {
+      var f = flowers[i];
+      petals = buildRy(f.R, f.k, f.cx, f.cy, f.nP, f.spacing);
+      ctx.fillStyle = this.colors[f.fs];
       for (var i = 0; i < petals.length; i++) {
         drawCurve(petals[i]);
       }
@@ -223,21 +246,7 @@ class FlowerGarden {
   }
 
   getFlower(pt) {
-    var f = {};
-    if (!pt)
-      pt = getRanPt();
-    f.cx = pt.x;
-    f.cy = pt.y;
-    f.R = randomIntFromInterval(20, 50);
-    f.Ri = randomIntFromInterval(5, 7) / 10;
-    f.k = randomIntFromInterval(5, 10) / 10;
-    f.ki = randomIntFromInterval(2, 7) / 100;
-    f.K = randomIntFromInterval(5, 16) / 10;
-    f.fs = ~~(Math.random() * this.colors.length) + 1;
-    f.cs = ~~(Math.random() * this.colors.length) + 1;
-    f.nP = randomIntFromInterval(4, 10);
-    f.spacing = randomIntFromInterval(4, 10);
-    return f;
+    return new Flower(this, {pt});
   }
 
   addFlower(pt) {
@@ -258,29 +267,8 @@ class FlowerGarden {
     ctx.clearRect(0, 0, cw, ch);
 
     for (var f = 0; f < flowers.length; f++) {
-
-      if (flowers[f].k < flowers[f].K) {
-        flowers[f].R += flowers[f].Ri;
-        flowers[f].k += flowers[f].ki;
-      }
-      var R = flowers[f].R;
-      var Ri = flowers[f].Ri;
-      var k = flowers[f].k;
-      var ki = flowers[f].ki;
-      var K = flowers[f].K;
-      var cx = flowers[f].cx;
-      var cy = flowers[f].cy;
-      var fs = this.colors[flowers[f].fs];
-      var cs = this.colors[flowers[f].cs];
-      var nP = flowers[f].nP;
-      var spacing = flowers[f].spacing;
-
-      for (var petal = 0; petal < petals.length; petal++) { //console.log(petals[petal])
-        petals = buildRy(R, k, cx, cy, nP, spacing);
-        ctx.fillStyle = fs;
-        drawCurve(petals[petal]);
-      }
-      drawCenter(k, cx, cy, cs);
+      var flower = flowers[f];
+      flower.update();
     }
 
     this.requestId = window.requestAnimationFrame(e => inst.update());
