@@ -7,7 +7,7 @@
 var ctx;
 var cw, ch, cX, cY;
 var rad = Math.PI / 180;
-var howMany = 10;
+var howMany = 4;
 // size of the tangent
 var t = 1 / 5;
 var petals;
@@ -161,6 +161,14 @@ class FlowerGarden {
       "#fee4fd", "#8520b4", "#FA2E59", "#FF703F", "#FF703F",
       "#F7BC05", "#ECF6BB", "#76BCAD"];
     this.init();
+  }
+
+  async loadGarden() {
+    var obj = await loadJSON("garden.json");
+    console.log("got garden data: "+JSON.stringify(obj));
+    obj.flowers.forEach(flower => {
+      this.addFlower({x: flower.x, y: flower.y});
+    })
   }
 
   init() {

@@ -1,0 +1,7 @@
+{
+    "flowers": [
+        {"name": "don", "x": 25, "y": 30},
+        {"name": "enock", "x": 100, "y": 60},
+        {"name": "shawna", "x": 200, "y": 150}
+    ]
+}
