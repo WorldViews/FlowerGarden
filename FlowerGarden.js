@@ -4,9 +4,7 @@
 
 "use strict";
 
-var ctx;
 var RAD = Math.PI / 180;
-var t = 1 / 5;
 
 function uniform(lo, hi) {
   return lo + Math.random() * (hi - lo);
@@ -25,40 +23,11 @@ function getRanPt(cw, ch) {
 
 
 
-function controlPoints(p) {
-  // given the points array p calculate the control points
-  var pc = [];
-  for (var i = 1; i < p.length - 1; i++) {
-    var dx = p[i - 1].x - p[i + 1].x; // difference x
-    var dy = p[i - 1].y - p[i + 1].y; // difference y
-    // the first control point
-    var x1 = p[i].x - dx * t;
-    var y1 = p[i].y - dy * t;
-    var o1 = {
-      x: x1,
-      y: y1
-    };
-
-    // the second control point
-    var x2 = p[i].x + dx * t;
-    var y2 = p[i].y + dy * t;
-    var o2 = {
-      x: x2,
-      y: y2
-    };
-
-    // building the control points array
-    pc[i] = [];
-    pc[i].push(o1);
-    pc[i].push(o2);
-  }
-  return pc;
-}
-
 
 class Flower {
   constructor(garden, opts) {
     this.garden = garden;
+    this.ctx = garden.ctx;
     opts = opts || {};
     var pt = opts.pt || getRanPt(garden.canvWidth, garden.canvHeight);
     var f = this;
@@ -81,23 +50,27 @@ class Flower {
       f.R += f.Ri;
       f.k += f.ki;
     }
-    ctx.fillStyle  = this.garden.colors[f.fs];
+    this.draw();
+  }
+
+  draw() {
+    var f = this;
+    var ctx = f.ctx;
+    ctx.fillStyle  = f.garden.colors[f.fs];
     var petals = this.buildPetals(f.R, f.k, f.cx, f.cy, f.numPetals, f.spacing);
     for (var petal = 0; petal < petals.length; petal++) {
       this.drawCurve(petals[petal]);
     }
-    this.drawCenter(f.k, f.cx, f.cy, f.cs);
-  }
-
-  drawCenter(k, cx, cy, cs) {
     ctx.beginPath();
-    ctx.fillStyle = cs;
-    ctx.arc(cx, cy, k * 10, 0, 2 * Math.PI)
+    ctx.fillStyle = f.cs;
+    ctx.arc(f.cx, f.cy, f.k * 10, 0, 2 * Math.PI)
     ctx.fill();
   }
 
+
   drawCurve(p) {
-    var pc = controlPoints(p); // the control points array
+    var ctx = this.ctx;
+    var pc = this.controlPoints(p); // the control points array
     ctx.beginPath();
     ctx.moveTo(p[0].x, p[0].y);
     // the first & the last curve are quadratic Bezier
@@ -168,6 +141,38 @@ class Flower {
     }
     return petals
   }
+
+  controlPoints(p) {
+    // given the points array p calculate the control points
+    var t = 1 / 5;
+    var pc = [];
+    for (var i = 1; i < p.length - 1; i++) {
+      var dx = p[i - 1].x - p[i + 1].x; // difference x
+      var dy = p[i - 1].y - p[i + 1].y; // difference y
+      // the first control point
+      var x1 = p[i].x - dx * t;
+      var y1 = p[i].y - dy * t;
+      var o1 = {
+        x: x1,
+        y: y1
+      };
+  
+      // the second control point
+      var x2 = p[i].x + dx * t;
+      var y2 = p[i].y + dy * t;
+      var o2 = {
+        x: x2,
+        y: y2
+      };
+  
+      // building the control points array
+      pc[i] = [];
+      pc[i].push(o1);
+      pc[i].push(o2);
+    }
+    return pc;
+  }
+  
 }
 
 
@@ -213,11 +218,13 @@ class FlowerGarden {
     $("#" + this.canvasName).mousedown(e => inst.handleClick(e));
     var c = document.getElementById(this.canvasName);
     this.canvas = c;
+    this.ctx = c.getContext("2d");
     this.canvWidth = c.width = window.innerWidth;
     this.canvHeight = c.height = window.innerHeight;
     this.cX = this.canvWidth / 2,
     this.cY = this.canvHeight / 2;
-    ctx = this.canvas.getContext("2d");
+    var ctx = this.canvas.getContext("2d");
+    this.ctx = ctx;
     ctx.strokeStyle = "white";
     ctx.shadowBlur = 5;
     ctx.shadowOffsetX = 2;
@@ -255,7 +262,7 @@ class FlowerGarden {
   update() {
     var inst = this;
     var flowers = this.flowers;
-    ctx.clearRect(0, 0, this.canvWidth, this.canvHeight);
+    this.ctx.clearRect(0, 0, this.canvWidth, this.canvHeight);
 
     for (var f = 0; f < flowers.length; f++) {
       var flower = flowers[f];
