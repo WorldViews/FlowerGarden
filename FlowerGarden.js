@@ -14,41 +14,33 @@ function randomIntFromInterval(mn, mx) {
   return ~~(Math.random() * (mx - mn + 1) + mn);
 }
 
-function getRanPt(cw, ch) {
-  return {
-    x: ~~(Math.random() * cw) + 1,
-    y: ~~(Math.random() * ch) + 1
-  }
-}
-
-
-
 
 class Flower {
   constructor(garden, opts) {
     this.garden = garden;
     this.ctx = garden.ctx;
     opts = opts || {};
-    var pt = opts.pt || getRanPt(garden.canvWidth, garden.canvHeight);
     var f = this;
-    f.cx = pt.x;
-    f.cy = pt.y;
-    f.R = f.R || uniform(10, 15);
-    f.k = uniform(0.5, 1);
-    f.Ri = uniform(.5, .7);
-    f.ki = uniform(.01, 0.04);
-    f.K = uniform(0.7, 1.5);
-    f.fs = ~~(Math.random() * garden.colors.length) + 1;
-    f.cs = ~~(Math.random() * garden.colors.length) + 1;
-    f.numPetals = randomIntFromInterval(4, 10);
+    f.cx = opts.x || uniform(0, garden.canvWidth);
+    f.cy = opts.y || uniform(0, garden.canvHeight);
+    f.centerRadMax = opts.centerRadMax || uniform(0.7,1.5);
+    f.centerGrowthInc = uniform(.01, 0.04);
+    f.flowerRad = opts.flowerRad || uniform(10, 15);
+    f.centerRad = uniform(0.1, 0.4);
+    f.growthRate = opts.growthRate || uniform(.1,.2);
+    f.fillStyle = opts.fillStyle ||
+            garden.colors[~~(Math.random() * garden.colors.length) + 1];
+    f.centerStyle = opts.centerStyle ||
+          garden.colors[~~(Math.random() * garden.colors.length) + 1];
+    f.numPetals = opts.numPetals || randomIntFromInterval(4, 10);
     f.spacing = randomIntFromInterval(4, 10);
   }
 
   update() {
     var f = this;
-    if (f.k < f.K) {
-      f.R += f.Ri;
-      f.k += f.ki;
+    if (f.centerRad < f.centerRadMax) {
+      f.flowerRad += f.growthRate;
+      f.centerRad += f.centerGrowthInc;
     }
     this.draw();
   }
@@ -56,14 +48,14 @@ class Flower {
   draw() {
     var f = this;
     var ctx = f.ctx;
-    ctx.fillStyle  = f.garden.colors[f.fs];
-    var petals = this.buildPetals(f.R, f.k, f.cx, f.cy, f.numPetals, f.spacing);
+    ctx.fillStyle  = f.fillStyle;
+    var petals = this.buildPetals(f.flowerRad, f.centerRad, f.cx, f.cy, f.numPetals, f.spacing);
     for (var petal = 0; petal < petals.length; petal++) {
       this.drawCurve(petals[petal]);
     }
     ctx.beginPath();
-    ctx.fillStyle = f.cs;
-    ctx.arc(f.cx, f.cy, f.k * 10, 0, 2 * Math.PI)
+    ctx.fillStyle = f.centerStyle;
+    ctx.arc(f.cx, f.cy, f.centerRad * 10, 0, 2 * Math.PI)
     ctx.fill();
   }
 
@@ -202,18 +194,31 @@ class FlowerGarden {
     var obj = await loadJSON("garden.json");
     console.log("got garden data: " + JSON.stringify(obj));
     obj.flowers.forEach(flower => {
-      this.addFlower({ x: flower.x, y: flower.y });
+      this.addFlower(flower);
     })
   }
 
-  init() {
+  async init() {
+    var opts = {};
+    try {
+      opts = await loadJSON("garden.json");
+      console.log("got garden data: "+JSON.stringify(opts))
+    }
+    catch (e) {
+      console.log("Failed to get garden init", e);
+    }
+    this.init_(opts);
+  }
+
+  init_(opts) {
     var inst = this;
-    this.numInitialFlowers = 8;
+    this.numInitialFlowers = opts.numInitialFlowers || 8;
+    this.maxNumFlowers = opts.maxNumFlowers || 20;
     this.requestId = window.requestAnimationFrame(e => inst.update(e));
     window.setInterval(e => {
-      if (inst.flowers.length < 200)
+      if (inst.flowers.length < inst.maxNumFlowers)
         inst.addFlower();
-    }, 1000);
+    }, 300);
     //$("#"+this.canvasName).click(e => inst.handleClick(e));
     $("#" + this.canvasName).mousedown(e => inst.handleClick(e));
     var c = document.getElementById(this.canvasName);
@@ -232,6 +237,11 @@ class FlowerGarden {
     ctx.shadowColor = "#333";
     ctx.globalAlpha = .85;
     this.initFlowers();
+    if (opts.flowers) {
+      opts.flowers.forEach(flower => {
+        this.addFlower(flower);
+      })  
+    }
   }
 
   initFlowers() {
@@ -241,13 +251,10 @@ class FlowerGarden {
     }
   }
 
-  getFlower(pt) {
-    return new Flower(this, { pt });
-  }
 
-  addFlower(pt) {
+  addFlower(opts) {
     console.log("Adding flower");
-    var f = this.getFlower(pt);
+    var f = new Flower(this, opts);
     this.flowers.push(f);
     return f;
   }
@@ -261,14 +268,8 @@ class FlowerGarden {
 
   update() {
     var inst = this;
-    var flowers = this.flowers;
     this.ctx.clearRect(0, 0, this.canvWidth, this.canvHeight);
-
-    for (var f = 0; f < flowers.length; f++) {
-      var flower = flowers[f];
-      flower.update();
-    }
-
+    this.flowers.forEach(flower => flower.update());
     this.requestId = window.requestAnimationFrame(e => inst.update());
   }
 
