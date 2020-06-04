@@ -14,6 +14,40 @@ function randomIntFromInterval(mn, mx) {
   return ~~(Math.random() * (mx - mn + 1) + mn);
 }
 
+class Animal {
+  constructor(garden, url, pos, size) {
+    var inst = this;
+    this.garden = garden;
+    var ctx = garden.ctx;
+    pos = pos || {x: 100, y: 80};
+    size = size || {width: 60, height: 80};
+    this.x = pos.x;
+    this.y = pos.y;
+    this.width = size.width;
+    this.height = size.height;
+    url = url || "penguin.svg";
+    console.log("*** drawSVG " + url);
+    this.svgImg = new Image;
+    this.svgImg.onload = function(){
+        console.log("*** image loaded ***");
+        ctx.drawImage(inst.svgImg, inst.x, inst.y, inst.width, inst.height);
+      };
+    this.svgImg.src = url;
+  }
+
+  draw(ctx) {
+    var inst = this;
+    if (!this.svgImg)
+      return;
+    this.garden.ctx.drawImage(inst.svgImg, inst.x, inst.y, inst.width, inst.height);
+  }
+}
+
+class Penguin extends Animal {
+  constructor(garden, pos, size) {
+    super(garden, "penguin.svg", pos, size);
+  }
+}
 
 class Flower {
   constructor(garden, opts) {
@@ -181,6 +215,7 @@ window.setTimeout(function() {
 class FlowerGarden {
   constructor(canvasName) {
     this.canvasName = canvasName || "flowerCanvas";
+    this.svgImages = {};
     this.flowers = [];
     this.colors = [
       "#930c37", "#ea767a", "#ee6133", "#ecac43", "#fb9983",
@@ -208,6 +243,10 @@ class FlowerGarden {
       console.log("Failed to get garden init", e);
     }
     this.init_(opts);
+    this.animals = [
+      new Penguin(this),
+      new Penguin(this, {x: 300, y:200})
+    ];
   }
 
   init_(opts) {
@@ -265,11 +304,32 @@ class FlowerGarden {
     this.addFlower(pt);
   }
 
+  drawSVG(url, pos, size) {
+    var inst = this;
+    var ctx = this.ctx;
+    pos = pos || {x: 100, y: 80};
+    size = size || {width: 60, height: 80};
+    url = url || "penguin.svg";
+    console.log("*** drawSVG " + url);
+    if (this.svgImages[url]) {
+      ctx.drawImage(this.svgImages[url], pos.x, pos.y, size.width, size.height);
+    }
+    else {
+      var img = new Image;
+      this.svgImages[url] = img;
+      img.onload = function(){
+        console.log("*** image loaded ***");
+        ctx.drawImage(img, pos.x, pos.y, size.width, size.height);
+      };
+      img.src = url;
+    }
+  }
 
   update() {
     var inst = this;
     this.ctx.clearRect(0, 0, this.canvWidth, this.canvHeight);
     this.flowers.forEach(flower => flower.update());
+    this.animals.forEach(animal => animal.draw());
     this.requestId = window.requestAnimationFrame(e => inst.update());
   }
 

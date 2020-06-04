@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="svg2"
+    sodipodi:docname="penguin_flat.svg"
+    viewBox="0 0 516.02 624.5"
+    sodipodi:version="0.32"
+    version="1.0"
+    inkscape:output_extension="org.inkscape.output.svg.inkscape"
+    inkscape:version="0.46"
+  >
+  <defs
+      id="defs4"
+    >
+    <radialGradient
+        id="radialGradient6653"
+        gradientUnits="userSpaceOnUse"
+        cy="579.21"
+        cx="-181.29"
+        gradientTransform="matrix(1.1573 .14256 -.073577 1.1033 75.501 -33.618)"
+        r="65.59"
+        inkscape:collect="always"
+      >
+      <stop
+          id="stop6639"
+          style="stop-color:#dcc5c5"
+          offset="0"
+      />
+      <stop
+          id="stop6641"
+          style="stop-color:#000000"
+          offset="1"
+      />
+    </radialGradient
+    >
+  </defs
+  >
+  <sodipodi:namedview
+      id="base"
+      bordercolor="#666666"
+      inkscape:pageshadow="2"
+      guidetolerance="10"
+      pagecolor="#ffffff"
+      gridtolerance="10000"
+      inkscape:window-height="1024"
+      inkscape:zoom="0.35355339"
+      objecttolerance="10"
+      showgrid="false"
+      borderopacity="1.0"
+      inkscape:current-layer="layer1"
+      inkscape:cx="371.95702"
+      inkscape:cy="223.99766"
+      inkscape:window-y="0"
+      inkscape:window-x="0"
+      inkscape:window-width="1680"
+      inkscape:pageopacity="0.0"
+      inkscape:document-units="px"
+  />
+  <g
+      id="layer1"
+      inkscape:label="Layer 1"
+      inkscape:groupmode="layer"
+      transform="translate(-58.19 -41.199)"
+    >
+    <g
+        id="g6695"
+        inkscape:transform-center-x="85.565502"
+        inkscape:transform-center-y="40.491872"
+        transform="matrix(-1.7077 -.048414 .082773 -.99883 592.4 1392.5)"
+      >
+      <path
+          id="path6687"
+          sodipodi:nodetypes="cccc"
+          style="fill-rule:evenodd;fill:#808000"
+          d="m142.71 724.19l75.07 56.44 65.18-60.66-140.25 4.22z"
+      />
+      <path
+          id="path6689"
+          style="fill-rule:evenodd;stroke:#000000;stroke-width:.57631px;fill:#000000"
+          d="m141.29 724.19c-0.03-0.96 3.77-1.99 10.78-2.88 7.02-0.89 17.25-1.63 30.05-2.12 12.79-0.49 28.16-0.73 45.38-0.74s36.31 0.2 56.51 0.51c-5.27 5.28-10.65 10.68-16.11 16.16-18.29 18.33-35.7 35.68-51.26 50.81-11.74-8.52-22.5-16.49-31.96-23.68s-17.63-13.61-24.22-19.04c-6.6-5.44-11.64-9.88-14.89-13.12-3.26-3.25-4.74-5.28-4.28-5.9 0.46-0.61 2.83 0.24 6.72 2.38 3.9 2.13 9.33 5.55 15.96 10.06 6.63 4.52 14.47 10.12 23.24 16.63 8.77 6.52 18.47 13.94 28.88 22.06 14.6-12.93 30.78-26.84 47.88-41.44 5.12-4.37 10.16-8.67 15.12-12.9-19.36 1.51-37.59 2.84-54.08 3.85-16.49 1-31.25 1.66-43.63 1.93-12.37 0.27-22.37 0.14-29.29-0.33s-10.77-1.27-10.8-2.24z"
+          sodipodi:nodetypes="cccc"
+          inkscape:path-effect="#path-effect6692"
+          inkscape:original-d="M 141.29088,724.19352 L 216.36513,780.62679 L 281.54743,719.97372 L 141.29088,724.19352 z"
+      />
+    </g
+    >
+    <path
+        id="path6348"
+        style="fill:#000000"
+        transform="matrix(2.3283 0 0 2.7465 -141.66 -172.72)"
+        d="m263.04 196.06c0 52.69-34.53 95.46-77.07 95.46-42.55 0-77.08-42.77-77.08-95.46 0-52.7 34.53-95.46 77.08-95.46 42.54 0 77.07 42.76 77.07 95.46z"
+    />
+    <path
+        id="path6352"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0462px;fill:#000000"
+        d="m524.73 335.14c1.38-1.29 2.64-2.62 3.77-3.97 4.99-5.86 8.5-11.41 10.78-16.41 5.77-12.44 8.66-23.64 10.15-33.04 2.18-12.18 3.23-23.42 3.85-33.69 0.75-11.75 0.99-22.5 1.2-32.33 0.13-5.13 0.18-9.91 0.27-14.37 0.08-4.45 0.2-8.6 0.39-12.48 0.2-3.67 0.32-6.85 0.56-9.64 0.3-2.61 0.29-4.57 0.38-6.01 0.13-1.2-0.43-2.01-1.08-2.31-1.06-0.27-1.68-1.05-2.07-1.83-0.1-0.72 0.28-1.26 0.93-1.72 0.66-0.46 1.58-0.84 2.61-1.18 1.61-0.46 3.28-0.72 4.9-0.97 1.61-0.25 3.17-0.49 4.58-0.81 2.83-0.66 5.07-1.7 6.4-3.49 0.66-0.9 1.09-1.96 1.26-3.19 0.16-1.23 0.07-2.63-0.35-4.19s-1.16-3.28-2.36-5.12c-1.19-1.84-2.84-3.81-5.14-5.81-1.53-1.36-3.44-2.67-5.88-3.78-2.43-1.11-5.39-2.02-9.02-2.51-5.33-0.47-11.21 0.37-16.98 3.27-5.17 2.76-9.71 6.29-12.96 10.15-3.58 4.05-6.62 8.42-8.96 12.64-2.59 4.57-4.83 9.34-6.73 14.06-1.99 4.91-3.79 10.02-5.41 15.24-1.63 5.22-3.07 10.54-4.39 15.85-2.6 10.39-4.84 21.19-7.07 31.97-1.99 9.58-3.85 18.98-6.18 27.79-2.08 7.19-3.56 12.98-5.66 16.39-0.76 1.17-0.88 1.57-0.51 0.93 0.11-0.21 0.29-0.42 0.55-0.65 0.73-0.67 2.07-1.46 4-2.53 1.73-0.73 3.34-1.06 5.06-1.05 1.59 0.17 2.23 0.22 2.09 0.39-0.26 0.1-1.17-0.33-2.69-1.03-1.74-0.86-3.75-2.21-6.03-3.85-5.65-4.06-11.23-9.42-17.02-15.17-6.89-6.92-13.38-14.13-19.62-21.13-7.44-8.35-14.34-16.25-20.74-23.35s-12.3-13.4-17.67-18.59c-12.22-12.37-21.98-18.13-27.72-15.17-5.72 2.95-6.69 14.27-3.55 31.69 1.55 7.62 4.04 16.43 7.59 26.18 3.56 9.75 8.17 20.44 14.05 31.77 4.89 9.42 10.78 19.41 18.08 29.63 5.93 8.42 13.27 17.31 22.69 26 3.92 3.61 8.51 7.25 13.86 10.75 4.58 3.05 10.17 5.91 16.84 8.31 5.89 2.17 12.92 3.45 20.96 3.52 7.85-0.09 15.6-1.78 22.99-5.1 5.97-2.91 10.99-6.32 15-10.06z"
+    />
+    <path
+        id="path6629"
+        style="fill-rule:evenodd;stroke:#000000;stroke-width:1.253px;fill:#000000"
+        d="m123.57 321.51c1.22-3.72 2.49-7.24 3.88-10.54 2.69-5.9 4.57-10.4 6.71-12.79 9.85-11.75 18.06-23.34 25.1-34.18 8.76-13.45 15.9-26.04 21.45-37.19 6.28-12.6 10.55-23.41 12.64-31.67 1.11-4.39 1.61-8.07 1.45-10.93-0.08-1.46-0.33-2.71-0.75-3.72-0.21-0.51-0.47-0.97-0.78-1.36-0.15-0.2-0.31-0.38-0.49-0.55-0.29-0.22-0.43-0.34-0.5-0.4l-0.07-0.06s-0.01 0-0.09-0.04c-0.08-0.05-0.24-0.14-0.55-0.32-0.22-0.11-0.45-0.19-0.69-0.26-0.48-0.14-1-0.22-1.55-0.24-1.1-0.03-2.35 0.18-3.73 0.62-2.71 0.86-5.95 2.59-9.66 5.11-6.98 4.73-15.6 12.23-25.47 21.84-8.73 8.51-18.41 18.66-28.85 29.85-8.47 9.09-17.26 18.77-26.558 28.27-7.944 8.8-13.452 18.14-16.997 26.72-2.169 4.93-4.066 9.92-5.725 14.9-1.881 5.65-3.416 11.17-4.7 16.52-3.07 12.66-5.118 24.94-6.47 36.59-1.352 11.66-2.01 22.7-2.241 32.96-0.596 24.53 1.234 45.18 4.245 60.04 1.622 8.01 3.603 14.37 5.816 18.76 1.136 2.26 2.334 4 3.578 5.19 0.629 0.6 1.27 1.06 1.921 1.37 0.327 0.16 0.657 0.28 0.989 0.36 0.167 0.04 0.334 0.08 0.501 0.1 0.17 0.02 0.341 0.03 0.512 0.03s0.342 0 0.513-0.01c0.168-0.02 0.336-0.04 0.504-0.08 0.335-0.07 0.669-0.17 1.002-0.32 0.663-0.28 1.322-0.7 1.979-1.26 1.298-1.11 2.584-2.75 3.861-4.89 2.485-4.16 4.931-10.18 7.364-17.77 4.515-14.08 8.926-33.5 13.776-56.15 2.05-9.55 4.13-19.61 6.42-29.93 2.28-10.32 4.77-20.9 7.74-31.5 1.26-4.48 2.54-8.86 3.92-13.07z"
+    />
+    <path
+        id="path6633"
+        style="fill:#ffffff"
+        transform="matrix(1.7907 0 0 2.2828 -41.68 -42.203)"
+        d="m263.04 196.06c0 52.69-34.53 95.46-77.07 95.46-42.55 0-77.08-42.77-77.08-95.46 0-52.7 34.53-95.46 77.08-95.46 42.54 0 77.07 42.76 77.07 95.46z"
+    />
+    <path
+        id="path6635"
+        style="stroke-width:0;fill:url(#radialGradient6653)"
+        transform="matrix(1.6444 0 0 1.21 628.95 -612.7)"
+        d="m-144.25 611.13c0 39.03-28.51 70.71-63.64 70.71s-63.64-31.68-63.64-70.71 28.51-70.71 63.64-70.71 63.64 31.68 63.64 70.71z"
+    />
+    <g
+        id="g6661"
+        transform="translate(369.11 -57.983)"
+      >
+      <path
+          id="path6655"
+          sodipodi:rx="19.091883"
+          sodipodi:ry="22.627417"
+          style="stroke:#938787;stroke-width:1.6;fill:#000000"
+          sodipodi:type="arc"
+          d="m-114.55 154.34a19.092 22.627 0 1 1 -38.19 0 19.092 22.627 0 1 1 38.19 0z"
+          sodipodi:cy="154.33658"
+          sodipodi:cx="-133.64319"
+      />
+      <path
+          id="path6659"
+          sodipodi:rx="7"
+          sodipodi:ry="7"
+          style="fill:#ffffff"
+          sodipodi:type="arc"
+          d="m-126 226.36a7 7 0 1 1 -14 0 7 7 0 1 1 14 0z"
+          transform="translate(5,-79)"
+          sodipodi:cy="226.36218"
+          sodipodi:cx="-133"
+      />
+    </g
+    >
+    <g
+        id="g6665"
+        transform="translate(468.1 -60.811)"
+      >
+      <path
+          id="path6667"
+          sodipodi:rx="19.091883"
+          sodipodi:ry="22.627417"
+          style="stroke:#938787;stroke-width:1.6;fill:#000000"
+          sodipodi:type="arc"
+          d="m-114.55 154.34a19.092 22.627 0 1 1 -38.19 0 19.092 22.627 0 1 1 38.19 0z"
+          sodipodi:cy="154.33658"
+          sodipodi:cx="-133.64319"
+      />
+      <path
+          id="path6669"
+          sodipodi:rx="7"
+          sodipodi:ry="7"
+          style="fill:#ffffff"
+          sodipodi:type="arc"
+          d="m-126 226.36a7 7 0 1 1 -14 0 7 7 0 1 1 14 0z"
+          transform="translate(5,-79)"
+          sodipodi:cy="226.36218"
+          sodipodi:cx="-133"
+      />
+    </g
+    >
+    <g
+        id="g6681"
+        transform="matrix(1 0 0 .62072 612.35 -43.393)"
+      >
+      <path
+          id="path6677"
+          sodipodi:nodetypes="cccc"
+          style="fill-rule:evenodd;fill:#ffff00"
+          d="m-397.52 279.7l75.07 90.92 65.18-97.72-140.25 6.8z"
+      />
+      <path
+          id="path6673"
+          style="fill-rule:evenodd;stroke:#000000;stroke-width:.73148px;fill:#000000"
+          d="m-396.11 279.7c-0.07-1.42 3.59-2.96 10.51-4.34s17.08-2.59 29.95-3.48 28.44-1.47 46.07-1.72 37.33-0.17 58.38 0.1c-8.87 13.82-18.26 28.43-27.98 43.47-14.66 22.69-28.73 44.31-41.51 63.68-12.35-13.52-23.63-26.17-33.44-37.61-9.81-11.43-18.15-21.64-24.74-30.27s-11.42-15.67-14.33-20.77c-2.92-5.09-3.91-8.24-2.91-9.06s3.89 0.74 8.18 4.37 9.98 9.32 16.66 16.76 14.36 16.63 22.75 27.24 17.49 22.64 27.14 35.75c11.23-16.62 23.37-34.3 36.16-52.76 8.48-12.24 16.75-24.1 24.71-35.52-19.28 2.23-37.28 4.14-53.5 5.53-16.23 1.39-30.69 2.27-42.8 2.59s-21.89 0.07-28.67-0.64-10.56-1.89-10.63-3.32z"
+          sodipodi:nodetypes="cccc"
+          inkscape:path-effect="#path-effect6675"
+          inkscape:original-d="M -396.11027,279.70185 L -321.03602,370.61757 L -255.85372,272.90363 L -396.11027,279.70185 z"
+      />
+    </g
+    >
+    <path
+        id="path3194"
+        sodipodi:rx="67.882248"
+        sodipodi:ry="52.325901"
+        style="opacity:0;stroke-width:.12625"
+        sodipodi:type="arc"
+        d="m-591.14-245.25z"
+        transform="translate(58.19 41.199)"
+        sodipodi:cy="-245.24605"
+        sodipodi:cx="-659.0235"
+    />
+  </g
+  >
+  <metadata
+    >
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >Penguin</dc:title
+        >
+        <dc:date
+          >2008-08-13T02:27:48</dc:date
+        >
+        <dc:description
+          >The obligatory penguin.</dc:description
+        >
+        <dc:source
+          >https://openclipart.org/detail/18403/penguin-by-feraliminal</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >feraliminal</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >bird</rdf:li
+            >
+            <rdf:li
+              >cartoon</rdf:li
+            >
+            <rdf:li
+              >penguin</rdf:li
+            >
+            <rdf:li
+              >tux</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>
