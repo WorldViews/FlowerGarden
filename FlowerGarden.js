@@ -14,7 +14,7 @@ function randomIntFromInterval(mn, mx) {
   return ~~(Math.random() * (mx - mn + 1) + mn);
 }
 
-class Animal {
+class Graphic {
   constructor(garden, url, pos, size) {
     var inst = this;
     this.garden = garden;
@@ -43,7 +43,7 @@ class Animal {
   }
 }
 
-class Penguin extends Animal {
+class Penguin extends Graphic {
   constructor(garden, pos, size) {
     super(garden, "penguin.svg", pos, size);
   }
@@ -245,7 +245,8 @@ class FlowerGarden {
     this.init_(opts);
     this.animals = [
       new Penguin(this),
-      new Animal( this, "penguin2.svg", {x: 500, y: 150}),
+      new Graphic( this, "penguin2.svg", {x: 500, y: 150}),
+      new Graphic( this, "taiko.svg", {x: 450, y: 450}, {width: 120, height: 120}),
       new Penguin(this, {url: "penguin2.svg", x: 300, y:200})
     ];
   }
