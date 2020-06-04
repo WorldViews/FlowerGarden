@@ -245,7 +245,8 @@ class FlowerGarden {
     this.init_(opts);
     this.animals = [
       new Penguin(this),
-      new Penguin(this, {x: 300, y:200})
+      new Animal( this, "penguin2.svg", {x: 500, y: 150}),
+      new Penguin(this, {url: "penguin2.svg", x: 300, y:200})
     ];
   }
 
