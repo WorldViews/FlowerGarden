@@ -15,133 +15,6 @@ function randomIntFromInterval(mn, mx) {
 }
 
 
-class XFlowerGarden {
-  constructor(canvasName) {
-    this.canvasName = canvasName || "flowerCanvas";
-    this.svgImages = {};
-    this.flowers = [];
-    this.colors = [
-      "#930c37", "#ea767a", "#ee6133", "#ecac43", "#fb9983",
-      "#f9bc9f", "#f8ed38", "#a8e3f9", "#d1f2fd", "#ecd5f5",
-      "#fee4fd", "#8520b4", "#FA2E59", "#FF703F", "#FF703F",
-      "#F7BC05", "#ECF6BB", "#76BCAD"];
-    this.init();
-  }
-
-  async loadGarden() {
-    var obj = await loadJSON("garden.json");
-    console.log("got garden data: " + JSON.stringify(obj));
-    obj.flowers.forEach(flower => {
-      this.addFlower(flower);
-    })
-  }
-
-  async init() {
-    var opts = {};
-    try {
-      opts = await loadJSON("garden.json");
-      console.log("got garden data: " + JSON.stringify(opts))
-    }
-    catch (e) {
-      console.log("Failed to get garden init", e);
-    }
-    this.init_(opts);
-    this.animals = [
-      new Penguin(this),
-      new Graphic(this, "penguin2.svg", { x: 500, y: 150 }),
-      new Graphic(this, "taiko.svg", { x: 450, y: 450 }, { width: 120, height: 120 }),
-      new Penguin(this, { url: "penguin2.svg", x: 300, y: 200 }),
-      new Graphic(this, "mamaP.jpg", { x: 100, y: 250 })
-    ];
-  }
-
-  init_(opts) {
-    var inst = this;
-    this.numInitialFlowers = opts.numInitialFlowers || 8;
-    this.maxNumFlowers = opts.maxNumFlowers || 20;
-    this.requestId = window.requestAnimationFrame(e => inst.update(e));
-    window.setInterval(e => {
-      if (inst.flowers.length < inst.maxNumFlowers)
-        inst.addFlower();
-    }, 300);
-    //$("#"+this.canvasName).click(e => inst.handleClick(e));
-    $("#" + this.canvasName).mousedown(e => inst.handleClick(e));
-    var c = document.getElementById(this.canvasName);
-    this.canvas = c;
-    this.ctx = c.getContext("2d");
-    //this.canvWidth = c.width = window.innerWidth;
-    //this.canvHeight = c.height = window.innerHeight;
-    this.canvWidth = 300;
-    this.canvHeight = 200;
-    this.cX = this.canvWidth / 2,
-      this.cY = this.canvHeight / 2;
-    var ctx = this.canvas.getContext("2d");
-    this.ctx = ctx;
-    ctx.strokeStyle = "white";
-    ctx.shadowBlur = 5;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
-    ctx.shadowColor = "#333";
-    ctx.globalAlpha = .85;
-    this.initFlowers();
-    if (opts.flowers) {
-      opts.flowers.forEach(flower => {
-        this.addFlower(flower);
-      })
-    }
-  }
-
-  initFlowers() {
-    var flowers = this.flowers;
-    for (var hm = 0; hm < this.numInitialFlowers; hm++) {
-      this.addFlower().update();
-    }
-  }
-
-  addFlower(opts) {
-    console.log("Adding flower");
-    var f = new Flower(this, opts);
-    this.flowers.push(f);
-    return f;
-  }
-
-  handleClick(e) {
-    var pt = { x: e.clientX, y: e.clientY };
-    console.log("click ", pt);
-    this.addFlower(pt);
-  }
-
-  drawSVG(url, pos, size) {
-    var inst = this;
-    var ctx = this.ctx;
-    pos = pos || { x: 100, y: 80 };
-    size = size || { width: 60, height: 80 };
-    url = url || "penguin.svg";
-    console.log("*** drawSVG " + url);
-    if (this.svgImages[url]) {
-      ctx.drawImage(this.svgImages[url], pos.x, pos.y, size.width, size.height);
-    }
-    else {
-      var img = new Image;
-      this.svgImages[url] = img;
-      img.onload = function () {
-        console.log("*** image loaded ***");
-        ctx.drawImage(img, pos.x, pos.y, size.width, size.height);
-      };
-      img.src = url;
-    }
-  }
-
-  update() {
-    var inst = this;
-    this.ctx.clearRect(0, 0, this.canvWidth, this.canvHeight);
-    this.flowers.forEach(flower => flower.update());
-    this.animals.forEach(animal => animal.draw());
-    this.requestId = window.requestAnimationFrame(e => inst.update());
-  }
-
-}
-
 class Pic extends CanvasTool.ImageGraphic {
   constructor(opts) {
     super(opts);
@@ -150,8 +23,9 @@ class Pic extends CanvasTool.ImageGraphic {
 
   onClick(e) {
     if (!this.targetURL)
-      return;
+      return true;
     window.open(this.targetURL, "gardenInfo");
+    return true;
   }
 }
 
@@ -164,9 +38,16 @@ class GardenTool extends CanvasTool {
     this.numFlowers = 0;
     this.maxNumFlowers = 10;
     this.addFlowers(10);
-    this.addPic({ id: 'don', url: 'images/penguin.svg', x: 50, y: 0, width: 20, height: 30 });
-    this.addPic({ id: 'shawna', url: 'images/penguin2.svg', x: 100, y: 50, width: 20, height: 30 });
-    this.addPic({ id: 'manami', url: 'images/mamaP.svg', x: -100, y: 200, width: 20, height: 30 });
+    this.addPic({
+      id: 'don', url: 'images/penguin.svg', x: 50, y: 0, width: 20, height: 30,
+      targetURL: 'http://worldviews.club/don'
+    });
+    this.addPic({ id: 'shawna', url: 'images/penguin2.svg', x: 100, y: 50, width: 20, height: 30,
+      targetURL: 'http://worldviews.club/shawna'
+     });
+    this.addPic({ id: 'manami', url: 'images/mamaP.jpg', x: 200, y: -50, width: 40, height: 50,
+    targetURL: 'http://www.dancevita.com/'
+   });
     this.addPic({
       id: 'taiko', url: 'images/taiko.svg', x: 150, y: -100, width: 50, height: 50,
       targetURL: 'http://taiko.org'

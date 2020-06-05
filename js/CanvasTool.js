@@ -39,7 +39,9 @@ class CanvasTool {
         this.canvas.addEventListener("mousedown", e => {
             var hit = this.getHit(e);
             if (hit) {
-                hit.onClick(e);
+                var v = hit.onClick(e);
+                if (v)
+                    return;
             }
             inst.mouseDownPt = { x: e.clientX, y: e.clientY };
             inst.mouseDownTrans = { tx: inst.tx, ty: inst.ty };
@@ -56,15 +58,6 @@ class CanvasTool {
 
             }
             inst.handleMouseDrag(e)
-            /*
-            var tr = inst.mouseDownTrans;
-            var dx = e.clientX - inst.mouseDownPt.x;
-            var dy = e.clientY - inst.mouseDownPt.y;
-            inst.tx = tr.tx + dx;
-            inst.ty = tr.ty + dy;
-            */
-            //inst.pan(dx,dy);
-            //console.log("move", e);
         });
         this.canvas.addEventListener("mouseup", e => {
             inst.mouseDownPt = null;
@@ -85,7 +78,7 @@ class CanvasTool {
     handleMouseDown(e) {
         console.log("handleMouseDown", e);
     }
-    
+
     handleMousePan(e) {
         var tr = this.mouseDownTrans;
         var dx = e.clientX - this.mouseDownPt.x;
