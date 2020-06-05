@@ -516,6 +516,32 @@ CanvasTool.IconGraphic = class extends CanvasTool.Graphic {
     }
 }
 
+CanvasTool.ImageGraphic = class extends CanvasTool.Graphic {
+    constructor(opts) {
+        super(opts);
+        this.url = opts.url;
+        this.x = opts.x || 0;
+        this.y = opts.y || 0;
+        this.width = opts.width || 10;
+        this.height = opts.height || 10;
+        var img = new Image;
+        var inst = this;
+        console.log("ImageGraphic ", this.id, this.url);
+        img.onload = e => {
+            console.log("*** image loaded ***", inst.url);
+            inst.image = img;
+        }   
+        img.src = this.url;
+    }
+
+    draw(canvas, ctx) {
+        if (!this.image)
+            return;
+        ctx.drawImage(
+            this.image, this.x, this.y, this.width, this.height);
+    }
+}
+
 CanvasTool.CloudGraphic = class extends CanvasTool.Graphic {
     constructor(opts) {
         super(opts);
