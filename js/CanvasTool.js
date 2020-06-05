@@ -43,6 +43,7 @@ class CanvasTool {
             }
             inst.mouseDownPt = { x: e.clientX, y: e.clientY };
             inst.mouseDownTrans = { tx: inst.tx, ty: inst.ty };
+            inst.handleMouseDown(e);
             //console.log("down", e, this.mouseDownPt);
         });
         this.canvas.addEventListener("mousemove", e => {
@@ -81,6 +82,10 @@ class CanvasTool {
         });
     }
 
+    handleMouseDown(e) {
+        console.log("handleMouseDown", e);
+    }
+    
     handleMousePan(e) {
         var tr = this.mouseDownTrans;
         var dx = e.clientX - this.mouseDownPt.x;
