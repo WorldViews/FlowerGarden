@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+This code was taken from
+https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effect/
+-->
+<head>
+<meta charset="UTF-8">
+<title>Canvas Blooming Flowers Effect</title>
+<style type="text/css">
+body {
+  margin: 0;
+  overflow: hidden;
+  background: -webkit-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
+  background: -moz-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
+  background: -ms-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
+  background: -o-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
+  background: radial-gradient( farthest-corner circle at left bottom, #e1fd3e, #174709);
+}
+</style>
+
+<body>
+<!--
+<canvas id="flowerCanvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
+<canvas id="canvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
+-->
+<canvas id="fcanvas" width=600 height=600></canvas>
+<div id="canvasStat"></div>
+
+<!--
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  
+-->
+<script src="js/libs/jquery-3.1.0.min.js"></script>
+<script src="js/libs/sprintf.js"></script>
+<script src="js/CanvasTool.js"></script>
+<script src="js/GardenTool.js"></script>
+<script src="js/util.js"></script>
+<script>
+  var garden;
+  var gtool;
+
+ 
+  $(document).ready(function() {
+    //garden = new FlowerGarden();
+    gtool = new CanvasTool("fcanvas");
+    var circle = new Circle({x:-50, y:70, radius: 10});
+    var flower = new Flower({id: 'flower1', x:10, y:10});
+    gtool.addGraphic(circle);
+    gtool.addGraphic(flower);
+    gtool.start();
+    gtool.setView(0, 0, 200, 200);
+});
+
+</script>
+</body>
+
