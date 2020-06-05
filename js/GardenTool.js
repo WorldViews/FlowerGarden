@@ -14,43 +14,8 @@ function randomIntFromInterval(mn, mx) {
   return ~~(Math.random() * (mx - mn + 1) + mn);
 }
 
-class Graphic {
-  constructor(garden, url, pos, size) {
-    var inst = this;
-    this.garden = garden;
-    var ctx = garden.ctx;
-    pos = pos || {x: 100, y: 80};
-    size = size || {width: 60, height: 80};
-    this.x = pos.x;
-    this.y = pos.y;
-    this.width = size.width;
-    this.height = size.height;
-    url = url || "penguin.svg";
-    console.log("*** drawSVG " + url);
-    this.svgImg = new Image;
-    this.svgImg.onload = function(){
-        console.log("*** image loaded ***");
-        ctx.drawImage(inst.svgImg, inst.x, inst.y, inst.width, inst.height);
-      };
-    this.svgImg.src = url;
-  }
 
-  draw(ctx) {
-    var inst = this;
-    if (!this.svgImg)
-      return;
-    this.garden.ctx.drawImage(inst.svgImg, inst.x, inst.y, inst.width, inst.height);
-  }
-}
-
-class Penguin extends Graphic {
-  constructor(garden, pos, size) {
-    super(garden, "penguin.svg", pos, size);
-  }
-}
-
-
-class FlowerGarden {
+class XFlowerGarden {
   constructor(canvasName) {
     this.canvasName = canvasName || "flowerCanvas";
     this.svgImages = {};
@@ -177,17 +142,38 @@ class FlowerGarden {
 
 }
 
+class Pic extends CanvasTool.ImageGraphic {
+  constructor(opts) {
+    super(opts);
+    this.targetURL = opts.targetURL;
+  }
+
+  onClick(e) {
+    if (!this.targetURL)
+      return;
+    window.open(this.targetURL, "gardenInfo");
+  }
+}
+
 class GardenTool extends CanvasTool {
   start() {
     //var circle = new Circle({x:-50, y:70, radius: 10});
     //var flower = new Flower({id: 'flower1', x:10, y:10});
     //gtool.addGraphic(circle);
     //gtool.addGraphic(flower);
+    this.numFlowers = 0;
+    this.maxNumFlowers = 100;
     this.addFlowers(10);
-    this.addPic({url: 'images/penguin.svg', x:50, y:0, width:20, height: 30});
-    this.addPic({url: 'images/penguin2.svg', x:100, y:50, width:20, height: 30});
-    this.addPic({url: 'images/mamaP.svg', x:-100, y:200, width:20, height: 30});
-    this.addPic({url: 'images/taiko.svg', x:150, y:-100, width:50, height: 50});
+    this.addPic({id: 'don', url: 'images/penguin.svg', x:50, y:0, width:20, height: 30});
+    this.addPic({id: 'shawna', url: 'images/penguin2.svg', x:100, y:50, width:20, height: 30});
+    this.addPic({id: 'manami', url: 'images/mamaP.svg', x:-100, y:200, width:20, height: 30});
+    this.addPic({id: 'taiko', url: 'images/taiko.svg', x:150, y:-100, width:50, height: 50,
+                  targetURL: 'http://taiko.org'});
+    var inst = this;
+    setInterval(() => {
+      if (inst.numFlowers < inst.maxNumFlowers)
+        inst.addFlowers(1);
+    }, 500);
     super.start();
   }
 
@@ -196,11 +182,12 @@ class GardenTool extends CanvasTool {
     for (var i=0; i<numFlowers; i++) {
       var f = new Flower({x: uniform(-100, 100), y: uniform(-100, 100)});
       this.addGraphic(f);
+      this.numFlowers++;
     }
   }
 
   addPic(opts) {
-    var imgGraphic = new CanvasTool.ImageGraphic(opts);
+    var imgGraphic = new Pic(opts);
     this.addGraphic(imgGraphic);
   }
 

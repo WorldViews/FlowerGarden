@@ -516,7 +516,7 @@ CanvasTool.IconGraphic = class extends CanvasTool.Graphic {
     }
 }
 
-CanvasTool.ImageGraphic = class extends CanvasTool.Graphic {
+CanvasTool.ImageGraphic = class extends CanvasTool.RectGraphic {
     constructor(opts) {
         super(opts);
         this.url = opts.url;
@@ -538,7 +538,9 @@ CanvasTool.ImageGraphic = class extends CanvasTool.Graphic {
         if (!this.image)
             return;
         ctx.drawImage(
-            this.image, this.x, this.y, this.width, this.height);
+            this.image,
+            this.x-this.width/2.0, this.y-this.height/2.0,
+            this.width, this.height);
     }
 }
 
