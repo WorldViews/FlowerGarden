@@ -178,6 +178,31 @@ class FlowerGarden {
 }
 
 class GardenTool extends CanvasTool {
+  start() {
+    //var circle = new Circle({x:-50, y:70, radius: 10});
+    //var flower = new Flower({id: 'flower1', x:10, y:10});
+    //gtool.addGraphic(circle);
+    //gtool.addGraphic(flower);
+    this.addFlowers(10);
+    this.addPic({url: 'images/penguin.svg', x:50, y:0, width:20, height: 30});
+    this.addPic({url: 'images/penguin2.svg', x:100, y:50, width:20, height: 30});
+    this.addPic({url: 'images/mamaP.svg', x:-100, y:200, width:20, height: 30});
+    this.addPic({url: 'images/taiko.svg', x:150, y:-100, width:50, height: 50});
+    super.start();
+  }
+
+  addFlowers(numFlowers) {
+    console.log("addFlowers "+numFlowers);
+    for (var i=0; i<numFlowers; i++) {
+      var f = new Flower({x: uniform(-100, 100), y: uniform(-100, 100)});
+      this.addGraphic(f);
+    }
+  }
+
+  addPic(opts) {
+    var imgGraphic = new CanvasTool.ImageGraphic(opts);
+    this.addGraphic(imgGraphic);
+  }
 
 }
 

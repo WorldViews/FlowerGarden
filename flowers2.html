@@ -42,11 +42,7 @@ body {
  
   $(document).ready(function() {
     //garden = new FlowerGarden();
-    gtool = new CanvasTool("fcanvas");
-    var circle = new Circle({x:-50, y:70, radius: 10});
-    var flower = new Flower({id: 'flower1', x:10, y:10});
-    gtool.addGraphic(circle);
-    gtool.addGraphic(flower);
+    gtool = new GardenTool("fcanvas");
     gtool.start();
     gtool.setView(0, 0, 200, 200);
 });
