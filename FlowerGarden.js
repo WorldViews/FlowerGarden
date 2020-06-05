@@ -45,7 +45,7 @@ class Graphic {
 
 class Penguin extends Graphic {
   constructor(garden, pos, size) {
-    super(garden, "penguin.svg", pos, size);
+    super(garden, "images/penguin.svg", pos, size);
   }
 }
 
@@ -245,9 +245,10 @@ class FlowerGarden {
     this.init_(opts);
     this.animals = [
       new Penguin(this),
-      new Graphic( this, "penguin2.svg", {x: 500, y: 150}),
-      new Graphic( this, "taiko.svg", {x: 450, y: 450}, {width: 120, height: 120}),
-      new Penguin(this, {url: "penguin2.svg", x: 300, y:200})
+      new Graphic( this, "images/penguin2.svg", {x: 500, y: 150}),
+      new Graphic( this, "images/taiko.svg", {x: 450, y: 450}, {width: 120, height: 120}),
+      new Penguin(this, {url: "images/penguin2.svg", x: 300, y:200}),
+      new Graphic(this, "images/mamaP.jpg", {x: 100, y:250})
     ];
   }
 
