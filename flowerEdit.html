@@ -32,6 +32,7 @@ body {
 -->
 <script src="js/libs/jquery-3.1.0.min.js"></script>
 <script src="js/libs/sprintf.js"></script>
+<script src="js/libs/dat.gui.js"></script>
 <script src="js/CanvasTool.js"></script>
 <script src="js/GardenTool.js"></script>
 <script src="js/Flower.js"></script>
@@ -39,13 +40,19 @@ body {
 <script>
   var garden;
   var gtool;
+  var selectedFlower;
  
   $(document).ready(function() {
     //garden = new FlowerGarden();
-    gtool = new GardenTool("fcanvas", {maxNumFlowers: 200});
-    gtool.loadPics(PICS);
+    gtool = new GardenTool("fcanvas", {maxNumWildFlowers: 0, numStartupFlowers: 0});
     gtool.start();
     gtool.setView(0, 0, 800);
+    var f = gtool.addFlower();
+    selectedFlower = f;
+    var gui = new dat.GUI();
+    gui.add(f, 'numPetals');
+    gui.add(f, 'centerRad', 0, 10);
+    gui.add(f, 'flowerRad', 0, 50);
 });
 
 </script>
