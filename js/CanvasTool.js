@@ -12,6 +12,7 @@ class CanvasTool {
             alert("No canvas named " + canvasName);
             return;
         }
+        this.ctx = this.canvas.getContext("2d");
         //this.elements = elements;
         this.mouseDownPt = null;
         this.mouseDownTrans = null;
@@ -250,7 +251,8 @@ class CanvasTool {
     }
 
     clearCanvas() {
-        var ctx = this.canvas.getContext('2d');
+        //var ctx = this.canvas.getContext('2d');
+        var ctx = this.ctx;
         var canvas = this.canvas;
         ctx.resetTransform();
         ctx.globalAlpha = 1;
@@ -271,7 +273,8 @@ class CanvasTool {
     }
 
     drawGraphics() {
-        var ctx = this.canvas.getContext('2d');
+        //var ctx = this.canvas.getContext('2d');
+        var ctx = this.ctx;
         this.setTransform(ctx);
         var canvas = this.canvas;
         for (var id in this.graphics) {
