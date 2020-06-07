@@ -40,7 +40,7 @@ body {
 <script>
   var garden;
   var gtool;
-  var selectedFlower;
+  var editor;
  
   $(document).ready(function() {
     //garden = new FlowerGarden();
@@ -48,11 +48,7 @@ body {
     gtool.start();
     gtool.setView(0, 0, 800);
     var f = gtool.addFlower();
-    selectedFlower = f;
-    var gui = new dat.GUI();
-    gui.add(f, 'numPetals');
-    gui.add(f, 'centerRad', 0, 10);
-    gui.add(f, 'flowerRad', 0, 50);
+    editor = new FlowerEditor(gtool, f);
 });
 
 </script>
