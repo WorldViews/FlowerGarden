@@ -61,6 +61,13 @@ class GardenTool extends CanvasTool {
     opts = opts || {};
     this.numStartupFlowers = getVal(opts.numStartupFlowers, 10);
     this.maxNumWildFlowers = getVal(opts.maxNumWildFlowers, 10);
+    var ctx = this.ctx;
+    ctx.strokeStyle = "white";
+    ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+    ctx.shadowColor = "#333";
+    ctx.globalAlpha = .85;
   }
 
   start() {
@@ -108,5 +115,20 @@ class GardenTool extends CanvasTool {
     this.addGraphic(f);
     this.numFlowers++;
   }
+
+  clearCanvas() {
+    //var ctx = this.canvas.getContext('2d');
+    var ctx = this.ctx;
+    var canvas = this.canvas;
+    ctx.resetTransform();
+    ctx.globalAlpha = 1;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#999';
+    ctx.fillStyle = this.background;
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    //ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
 }
 

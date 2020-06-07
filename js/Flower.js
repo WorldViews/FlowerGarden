@@ -40,7 +40,7 @@ class Flower extends CanvasTool.Graphic {
     f.flowerRad = opts.flowerRad || uniform(10, 15);
     f.centerRad = uniform(0.1, 0.4);
     f.growthRate = opts.growthRate || uniform(.1, .2);
-    f.fillStyle = opts.fillStyle ||
+    f.petalStyle = opts.petalStyle ||
       garden.colors[~~(Math.random() * garden.colors.length) + 1];
     f.centerStyle = opts.centerStyle ||
       garden.colors[~~(Math.random() * garden.colors.length) + 1];
@@ -61,7 +61,7 @@ class Flower extends CanvasTool.Graphic {
 
   drawFlower(ctx) {
     var f = this;
-    ctx.fillStyle = f.fillStyle;
+    ctx.fillStyle = f.petalStyle;
     var petals = this.buildPetals(f.flowerRad, f.centerRad, f.cx, f.cy, f.numPetals, f.spacing);
     for (var petal = 0; petal < petals.length; petal++) {
       this.drawCurve(petals[petal]);
@@ -171,12 +171,39 @@ class Flower extends CanvasTool.Graphic {
       };
 
       // building the control points array
-      pc[i] = [];
-      pc[i].push(o1);
-      pc[i].push(o2);
+      pc[i] = [o1, o2];
+      //pc[i].push(o1);
+      //pc[i].push(o2);
     }
     return pc;
   }
+}
 
+class GardenEditor {
+}
+
+class FlowerEditor extends GardenEditor {
+    constructor(garden, flower) {
+        super();
+        this.gtool = gtool;
+        if (flower)
+            this.setFlower(flower);
+    }
+
+    setFlower(flower) {
+        this.selectedFlower = flower;
+        if (!this.gui) {
+            var gui = new dat.GUI();
+            this.gui = gui;
+            var f = flower;
+            gui.add(f, 'numPetals', 2, 20);
+            gui.add(f, 'centerRad', 0, 10);
+            gui.add(f, 'flowerRad', 0, 50);
+            gui.add(f, 'spacing', 3, 14);
+            gui.addColor(f, 'centerStyle');
+            gui.addColor(f, 'petalStyle');
+
+        }
+    }
 }
 
