@@ -12,19 +12,29 @@ def on_connect(client, userdata, flags, rc):
     print("subscribing to", topic);
     #client.subscribe("$SYS/#")
     client.subscribe(topic)
+    #sendVal(client)
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
 
+def on_publish(client, userdata, mid):
+    print(client, userdata, mid)
+
+def sendVal(client, val=60):
+    topic = "reachandteach/feeds/peacetree"
+    print("publishing to", topic, val)
+    client.publish(topic, val)
+
 def run(host="io.adafruit.com"):
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
+    client.on_publish = on_publish
 
     print("Connecting to", host);
     #client.connect("mqtt.eclipse.org", 1883, 60)
-    client.username_pw_set("donkimber", "aio_qspe92Wl8pJFGYSyZFuboMBLvxMp")
+    client.username_pw_set("donkimber", "aio_ZScm78k3SWhSxScOkB8v6kb5ff6h")
     client.connect(host, 1883, 60)
 
     # Blocking call that processes network traffic, dispatches callbacks and
