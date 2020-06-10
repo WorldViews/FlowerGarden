@@ -1,0 +1,51 @@
+<html>
+
+<head>
+    <title>PouchDB Play</title>
+    <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <script src="js/libs/sprintf.js"></script>
+    <script src="js/libs/dat.gui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.1.1/dist/pouchdb.min.js"></script>
+
+</head>
+
+<body>
+    <h1>Hello World -- play with Pouch</h1>
+    <script>
+        var vals = { 'x': 25, 'y': 50 };
+
+        vals.add = function () {
+            console.log("add");
+            addTodo("eat", vals.x, vals.y);
+        }
+
+        vals.dump = function () {
+            db.allDocs({ include_docs: true, descending: true }, function (err, doc) {
+                console.log(doc.rows);
+            });
+        }
+
+        function addTodo(text, x, y) {
+            var todo = {
+                //_id: new Date().toISOString(),
+                _id: 'obj1',
+                title: text,
+                completed: false,
+                x, y
+            };
+            db.put(todo, function callback(err, result) {
+                if (!err) {
+                    console.log('Successfully posted a todo!');
+                }
+            });
+        }
+        var db = new PouchDB('my_database');
+        var gui = new dat.GUI();
+        gui.add(vals, 'x');
+        gui.add(vals, 'y');
+        gui.add(vals, 'add');
+        gui.add(vals, 'dump');
+    </script>
+</body>
+
+</html>
