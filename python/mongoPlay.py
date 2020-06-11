@@ -15,6 +15,8 @@ def dump():
     for flower in flowers.find():
         print(flower)
 
+def clear():
+    flowers.remove()
 
 def insert():
     flowers.insert_one({'name': 'don', 'flower': 'rose'})
