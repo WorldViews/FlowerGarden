@@ -73,12 +73,26 @@ class GardenTool extends CanvasTool {
   start() {
     var inst = this;
     this.numFlowers = 0;
+    /*
     this.addFlowers(this.numStartupFlowers);
     setInterval(() => {
       if (inst.numFlowers < inst.maxNumWildFlowers)
         inst.addFlowers(1);
     }, 500);
+    */
     super.start();
+  }
+
+  startWildFlowers(maxNumWildFlowers) {
+    var inst = this;
+    inst.numWildFlowers = 0;
+    inst.maxNumWildFlowers = maxNumWildFlowers;
+    setInterval(() => {
+      if (inst.numWildFlowers < inst.maxNumWildFlowers) {
+        inst.numWildFlowers++;
+        inst.addFlowers(1);
+       }
+   }, 500);
   }
 
   loadPics(pics) {
@@ -92,8 +106,13 @@ class GardenTool extends CanvasTool {
       this.addFlower();
   }
 
-  addFlower() {
-    var f = new Flower({ x: uniform(-100, 100), y: uniform(-100, 100) });
+  addFlower(opts) {
+    opts = opts || {};
+    if (opts.x == null)
+      opts.x = uniform(-100, 100);
+    if (opts.y == null)
+      opts.y = uniform(-100, 100);
+    var f = new Flower(opts);
     this.addGraphic(f);
     this.numFlowers++;
     return f;
@@ -129,6 +148,17 @@ class GardenTool extends CanvasTool {
     ctx.fillStyle = this.background;
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
     //ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
+  }
+
+  async loadGardenFile(url) {
+    url = url || "garden.json";
+    var obj = await loadJSON("garden.json");
+    console.log("got garden data: " + JSON.stringify(obj));
+    obj.flowers.forEach(flower => {
+      console.log("flower:", flower);
+      this.addFlower(flower);
+    })
+  }
+
 }
 

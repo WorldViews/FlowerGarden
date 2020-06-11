@@ -42,10 +42,13 @@ body {
  
   $(document).ready(function() {
     //garden = new FlowerGarden();
-    gtool = new GardenTool("fcanvas", {maxNumFlowers: 200});
+    gtool = new GardenTool("fcanvas", {numStartupFlowers: 0, maxNumFlowers: 200});
+    gtool.addFlowers(0);
+    gtool.startWildFlowers(0);
     gtool.loadPics(PICS);
     gtool.start();
     gtool.setView(0, 0, 800);
+    gtool.loadGardenFile();
 });
 
 </script>
