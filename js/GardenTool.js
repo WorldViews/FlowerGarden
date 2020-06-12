@@ -51,6 +51,10 @@ var PICS = [
   {
     id: 'candle', url: 'images/animated-candle-image-0022.gif', x: 250, y: -200, width: 30, height: 60,
     targetURL: 'http://taiko.org'
+  },
+  {
+    id: 'candle', url: 'images/transFlower.png', x: -50, y: 150, width: 60, height: 60,
+    targetURL: 'http://taiko.org'
   }
 ];
 
@@ -151,6 +155,16 @@ class GardenTool extends CanvasTool {
   }
 
   async loadGardenFile(url) {
+    url = url || "garden.json";
+    var obj = await loadJSON("garden.json");
+    console.log("got garden data: " + JSON.stringify(obj));
+    obj.flowers.forEach(flower => {
+      console.log("flower:", flower);
+      this.addFlower(flower);
+    })
+  }
+
+  async loadGardenFromDB(url) {
     url = url || "garden.json";
     var obj = await loadJSON("garden.json");
     console.log("got garden data: " + JSON.stringify(obj));
