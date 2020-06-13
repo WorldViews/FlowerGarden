@@ -12,6 +12,7 @@ class CanvasTool {
             alert("No canvas named " + canvasName);
             return;
         }
+        this.canvasName = canvasName;
         this.ctx = this.canvas.getContext("2d");
         //this.elements = elements;
         this.mouseDownPt = null;

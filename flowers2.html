@@ -11,11 +11,20 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
 body {
   margin: 0;
   overflow: hidden;
+  height: 100vh;
   background: -webkit-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
   background: -moz-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
   background: -ms-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
   background: -o-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
   background: radial-gradient( farthest-corner circle at left bottom, #e1fd3e, #174709);
+}
+
+.buttons {
+  padding: 10px 10px;
+}
+
+#flowerCanvas {
+  width: 100%; height: 92%;
 }
 </style>
 
@@ -24,8 +33,14 @@ body {
 <canvas id="flowerCanvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
 <canvas id="canvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
 -->
-<canvas id="fcanvas" style = "width: 100%; height: 95%;"></canvas>
-<div id="canvasStat"></div>
+<canvas id="flowerCanvas"></canvas>
+<div id="controls">
+  <div id="canvasStat">stats</div>  
+  <div id="buttons" class="buttons">
+    <button id="save">save</button>
+  </div>
+</div>
+
 
 <!--
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  
@@ -42,7 +57,7 @@ body {
  
   $(document).ready(function() {
     //garden = new FlowerGarden();
-    gtool = new GardenTool("fcanvas", {numStartupFlowers: 0, maxNumFlowers: 200});
+    gtool = new GardenTool("flowerCanvas", {numStartupFlowers: 0, maxNumFlowers: 200});
     gtool.addFlowers(0);
     gtool.startWildFlowers(0);
     gtool.loadPics(PICS);

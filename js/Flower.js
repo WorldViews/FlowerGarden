@@ -48,6 +48,14 @@ class Flower extends CanvasTool.Graphic {
     f.spacing = randomIntFromInterval(4, 10);
   }
 
+  getState() {
+    var f = this;
+    var obj = {'type': 'Flower', x: f.cx, y: f.cy,
+    'flowerRad': f.flowerRad,
+    'centerRad': f.centerRad};
+    return obj;
+  }
+
   draw(canvas, ctx) {
     super.draw(canvas, ctx);
     this.ctx = ctx;
