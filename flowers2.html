@@ -58,9 +58,9 @@ body {
   $(document).ready(function() {
     //garden = new FlowerGarden();
     gtool = new GardenTool("flowerCanvas", {numStartupFlowers: 0, maxNumFlowers: 200});
-    gtool.addFlowers(0);
-    gtool.startWildFlowers(0);
-    gtool.loadPics(PICS);
+    gtool.addFlowers(2);
+    gtool.startWildFlowers(4);
+    //gtool.loadPics(PICS);
     gtool.start();
     gtool.setView(0, 0, 800);
     gtool.loadGardenFile();
