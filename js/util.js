@@ -1,5 +1,5 @@
 
-getParameterByName = function(name, defaultVal) {
+getParameterByName = function (name, defaultVal) {
     //console.log("getParameterByName", name, defaultVal);
     if (typeof window === 'undefined') {
         console.log("***** getParameterByName called outside of browser...");
@@ -13,14 +13,14 @@ getParameterByName = function(name, defaultVal) {
     return val;
 }
 
-getFloatParameterByName = function(name, defaultVal) {
+getFloatParameterByName = function (name, defaultVal) {
     var val = getParameterByName(name, defaultVal);
     if (val != null)
         return parseFloat(val);
     return val;
 }
 
-getBooleanParameterByName = function(name, defaultVal) {
+getBooleanParameterByName = function (name, defaultVal) {
     var val = getParameterByName(name, defaultVal);
     if (typeof val == "string") {
         console.log("getBool", val);
@@ -32,47 +32,51 @@ getBooleanParameterByName = function(name, defaultVal) {
     return val;
 }
 
+function getVal(val, def) {
+    if (val == null)
+        return def;
+    return val;
+}
+
 // return last part of path - the name
 function getNameFromPath(path) {
     var parts = path.split("/");
-    return parts[parts.length-1];
+    return parts[parts.length - 1];
 }
 
 function cloneObject(obj) { return Object.assign({}, obj); }
 
-function getClockTime()
-{
-    return new Date().getTime()/1000.0;
+function getClockTime() {
+    return new Date().getTime() / 1000.0;
 }
 
 
 // This is a promise based version of code for getting
 // JSON.  New code should use this instead of getJSON
 // and older code should migrate to this.
-async function loadJSON(url)
-{
-    console.log("loadJSON: "+url);
+async function loadJSON(url) {
+    console.log("loadJSON: " + url);
     return new Promise((res, rej) => {
         $.ajax({
             url: url,
             dataType: 'text',
-            success: function(str) {
+            success: function (str) {
                 var data;
                 try {
                     data = JSON.parse(str);
                 }
                 catch (err) {
-                    console.log("err: "+err);
-                    alert("Error in json for: "+url+"\n"+err);
+                    console.log("err: " + err);
+                    alert("Error in json for: " + url + "\n" + err);
                     rej(err);
                 }
                 res(data);
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("Failed to get JSON for "+url);
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Failed to get JSON for " + url);
                 rej(errorThrown);
             }
-        });  
+        });
     })
 }
 
@@ -80,14 +84,12 @@ async function loadJSON(url)
 
 
 //TODO: let the filename be provided here.  Currently
-function uploadObjAsFile(sessionName, obj, fileName)
-{
+function uploadObjAsFile(sessionName, obj, fileName) {
     return uploadDataToSession(sessionName, JSON.stringify(obj, null, 3), fileName);
 }
 
 //TODO: move to better place
-function uploadDataToSession(sessionName, data, fileName)
-{
+function uploadDataToSession(sessionName, data, fileName) {
     console.log("uploadDataAsFile recId " + sessionName + "  fileName " + fileName);
     var formData = new FormData();
     formData.append('recId', sessionName);
@@ -117,13 +119,11 @@ function uploadDataToSession(sessionName, data, fileName)
 
 // This is a version for uploading to a specified path that may
 // not be a session.  (i.e. global configs, etc.)
-function uploadToFile(dpath, obj, fileName)
-{
+function uploadToFile(dpath, obj, fileName) {
     return uploadDataToFile(dpath, JSON.stringify(obj, null, 3), fileName);
 }
 
-function uploadDataToFile(dpath, data, fileName)
-{
+function uploadDataToFile(dpath, data, fileName) {
     console.log("uploadDataToFile path " + dpath + "  fileName " + fileName);
     var formData = new FormData();
     formData.append('dir', dpath);

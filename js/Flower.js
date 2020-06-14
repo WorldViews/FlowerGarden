@@ -33,8 +33,8 @@ class Flower extends CanvasTool.Graphic {
     var garden = GARDEN;
     this.ctx = garden.ctx;
     var f = this;
-    f.cx = opts.x || uniform(0, garden.canvWidth);
-    f.cy = opts.y || uniform(0, garden.canvHeight);
+    f.cx = getVal(opts.x, uniform(0, garden.canvWidth));
+    f.cy = getVal(opts.y, uniform(0, garden.canvHeight));
     f.centerRadMax = opts.centerRadMax || uniform(0.7, 1.5);
     f.centerGrowthInc = uniform(.01, 0.04);
     f.flowerRad = opts.flowerRad || uniform(10, 15);

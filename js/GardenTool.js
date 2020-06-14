@@ -4,11 +4,6 @@
 
 "use strict";
 
-function getVal(val, def) {
-  if (val == null)
-    return def;
-  return val;
-}
 
 class Pic extends CanvasTool.ImageGraphic {
   constructor(opts) {
@@ -210,6 +205,11 @@ class GardenTool extends CanvasTool {
       console.log("flower:", flower);
       this.addFlower(flower);
     })
+    if (obj.pictures) {
+      obj.pictures.forEach(pic => {
+        this.addPic(pic);
+      })
+    }
   }
 
   async loadGardenFromDB(url) {
