@@ -2,9 +2,87 @@
     "numInitialFlowers": 10,
     "maxNumFlowers": 200,
     "flowers": [
-        {"name": "don", "x": 400, "y": 450, "centerRadMax": 1,
-        "fillStyle": "purple", "numPetals": 12, "flowerRad": 40},
-        {"name": "enock", "x": 100, "y": 60, "fillStyle": "red", "flowerRad": 30, "numPetals": 9},
-        {"name": "shawna", "x": 300, "y": 250, "fillStyle": "white", "centerStyle": "yellow", "flowerRad": 30, "numPetals": 12}
+        {
+            "name": "don",
+            "x": 400,
+            "y": 450,
+            "centerRadMax": 1,
+            "fillStyle": "purple",
+            "numPetals": 12,
+            "flowerRad": 40
+        },
+        {
+            "name": "enock",
+            "x": 100,
+            "y": 60,
+            "fillStyle": "red",
+            "flowerRad": 30,
+            "numPetals": 9
+        },
+        {
+            "name": "shawna",
+            "x": 300,
+            "y": 250,
+            "fillStyle": "white",
+            "centerStyle": "yellow",
+            "flowerRad": 30,
+            "numPetals": 12
+        }
+    ],
+    "pictures": [
+        {
+            "id": "don",
+            "url": "images/penguin.svg",
+            "x": 50,
+            "y": 0,
+            "width": 20,
+            "height": 30,
+            "targetURL": "http://worldviews.club/don"
+        },
+        {
+            "id": "shawna",
+            "url": "images/penguin2.svg",
+            "x": 100,
+            "y": 50,
+            "width": 20,
+            "height": 30,
+            "targetURL": "http://worldviews.club/shawna"
+        },
+        {
+            "id": "manami",
+            "url": "images/mamaP.jpg",
+            "x": 200,
+            "y": -50,
+            "width": 40,
+            "height": 50,
+            "targetURL": "http://www.dancevita.com/"
+        },
+        {
+            "id": "taiko",
+            "url": "images/taiko.svg",
+            "x": 150,
+            "y": -100,
+            "width": 50,
+            "height": 50,
+            "targetURL": "http://taiko.org"
+        },
+        {
+            "id": "candle",
+            "url": "images/animated-candle-image-0022.gif",
+            "x": 250,
+            "y": -200,
+            "width": 30,
+            "height": 60,
+            "targetURL": "http://taiko.org"
+        },
+        {
+            "id": "candle",
+            "url": "images/transFlower.png",
+            "x": -50,
+            "y": 150,
+            "width": 60,
+            "height": 60,
+            "targetURL": "http://taiko.org"
+        }
     ]
 }
