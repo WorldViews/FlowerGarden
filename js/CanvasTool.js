@@ -38,6 +38,13 @@ class CanvasTool {
         //this.canvas.parentElement.addEventListener("resize", e=> {
         //    inst.resize();
         //});
+        this.canvas.addEventListener("contextmenu", e => {
+            //var hit = this.getHit(e);
+            console.log("contextMenu *****");
+            e.preventDefault();
+            return false;
+        });
+
         this.canvas.addEventListener("mousedown", e => {
             var hit = this.getHit(e);
             if (hit) {
@@ -63,6 +70,10 @@ class CanvasTool {
         });
         this.canvas.addEventListener("mouseup", e => {
             inst.mouseDownPt = null;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            console.log("preventDefaults for mouse up");
+            return false;
             //console.log("up", e);
         });
         this.canvas.addEventListener("wheel", e => {
