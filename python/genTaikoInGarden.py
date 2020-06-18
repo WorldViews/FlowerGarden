@@ -43,7 +43,7 @@ def genTaikoGarden():
         g.addPicture(name, url, x, y+ht, wd, ht)
 
 
-    g.save("taikoInGarden.json")
+    g.save("../gardens/taikoInGarden.json")
 
 if __name__ == '__main__':
     genTaikoGarden()
