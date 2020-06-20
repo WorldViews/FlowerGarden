@@ -14,7 +14,8 @@ class Pic extends CanvasTool.ImageGraphic {
   onClick(e) {
     if (!this.targetURL)
       return true;
-    window.open(this.targetURL, "gardenInfo");
+    $("#webview").src = this.targetURL;
+    //window.open(this.targetURL, "webview");
     return true;
   }
 }
@@ -190,6 +191,38 @@ class GardenTool extends CanvasTool {
     //ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
+  async loadProjectFile(url) {
+    if (url == null) {
+      garden = getParameterByName("projects");
+      if (garden)
+        url = garden+".json"
+    }
+    url = url || "projects.json";
+    console.log("Reading project file " + url);
+    var obj = await loadJSON(url);
+    //console.log("got project data: " + JSON.stringify(obj));
+    this.addProjectFlowers(obj);
+  }
+
+  addProjectFlowers(obj) {
+    console.log("addProjectFlowers", obj);
+    var i = 0;
+    var ncols = 4;
+    var spacing = 100;
+    obj.projects.forEach(proj => {
+      var row = i % ncols;
+      var col = Math.floor(i/ncols);
+      console.log("project", proj);
+      var name = proj.name;
+      var desc = proj.descriptiong;
+      console.log(row, col, "name:", name);
+      var opts = {x: row*spacing, y: col*spacing};
+      opts.targetURL = proj.infoURL || "https://worldviews.org";
+      this.addFlower(opts);
+      i++;
+    })
+  }
+
   async loadGardenFile(url) {
     if (url == null) {
       garden = getParameterByName("garden");
@@ -260,6 +293,11 @@ class GardenTool extends CanvasTool {
       };
       var txt = reader.readAsText(file);
     }
+  }
+
+  showPage(url) {
+    console.log("showPage ", url);
+    $("#webview").attr('src', url);
   }
 
 }

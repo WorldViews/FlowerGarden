@@ -23,8 +23,16 @@ body {
   padding: 10px 10px;
 }
 
+.stats {
+  height: 30px;
+}
+.webview {
+  width: 100%;
+  height: 500px;
+}
+
 #flowerCanvas {
-  width: 100%; height: 92%;
+  width: 100%; height: 50%;
 }
 </style>
 
@@ -35,10 +43,13 @@ body {
 -->
 <canvas id="flowerCanvas"></canvas>
 <div id="controls">
-  <div id="canvasStat">stats</div>  
-  <div id="buttons" class="buttons">
+  <span id="buttons" class="buttons">
     <button id="save">save</button>
-  </div>
+  </span>
+  <span id="canvasStat" class = "stats">stats</span>  
+</div>
+<div>
+  <iframe id="webview" src="https://worldviews.org" class="webview"></iframe>
 </div>
 
 
@@ -58,12 +69,13 @@ body {
   $(document).ready(function() {
     //garden = new FlowerGarden();
     gtool = new GardenTool("flowerCanvas", {numStartupFlowers: 0, maxNumFlowers: 200});
-    gtool.addFlowers(2);
-    gtool.startWildFlowers(4);
+    //gtool.addFlowers(2);
+    //gtool.startWildFlowers(4);
     //gtool.loadPics(PICS);
     gtool.start();
     gtool.setView(0, 0, 800);
-    gtool.loadGardenFile();
+    //gtool.loadGardenFile();
+    gtool.loadProjectFile();
 });
 
 </script>

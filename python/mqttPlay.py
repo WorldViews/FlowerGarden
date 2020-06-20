@@ -34,7 +34,7 @@ def run(host="io.adafruit.com"):
 
     print("Connecting to", host);
     #client.connect("mqtt.eclipse.org", 1883, 60)
-    client.username_pw_set("donkimber", "aio_ZScm78k3SWhSxScOkB8v6kb5ff6h")
+    client.username_pw_set("donkimber", "aio_HMWG45yUsVI72dEx0W2lFWoiv7QF")
     client.connect(host, 1883, 60)
 
     # Blocking call that processes network traffic, dispatches callbacks and

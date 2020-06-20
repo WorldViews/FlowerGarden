@@ -1,0 +1,121 @@
+<!--
+ * jquery.instagramFeed
+ *
+ * @version 1.2.7
+ *
+ * @author Javier Sanahuja Liebana <bannss1@gmail.com>
+ * @contributor csanahuja <csanahuja10@gmail.com>
+ *
+ * https://github.com/jsanahuja/jquery.instagramFeed
+ *
+ *-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+        crossorigin="anonymous">
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script 
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+        crossorigin="anonymous"></script>
+        
+    <script src="https://www.sowecms.com/demos/statics/prism.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://www.sowecms.com/demos/statics/prism.css">
+
+    <style>
+
+        .bg-primary-2 {
+            background-color: #3779B3;
+        }
+
+        .bg-secondary-2 {
+            background: #cbdbe8;
+        }
+
+        .text-underline {
+            text-decoration: underline;
+        }
+
+        .text-bold {
+            font-weight: 700;
+        }
+
+        .text-italic {
+            font-style: italic;
+        }
+
+        .text-small {
+            font-size: 0.8em;
+        }
+
+        .flex-grow-1 {
+            flex-grow: 1;
+        }
+
+        #btn-top {
+            position: fixed;
+            z-index: 999;
+            bottom: 1em;
+            top: auto;
+            left: auto;
+            right: 1em;
+            margin-left: -1.9rem;
+            opacity: .66;
+            display: none;
+        }
+
+        .instagram_feed {
+            overflow:hidden;
+        }
+
+        #jsonHere {
+            max-height: 60vh;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="instagram-feed1" class="instagram_feed"></div>
+    <script src="jquery.instagramFeed.js"></script>
+    <script>
+        function handleData(obj) {
+            console.log("Got Data", obj);
+            var jstr = JSON.stringify(obj, null, 3);
+            console.log(jstr);
+        }
+
+        (function($){
+            $(window).on('load', function(){
+                $.instagramFeed({
+                    'username': 'taikoin',
+                    'container': "#instagram-feed1",
+                    'display_profile': true,
+                    'display_biography': true,
+                    'display_gallery': true,
+                    'callback': handleData,
+                    'get_data': true,
+                    'styling': true,
+                    'items': 8,
+                    'items_per_row': 4,
+                    'margin': 1
+                }); 
+                
+            });
+        })(jQuery);
+    </script>
+</body>
+</html>

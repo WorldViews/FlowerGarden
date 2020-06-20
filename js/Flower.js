@@ -31,7 +31,7 @@ class Flower extends CanvasTool.Graphic {
     super(opts);
     console.log("Flower ", opts);
     var garden = GARDEN;
-    this.ctx = garden.ctx;
+    //this.ctx = garden.ctx;
     var f = this;
     f.cx = getVal(opts.x, uniform(0, garden.canvWidth));
     f.cy = getVal(opts.y, uniform(0, garden.canvHeight));
@@ -46,6 +46,9 @@ class Flower extends CanvasTool.Graphic {
       garden.colors[~~(Math.random() * garden.colors.length) + 1];
     f.numPetals = opts.numPetals || randomIntFromInterval(4, 10);
     f.spacing = randomIntFromInterval(4, 10);
+    this.radius = f.flowerRad;
+    this.targetURL = opts.targetURL;
+    console.log("targetURL", this.targetURL);
   }
 
   getState() {
@@ -54,6 +57,15 @@ class Flower extends CanvasTool.Graphic {
     'flowerRad': f.flowerRad,
     'centerRad': f.centerRad};
     return obj;
+  }
+
+  onClick(e) {
+    if (!this.targetURL)
+      return true;
+    this.tool.showPage(this.targetURL);
+    //$("#webview").src = this.targetURL;
+    //window.open(this.targetURL, "gardenInfo");
+    return true;
   }
 
   draw(canvas, ctx) {
