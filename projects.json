@@ -20,6 +20,7 @@
     },
     {
       "name": "WorldViews Technology Development",
+      "infoURL": "https://taiko-in.com",
       "description": "This activity is to build cool server and client software for furthering the WorldViews mission. All our software is open source, and built on open source. Currently the main efforts are building a client virtual earth browser called TeleViewer, which can show many layers of information, videos, and live video feeds. TeleViewer is built upon the open source CesiumJS. Another part of the current development is to develop a server to support many WorldViews capabilities. We currently support serving the TeleViewer using either nodejs, django, python flask, or a simple python server. We primarily are focusing on flask, and use the mongodb.",
       "image": "worldviews.png"
     },
@@ -37,7 +38,7 @@
     {
       "image": "polly-med.jpg",
       "name": "Next Generation Polly",
-      "infoURL": "https://r4h.org",
+      "infoURL": "http://r4h.org",
       "description": "Polly was an FXPAL project, based on the idea of a 'parrot on the shoulder' serving as an avatar for someone wanting to virtualy visit a location they can't physically access. It is a bit like using a telepresence robot, but instead of the person connecting to a robot, they connect to the robotic parrot being carried by a guide. It was fun using Polly to take people on virtual tours, and was especially rewarding to take Henry and Jane Evans on a tour of the Stanford Business school, where Henry had received his MBA (shown in video above.) As is clearly seen, our prototype, designed and 3D printed by Don Severns worked, but was rather clunky and fragile. We always hoped for a Polly type device to become more available. Now DJI has put out a product called the Osmo mobile, which is very much like Polly. We are planning to use this to revive the Polly idea, and give more virtual tours. Enock has made good progress on this, getting the DJI sample code to work for controlling the gimbal."
     },
     {
