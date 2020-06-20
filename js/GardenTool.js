@@ -14,10 +14,16 @@ class Pic extends CanvasTool.ImageGraphic {
   onClick(e) {
     if (!this.targetURL)
       return true;
-    $("#webview").src = this.targetURL;
-    //window.open(this.targetURL, "webview");
+    this.tool.showPage(this.targetURL);
+    //$("#webView").src = this.targetURL;
+    //window.open(this.targetURL, "webView");
     return true;
   }
+}
+
+//TODO: modify draw method of this to produce nice frame.
+class FramedPic extends Pic {
+
 }
 
 class Circle extends CanvasTool.Graphic {
@@ -195,13 +201,20 @@ class GardenTool extends CanvasTool {
     if (url == null) {
       garden = getParameterByName("projects");
       if (garden)
-        url = garden+".json"
+        url = garden + ".json"
     }
     url = url || "projects.json";
     console.log("Reading project file " + url);
     var obj = await loadJSON(url);
     //console.log("got project data: " + JSON.stringify(obj));
     this.addProjectFlowers(obj);
+
+    var pic = new FramedPic({
+      id: 'PicViewer', x: -200, y: 40,
+      width: 100, height: 100, url: "images/logo1.png"
+    });
+    this.addGraphic(pic);
+    this.picViewer = pic;
   }
 
   addProjectFlowers(obj) {
@@ -211,13 +224,15 @@ class GardenTool extends CanvasTool {
     var spacing = 100;
     obj.projects.forEach(proj => {
       var row = i % ncols;
-      var col = Math.floor(i/ncols);
+      var col = Math.floor(i / ncols);
       console.log("project", proj);
       var name = proj.name;
       var desc = proj.descriptiong;
       console.log(row, col, "name:", name);
-      var opts = {x: row*spacing, y: col*spacing};
+      var opts = { x: row * spacing, y: col * spacing };
       opts.targetURL = proj.infoURL || "https://worldviews.org";
+      if (proj.image)
+        opts.imageURL = "images/" + proj.image;
       this.addFlower(opts);
       i++;
     })
@@ -227,7 +242,7 @@ class GardenTool extends CanvasTool {
     if (url == null) {
       garden = getParameterByName("garden");
       if (garden)
-        url = garden+".json"
+        url = garden + ".json"
     }
     url = url || "garden.json";
     console.log("Reading garden file " + url);
@@ -256,9 +271,9 @@ class GardenTool extends CanvasTool {
     console.log("got garden data: " + JSON.stringify(obj));
     this.loadGardenJSON(obj);
   }
-  
+
   getGardenStateObj() {
-    var obj = { flowers: []};
+    var obj = { flowers: [] };
     this.flowers.forEach(f => obj.flowers.push(f.getState()));
     return obj;
   }
@@ -297,7 +312,15 @@ class GardenTool extends CanvasTool {
 
   showPage(url) {
     console.log("showPage ", url);
-    $("#webview").attr('src', url);
+    $("#webView").attr('src', url);
+  }
+
+  showImage(url) {
+    console.log("showImage ", url);
+    $("#imageView").attr('src', url);
+    if (this.picViewer) {
+      this.picViewer.setImageURL(url);
+    }
   }
 
 }

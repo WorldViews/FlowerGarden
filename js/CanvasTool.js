@@ -152,8 +152,10 @@ class CanvasTool {
         //console.log("mouseOver", pt);
         for (var id in this.graphics) {
             var g = this.graphics[id];
-            if (g.contains(pt))
+            if (g.contains(pt)) {
                 console.log("Over id", id);
+                g.onOver(e);
+            }
         }
     }
 
@@ -466,6 +468,10 @@ CanvasTool.Graphic = class {
         return v;
     }
 
+    onOver(e) {
+        console.log("Graphic.onOver", this.id, e);
+    }
+
     onClick(e) {
         console.log("Graphic.onClick", this.id, e);
     }
@@ -537,11 +543,22 @@ CanvasTool.ImageGraphic = class extends CanvasTool.RectGraphic {
         this.y = opts.y || 0;
         this.width = opts.width || 10;
         this.height = opts.height || 10;
-        var img = new Image;
         var inst = this;
         console.log("ImageGraphic ", this.id, this.url);
+        this.setImageURL(this.url, true);
+    }
+
+    setImageURL(url, forceReload) {
+        if (url == this.url && !forceReload) {
+            console.log("Ignoring redundant setImageURL", url);
+            return;
+        }
+        var inst = this;
+        console.log("setImageURL", this.id, url);
+        this.url = url;
+        var img = new Image;
         img.onload = e => {
-            console.log("*** image loaded ***", inst.url);
+            console.log("*** image loaded ***", inst.id, inst.url);
             inst.image = img;
         }   
         img.src = this.url;

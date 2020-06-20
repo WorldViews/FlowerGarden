@@ -33,6 +33,7 @@ class Flower extends CanvasTool.Graphic {
     var garden = GARDEN;
     //this.ctx = garden.ctx;
     var f = this;
+    f.imageURL = opts.imageURL;
     f.cx = getVal(opts.x, uniform(0, garden.canvWidth));
     f.cy = getVal(opts.y, uniform(0, garden.canvHeight));
     f.centerRadMax = opts.centerRadMax || uniform(0.7, 1.5);
@@ -63,11 +64,17 @@ class Flower extends CanvasTool.Graphic {
     if (!this.targetURL)
       return true;
     this.tool.showPage(this.targetURL);
-    //$("#webview").src = this.targetURL;
+    //$("#webView").src = this.targetURL;
     //window.open(this.targetURL, "gardenInfo");
     return true;
   }
 
+  onOver(e) {
+    console.log("onOver", this.id, this.imageURL);
+    if (this.imageURL) {
+      this.tool.showImage(this.imageURL);
+    }
+  }
   draw(canvas, ctx) {
     super.draw(canvas, ctx);
     this.ctx = ctx;
