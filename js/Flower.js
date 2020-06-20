@@ -76,7 +76,7 @@ class Flower extends CanvasTool.Graphic {
     }
   }
   draw(canvas, ctx) {
-    super.draw(canvas, ctx);
+    //super.draw(canvas, ctx);
     this.ctx = ctx;
     var f = this;
     if (f.centerRad < f.centerRadMax) {
