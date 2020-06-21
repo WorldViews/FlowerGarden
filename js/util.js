@@ -147,7 +147,7 @@ function uploadDataToFile(dpath, data, fileName) {
             console.log(pc, '% uploaded');
         }
     }, false);
-    request.open("POST", "/api/uploadfile");
+    request.open("POST", "/uploadfile");
     request.send(formData);
 }
 

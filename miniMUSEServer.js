@@ -16,12 +16,59 @@ var sprintf = require("./js/libs/sprintf").sprintf;
 var http = require('http');
 var https = require('https');
 var fs = require('fs');
+var path = require('path');
     // NEVER use a Sync function except at start-up!
 var express = require('express');
 var proxy = require('express-http-proxy');
 var bodyParser = require('body-parser');
 var exec = require("child_process").exec;
+//var cors = require('cors');
+var fileupload = require('express-fileupload');
 
+function fixPath(pstr) {
+    //console.log("fixPath", pstr)
+    var i = pstr.indexOf(":")
+    //console.log("i", i)
+    if (i >= 0 && i < pstr.length-1) {
+        if (pstr[i+1] == "/" || pstr[i+1] == "\\") {
+            // its alread ok
+        }
+        else {
+            pstr = pstr.replace(":", ":/")
+        }
+    }
+    //console.log("returning", pstr);
+    return pstr;
+}
+
+function makeDirIfNeeded(dir) {
+    //console.log("makeDirIfNeeded", dir);
+    dir = fixPath(dir);
+    dir = path.normalize(dir);
+    try {
+        fs.accessSync(dir);
+        //console.log("dir already exists", dir)
+    } catch (edir) {
+        console.log("creating dir", dir);
+        fs.mkdirSync(dir, { recursive: true });
+    }
+}
+
+function makePathIfNeeded(dirpath) {
+    //console.log("makePathIfNeeded", dirpath);
+    dirpath = fixPath(dirpath);
+    dirpath = path.normalize(dirpath);
+    let pathComponents = dirpath.split(path.sep);
+    let outdir = "";
+    pathComponents.forEach(component => {
+        outdir = path.join(outdir, component);
+        makeDirIfNeeded(outdir);
+    });
+}
+
+function verifyDir(dir) {
+    return makePathIfNeeded(dir);
+}
 
 async function getFlowersFromDB(url) {
     var url = url || "mongodb://localhost:27017/";
@@ -92,6 +139,10 @@ app.get('/', function (req, res) {
 app.use(express.static("."));
 app.use(bodyParser.json());
 
+app.use(fileupload());
+//app.use(cors());
+
+
 app.get('/getFlowers*', async (req, resp) => {
     console.log("/getFlowers path: "+req.path);
     var query = req.query;
@@ -101,12 +152,14 @@ app.get('/getFlowers*', async (req, resp) => {
     resp.json(recs);
 });
 
+/*
 app.use('/api', proxy('localhost:8080', {
     proxyReqPathResolver: function(req) {
         console.log(req.url);
         return '/api' + req.url;
     }
 }))
+*/
 
 app.get('/version', function (req, res) {
   res.send('Version 0.0.0')
@@ -176,6 +229,51 @@ app.post('/upload/*', function(request, response){
    console.log("returning obj: "+JSON.stringify(obj));      // your JSON
    response.send(obj);    // echo the result back
 });
+
+app.post('/uploadfile', function (req,res,next) {
+    console.log('/uploadfile');
+    if (!req.files) {
+        console.log("No files provided");
+      return res.json({error:'no files were uploaded.'});
+    }
+    var dir = req.body.dir;
+    console.log("dir", dir);
+    if (!dir)
+      return res.json({error:'no dir'});
+
+    var keys = Object.keys(req.files);
+
+    var baseDir = ".";
+    console.log("baseDir:", baseDir);
+    var outdir = path.join(baseDir, dir);
+    console.log("outdir:", outdir);
+    makePathIfNeeded(outdir);
+
+    console.log("outdir", outdir);
+    var done = false;
+    var n = keys.length;
+    for (var i=0;i<n;i++)
+    {
+        var key = keys[i];
+        console.log("key", key);
+        var sampleFile = req.files[key];
+        var fileName = sampleFile.name;
+        console.log("fileName", fileName);
+
+        var filePath = path.join(outdir, fileName);
+        console.log("filePath", filePath);
+
+        sampleFile.mv(filePath, function (err) {
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
+            if (!done && i >= n) {
+                done = true;
+                res.status(200).json({ success: 'ok' });
+            }
+        });
+    }   
+})
 
 app.get('/dir/*', function (req, resp) {
     console.log("/dir path: "+req.path);

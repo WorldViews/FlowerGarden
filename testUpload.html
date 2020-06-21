@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+This code was taken from
+https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effect/
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>WorldViews Flower Garden</title>
+    <style type="text/css">
+
+    </style>
+
+<body>
+    <!--
+<canvas id="flowerCanvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
+<canvas id="canvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
+-->
+
+    <!--
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  
+-->
+    <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <script src="js/libs/sprintf.js"></script>
+    <script src="js/CanvasTool.js"></script>
+    <script src="js/GardenTool.js"></script>
+    <script src="js/Flower.js"></script>
+    <script src="js/util.js"></script>
+
+    <input id="uploadButton" type="button" value="upload">
+    <script>
+        var obj = { "type": "json_string", "name": "string 1", "description": "This is a sample string" };
+        var jstr = JSON.stringify(obj, null, 3);
+
+        function handleUpload() {
+            var fname = "foobar.json";
+            console.log("handle upload", fname, obj);
+            uploadDataToFile("/", jstr, fname);
+        }
+
+        $(document).ready(function () {
+            $("#uploadButton").click(handleUpload);
+        });
+
+    </script>
+</body>
