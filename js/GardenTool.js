@@ -230,9 +230,11 @@ class GardenTool extends CanvasTool {
       var desc = proj.descriptiong;
       console.log(row, col, "name:", name);
       var opts = { x: row * spacing, y: col * spacing };
+      opts.id = proj.id;
       opts.targetURL = proj.infoURL || "https://worldviews.org";
-      if (proj.image)
-        opts.imageURL = "images/" + proj.image;
+      if (proj.imageURL) {
+        opts.imageURL = proj.imageURL;
+      }
       this.addFlower(opts);
       i++;
     })

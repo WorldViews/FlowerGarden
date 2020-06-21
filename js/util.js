@@ -82,41 +82,6 @@ async function loadJSON(url) {
 
 
 
-
-//TODO: let the filename be provided here.  Currently
-function uploadObjAsFile(sessionName, obj, fileName) {
-    return uploadDataToSession(sessionName, JSON.stringify(obj, null, 3), fileName);
-}
-
-//TODO: move to better place
-function uploadDataToSession(sessionName, data, fileName) {
-    console.log("uploadDataAsFile recId " + sessionName + "  fileName " + fileName);
-    var formData = new FormData();
-    formData.append('recId', sessionName);
-    let blob = new Blob([data], { type: 'application/json' });
-    //  formData.append('data', blob, 'data.json');
-    formData.append(fileName, blob, fileName);
-    var request = new XMLHttpRequest();
-    request.onload = function () {
-        if (this.status == 200) {
-            var r = JSON.parse(this.response);
-            console.log(r);
-            if (r.error) {
-                alert('Error uploading: ' + r.error);
-            }
-        }
-    };
-    request.onerror = function (err) { alert('error uploading' + err) };
-    request.upload.addEventListener("progress", function (evt) {
-        if (evt.lengthComputable) {
-            var pc = Math.floor((evt.loaded / evt.total) * 100);
-            console.log(pc, '% uploaded');
-        }
-    }, false);
-    request.open("POST", "/api/uploaddata");
-    request.send(formData);
-}
-
 // This is a version for uploading to a specified path that may
 // not be a session.  (i.e. global configs, etc.)
 function uploadToFile(dpath, obj, fileName) {
