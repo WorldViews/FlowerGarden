@@ -41,7 +41,7 @@ class CanvasTool {
         this.canvas.addEventListener("contextmenu", e => {
             //var hit = this.getHit(e);
             console.log("contextMenu *****");
-            //e.preventDefault();
+            e.preventDefault();
             return false;
         });
 
