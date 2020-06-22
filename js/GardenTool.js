@@ -23,7 +23,22 @@ class Pic extends CanvasTool.ImageGraphic {
 
 //TODO: modify draw method of this to produce nice frame.
 class FramedPic extends Pic {
-
+  constructor(opts) {
+    super(opts);
+    this.fillStyle = "brown";
+  }
+  draw(canvas, ctx) {
+    var bd = 4;
+    this.drawRect(canvas, ctx,
+        this.x, this.y,
+        this.width+2*bd, this.height+2*bd);
+    if (!this.image)
+      return;
+    ctx.drawImage(
+      this.image,
+      this.x - this.width / 2.0, this.y - this.height / 2.0,
+      this.width, this.height);
+  }
 }
 
 class Circle extends CanvasTool.Graphic {
