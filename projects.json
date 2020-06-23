@@ -13,25 +13,24 @@
          "description": "The mission of this project is to create and nurture a vibrant community of people working on WorldViews, enjoying the project, or using it to share views of the world.",
          "imageURL": "images/virtualtour.jpg",
          "id": "WorldViews_Organization_and_Community",
-         "infoURL": "https://worldviews.org/site"
+         "infoURL": "https://worldviews.org"
       },
       {
          "name": "Guide and Expert Registry",
          "description": "This project will make it easy to find people around any location who can tell you about that location and provide views or tours of the area. This works by listing current live streams or guides ready to stream using Periscope, Meerkat, or other mobile streaming technologies. We also have a ShareCamApp powered by the JumpCh.at WebRTC system that lets people take pictures together. The Registry lists active guides, or guides willing to provide views for upcoming events, and for others to list views or event coverage they would like to see.",
-         "imageURL": "images/techdevelopment.jpg",
+         "imageURL": "images/virtualtour.jpg",
          "id": "Guide_and_Expert_Registry",
-         "infoURL": "https://worldviews.org/site"
+         "infoURL": "https://worldviews.org"
       },
       {
          "name": "WorldViews Technology Development",
          "description": "<p style=\"text-align: center;\"><img src=\"https://worldviews.org/images/worldviews.png\" alt=\"screen capture of televiewer\" /></p>\n<p>This activity is to build cool server and client software for furthering the WorldViews mission. All our software is open source, and built on open source. Currently the main efforts are building a client virtual earth browser called TeleViewer, which can show many layers of information, videos, and live video feeds. TeleViewer is built upon the open source CesiumJS. Another part of the current development is to develop a server to support many WorldViews capabilities. We currently support serving the TeleViewer using either nodejs, django, python flask, or a simple python server. We primarily are focusing on flask, and use the mongodb.</p>",
-         "image": "images/worldviews.png",
          "id": "WorldViews_Technology_Development",
          "imageURL": "https://worldviews.org/images/techdevelopment.jpg",
          "infoURL": "https://worldviews.org"
       },
       {
-         "image": "images/worldviews.png",
+         "imageURL": "images/TeleViewer.png",
          "name": "TeleViewer",
          "description": "Our first  project was TeleViewer, which is a digital earth supporting many different ways to see the world or any part of the world. These may be based on images, video, computer graphics, or live streamed views, telepresence robotic views, etc. It is inspired by Google Eath, StreetView and many great related projects, but we seek to build open source tools with core content in the creative commons. Our ultimate vision is to have free tools available to anyone to let them see the world or any part of the world in useful and inspiring ways.",
          "id": "TeleViewer",
