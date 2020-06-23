@@ -37,7 +37,6 @@
          "infoURL": "https://worldviews.org/static/TeleViewer.html"
       },
       {
-         "image": "images/toyokawa.jpg",
          "name": "Cupertino - Toyokawa Sister City Program",
          "description": "<p>WorldViews is interested in ways to help connect people and share experiences across sister cities. We are working with the Cupertino Toyokawa Sister Cities program to explore ways to do this. Our first effort at this will be during the Cupertino Cherry Blossom Festival.</p>",
          "id": "Cupertino_-_Toyokawa_Sister_City_Program",
@@ -45,17 +44,16 @@
          "infoURL": "https://www.cupertinocherryblossomfestival.org/"
       },
       {
-         "image": "images/polly-med.jpg",
+         "imageURL": "images/polly-med.jpg",
          "name": "Next Generation Polly",
          "description": "Polly was an FXPAL project, based on the idea of a 'parrot on the shoulder' serving as an avatar for someone wanting to virtualy visit a location they can't physically access. It is a bit like using a telepresence robot, but instead of the person connecting to a robot, they connect to the robotic parrot being carried by a guide. It was fun using Polly to take people on virtual tours, and was especially rewarding to take Henry and Jane Evans on a tour of the Stanford Business school, where Henry had received his MBA (shown in video above.) As is clearly seen, our prototype, designed and 3D printed by Don Severns worked, but was rather clunky and fragile. We always hoped for a Polly type device to become more available. Now DJI has put out a product called the Osmo mobile, which is very much like Polly. We are planning to use this to revive the Polly idea, and give more virtual tours. Enock has made good progress on this, getting the DJI sample code to work for controlling the gimbal.",
          "id": "Next_Generation_Polly"
       },
       {
-         "image": "images/horseshoepond.jpg",
          "name": "Drone Views",
          "description": "<p>Inspired by the sites Travel By Drone and Travel With Drone we would like to have a layer that shows beautiful videos captured by drones from all around the world. We would also like to show current live drone videos, and allow users to make a request to have videos shot at various locations of their interest. We will also work to provide software so that drone flights can be remotely controlled (within geobox and safety control guidelines) by remote people watching on WorldViews.</p>",
          "id": "Drone_Views",
-         "imageURL": "images/horseshoepond.jpg",
+         "imageURL": "https://worldviews.org/images/droneView.jpg",
          "infoURL": "https://travelwithdrone.com/"
       },
       {
