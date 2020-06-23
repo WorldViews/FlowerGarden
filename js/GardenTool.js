@@ -225,8 +225,8 @@ class GardenTool extends CanvasTool {
     this.addProjectFlowers(obj);
 
     var pic = new FramedPic({
-      id: 'PicViewer', x: -200, y: 40,
-      width: 100, height: 100, url: "images/logo1.png"
+      id: 'PicViewer', x: 0, y: -200,
+      width: 160, height: 120, url: "images/logo1.png"
     });
     this.addGraphic(pic);
     this.picViewer = pic;
@@ -235,8 +235,10 @@ class GardenTool extends CanvasTool {
   addProjectFlowers(obj) {
     console.log("addProjectFlowers", obj);
     var i = 0;
-    var ncols = 4;
+    var ncols = 5;
     var spacing = 100;
+    var x0 = -200;
+    var y0 = 0;
     obj.projects.forEach(proj => {
       var row = i % ncols;
       var col = Math.floor(i / ncols);
@@ -244,7 +246,7 @@ class GardenTool extends CanvasTool {
       var name = proj.name;
       var desc = proj.descriptiong;
       console.log(row, col, "name:", name);
-      var opts = { x: row * spacing, y: col * spacing };
+      var opts = { x: x0 + row * spacing, y: y0 + col * spacing };
       opts.id = proj.id;
       opts.targetURL = proj.infoURL || "https://worldviews.org";
       if (proj.imageURL) {
