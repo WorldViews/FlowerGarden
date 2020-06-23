@@ -6,19 +6,21 @@
          "image": "images/community.jpg",
          "id": "The_Garden",
          "imageURL": "images/community.jpg",
-         "infoURL": "http://worldviews.org/site"
+         "infoURL": "https://worldviews.org/site"
       },
       {
          "name": "WorldViews Organization and Community",
          "description": "The mission of this project is to create and nurture a vibrant community of people working on WorldViews, enjoying the project, or using it to share views of the world.",
          "image": "images/virtualtour.jpg",
-         "id": "WorldViews_Organization_and_Community"
+         "id": "WorldViews_Organization_and_Community",
+         "infoURL": "https://worldviews.org/site"
       },
       {
          "name": "Guide and Expert Registry",
          "description": "This project will make it easy to find people around any location who can tell you about that location and provide views or tours of the area. This works by listing current live streams or guides ready to stream using Periscope, Meerkat, or other mobile streaming technologies. We also have a ShareCamApp powered by the JumpCh.at WebRTC system that lets people take pictures together. The Registry lists active guides, or guides willing to provide views for upcoming events, and for others to list views or event coverage they would like to see.",
          "image": "images/techdevelopment.jpg",
-         "id": "Guide_and_Expert_Registry"
+         "id": "Guide_and_Expert_Registry",
+         "infoURL": "https://worldviews.org/site"
       },
       {
          "name": "WorldViews Technology Development",
