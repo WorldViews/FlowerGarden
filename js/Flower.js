@@ -49,6 +49,7 @@ class Flower extends CanvasTool.Graphic {
     f.spacing = randomIntFromInterval(4, 10);
     this.radius = f.flowerRad;
     this.targetURL = opts.targetURL;
+    this.project = opts.project;
     console.log("targetURL", this.targetURL);
   }
 
@@ -61,10 +62,11 @@ class Flower extends CanvasTool.Graphic {
   }
 
   onClick(e) {
-    if (!this.targetURL)
-      return true;
-    this.tool.showPage(this.targetURL);
-    //$("#webView").src = this.targetURL;
+     if (this.project)
+      this.tool.showProject(this.project);
+    if (this.targetURL)
+      this.tool.showPage(this.targetURL);
+      //$("#webView").src = this.targetURL;
     //window.open(this.targetURL, "gardenInfo");
     return true;
   }

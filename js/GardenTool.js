@@ -30,8 +30,8 @@ class FramedPic extends Pic {
   draw(canvas, ctx) {
     var bd = 4;
     this.drawRect(canvas, ctx,
-        this.x, this.y,
-        this.width+2*bd, this.height+2*bd);
+      this.x, this.y,
+      this.width + 2 * bd, this.height + 2 * bd);
     if (!this.image)
       return;
     ctx.drawImage(
@@ -252,6 +252,7 @@ class GardenTool extends CanvasTool {
       if (proj.imageURL) {
         opts.imageURL = proj.imageURL;
       }
+      opts.project = proj;
       this.addFlower(opts);
       i++;
     })
@@ -329,6 +330,32 @@ class GardenTool extends CanvasTool {
     }
   }
 
+  showProject(project) {
+    console.log("showProject");
+    var hstr = sprintf("<h3 align='center'>%s</h3><p>\n%s", project.name, project.description)
+    $("#projectView").html(hstr);
+    if (project.instagramUsername)
+      this.showInstagram(project);
+}
+
+  showInstagram(project) {
+    console.log("showInstagram");
+    $.instagramFeed({
+//      'username': 'taikoin',
+      'username': project.instagramUsername,
+//      'container': "#instagram-feed1",
+      'container': "#instagramView",
+      'display_profile': true,
+      'display_biography': true,
+      'display_gallery': true,
+      'callback': null,
+      'styling': true,
+      'items': 8,
+      'items_per_row': 4,
+      'margin': 1
+    });
+
+  }
   showPage(url) {
     console.log("showPage ", url);
     $("#webView").attr('src', url);
