@@ -334,16 +334,16 @@ class GardenTool extends CanvasTool {
     console.log("showProject");
     var hstr = sprintf("<h3 align='center'>%s</h3><p>\n%s", project.name, project.description)
     $("#projectView").html(hstr);
-    if (project.instagramUsername)
+    if (project.instagramUsername || project.instagramTag)
       this.showInstagram(project);
-}
+  }
 
-  showInstagram(project) {
+  showInstagramOLD(project) {
     console.log("showInstagram");
     $.instagramFeed({
-//      'username': 'taikoin',
+      //      'username': 'taikoin',
       'username': project.instagramUsername,
-//      'container': "#instagram-feed1",
+      //      'container': "#instagram-feed1",
       'container': "#instagramView",
       'display_profile': true,
       'display_biography': true,
@@ -354,20 +354,43 @@ class GardenTool extends CanvasTool {
       'items_per_row': 4,
       'margin': 1
     });
-
-  }
-  showPage(url) {
-    console.log("showPage ", url);
-    $("#webView").attr('src', url);
   }
 
-  showImage(url) {
-    console.log("showImage ", url);
-    $("#imageView").attr('src', url);
-    if (this.picViewer) {
-      this.picViewer.setImageURL(url);
+    showInstagram(project) {
+      console.log("showInstagram");
+      var opts = {
+        //      'username': 'taikoin',
+        'username': project.instagramUsername,
+        //      'container': "#instagram-feed1",
+        'container': "#instagramView",
+        'display_profile': true,
+        'display_biography': true,
+        'display_gallery': true,
+        'callback': null,
+        'styling': true,
+        'items': 8,
+        'items_per_row': 4,
+        'margin': 1
+      }
+      if (project.instagramUsername)
+        opts.username = project.instagramUsername;
+      else if (project.instagramTag)
+        opts.tag = project.instagramTag;
+      $.instagramFeed(opts);
     }
-  }
 
-}
+    showPage(url) {
+      console.log("showPage ", url);
+      $("#webView").attr('src', url);
+    }
+
+    showImage(url) {
+      console.log("showImage ", url);
+      $("#imageView").attr('src', url);
+      if (this.picViewer) {
+        this.picViewer.setImageURL(url);
+      }
+    }
+
+  }
 

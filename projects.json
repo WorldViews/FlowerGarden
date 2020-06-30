@@ -85,6 +85,7 @@
          "id": "Kinetech_Arts",
          "description": "<p><img src=\"http://static1.squarespace.com/static/579fed14b3db2b31eb589ca9/t/5e0f549f0eeb83355fdf9768/1592596783043/?format=1500w\" alt=\"Kinetech Arts\" width=\"333\" height=\"45\" /></p>\n<p><strong>Kinetech Arts</strong>, directed by Daiane Lopes da Silva and Weidong Yang, is a 501(c)(3) non-profit organization that combines the work of dancers, scientists, and digital artists to create innovative and socially responsible performances. Kinetech Arts work has been supported by Zellerbach Family Foundation, CA$H Grant, The Phyllis C. Wattis Foundation, Rainin Foundation, and Creative Work Fund. Each year, KA produces multiple performances and over 50 other public events, including Open Labs, Y-Exchange public talks and Dance Hack Festivals. KA residencies includes RAW at SAFEhouse Arts, Combustible at CounterPulse and participation in the Dancing Lab: Immersive Media Through Cunningham at NCCAkron. KA is currently in residency at Djerassi Resident Artists Program and ODC Theatre from 2018-2021.</p>",
          "imageURL": "https://worldviews.org/images/KA_logo.jpg",
+         "instagramTag": "kinetech",
          "infoURL": "https://kinetecharts.org/"
       },
       {
@@ -115,7 +116,8 @@
          "description": "<p><a href=\"https://www.facebook.com/pages/category/Arts---Humanities-Website/Creatives-for-Compassionate-Communities-108372904096772\"><img src=\"https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-0/p180x540/101938118_146058990328163_908466354258968576_o.png?_nc_cat=106&amp;_nc_sid=dd9801&amp;_nc_ohc=PBkVsbVjVOAAX8adlDL&amp;_nc_ht=scontent-sjc3-1.xx&amp;oh=681ba29e8090b10525936d65e009ff89&amp;oe=5F16C59D\" alt=\"Image may contain: text that says 'Incubating Creative, Compassionate Communities CREATIVES for COMPASSIONATE COMMUNITIES'\" width=\"361\" height=\"203\" /></a></p>\n<p>This group hosts varous community based transformative projects such as bright word mandala workshops.</p>\n<p>&nbsp;</p>",
          "imageURL": "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/87292578_108404274093635_249606877720084480_n.jpg?_nc_cat=102&_nc_sid=09cbfe&_nc_ohc=RdbXJaFlCxYAX8t36DF&_nc_ht=scontent-sjc3-1.xx&oh=ceeb325de25d804ee59e873b8a0f299f&oe=5F156842",
          "infoURL": "https://www.facebook.com/Creatives-for-Compassionate-Communities-108372904096772/about/?ref=page_internal",
-         "projectType": "group"
+         "projectType": "group",
+         "instagramTag": "peacemandala"
       },
       {
          "name": "South Bay Beat Institute",
