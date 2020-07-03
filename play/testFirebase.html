@@ -1,0 +1,89 @@
+<!--
+ *-->
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <style>
+        .bg-primary-2 {
+            background-color: #3779B3;
+        }
+
+        #jsonHere {
+            max-height: 60vh;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello</h1>
+    <input id="addButton" type="button" value="click me!"><br>
+    <pre id="jsonArea"></pre>
+    <div id="instagram-feed1" class="instagram_feed"></div>
+    <script src="jquery.instagramFeed.js"></script>
+
+    <!--  The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBqAsqHaBZGT-UsC82ShV3koGWWgu-l8to",
+            authDomain: "fir-helloworld-39759.firebaseapp.com",
+            databaseURL: "https://fir-helloworld-39759.firebaseio.com",
+            projectId: "fir-helloworld-39759",
+            storageBucket: "fir-helloworld-39759.appspot.com",
+            messagingSenderId: "1080893233748",
+            appId: "1:1080893233748:web:1614aab0d167c094322bc1"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script>
+        // getting the text value from the database
+        var bigOne = document.getElementById('jsonArea');
+        //var dbRef = firebase.database().ref().child('text');
+        var db = firebase.database();
+        console.log("db:", db);
+        //var dbRef = db.ref('/text');
+        var dbRef = db.ref();
+        console.log("Got dbRef", dbRef);
+        dbRef.on('value', snap => {
+            console.log("Got", snap);
+            var obj = snap.val();
+            console.log("obj", obj);
+            var jstr = JSON.stringify(obj, null, 3);
+            console.log("jstr");
+            bigOne.innerText = jstr;
+        });
+
+        $(document).ready(() => {
+            $("#addButton").click(() => {
+                console.log("click");
+                dbRef.child("tags").push({
+                    name: "Los Angeles",
+                    state: "CA",
+                    country: "USA"
+                })
+                .then(function () {
+                        console.log("Document successfully written!");
+                })
+                .catch(function (error) {
+                        console.error("Error writing document: ", error);
+                 });
+            });
+        })
+    </script>
+</body>
+
+</html>
