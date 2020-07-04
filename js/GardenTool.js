@@ -222,6 +222,10 @@ class GardenTool extends CanvasTool {
     console.log("Reading project file " + url);
     var obj = await loadJSON(url);
     //console.log("got project data: " + JSON.stringify(obj));
+    this.showProjects(obj);
+  }
+
+  showProjects(obj) {
     this.addProjectFlowers(obj);
 
     var pic = new FramedPic({
@@ -283,6 +287,34 @@ class GardenTool extends CanvasTool {
         this.addPic(pic);
       })
     }
+  }
+
+  async loadFromFirebase() {
+    var inst = this;
+    var firebaseConfig = {
+      apiKey: "AIzaSyBqAsqHaBZGT-UsC82ShV3koGWWgu-l8to",
+      authDomain: "fir-helloworld-39759.firebaseapp.com",
+      databaseURL: "https://fir-helloworld-39759.firebaseio.com",
+      projectId: "fir-helloworld-39759",
+      storageBucket: "fir-helloworld-39759.appspot.com",
+      messagingSenderId: "1080893233748",
+      appId: "1:1080893233748:web:1614aab0d167c094322bc1"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+    console.log("db:", db);
+    //var dbRef = db.ref('/text');
+    var dbRef = db.ref();
+    console.log("Got dbRef", dbRef);
+    dbRef.on('value', snap => {
+      console.log("Got", snap);
+      var obj = snap.val();
+      console.log("obj", obj);
+      var jstr = JSON.stringify(obj, null, 3);
+      console.log("projects", jstr);
+      inst.showProjects(obj.topics);
+    });
   }
 
   async loadGardenFromDB(url) {
@@ -356,41 +388,41 @@ class GardenTool extends CanvasTool {
     });
   }
 
-    showInstagram(project) {
-      console.log("showInstagram");
-      var opts = {
-        //      'username': 'taikoin',
-        'username': project.instagramUsername,
-        //      'container': "#instagram-feed1",
-        'container': "#instagramView",
-        'display_profile': true,
-        'display_biography': true,
-        'display_gallery': true,
-        'callback': null,
-        'styling': true,
-        'items': 8,
-        'items_per_row': 4,
-        'margin': 1
-      }
-      if (project.instagramUsername)
-        opts.username = project.instagramUsername;
-      else if (project.instagramTag)
-        opts.tag = project.instagramTag;
-      $.instagramFeed(opts);
+  showInstagram(project) {
+    console.log("showInstagram");
+    var opts = {
+      //      'username': 'taikoin',
+      'username': project.instagramUsername,
+      //      'container': "#instagram-feed1",
+      'container': "#instagramView",
+      'display_profile': true,
+      'display_biography': true,
+      'display_gallery': true,
+      'callback': null,
+      'styling': true,
+      'items': 8,
+      'items_per_row': 4,
+      'margin': 1
     }
-
-    showPage(url) {
-      console.log("showPage ", url);
-      $("#webView").attr('src', url);
-    }
-
-    showImage(url) {
-      console.log("showImage ", url);
-      $("#imageView").attr('src', url);
-      if (this.picViewer) {
-        this.picViewer.setImageURL(url);
-      }
-    }
-
+    if (project.instagramUsername)
+      opts.username = project.instagramUsername;
+    else if (project.instagramTag)
+      opts.tag = project.instagramTag;
+    $.instagramFeed(opts);
   }
+
+  showPage(url) {
+    console.log("showPage ", url);
+    $("#webView").attr('src', url);
+  }
+
+  showImage(url) {
+    console.log("showImage ", url);
+    $("#imageView").attr('src', url);
+    if (this.picViewer) {
+      this.picViewer.setImageURL(url);
+    }
+  }
+
+}
 
