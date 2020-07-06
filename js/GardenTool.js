@@ -366,6 +366,7 @@ class GardenTool extends CanvasTool {
     console.log("showProject");
     var hstr = sprintf("<h3 align='center'>%s</h3><p>\n%s", project.name, project.description)
     $("#projectView").html(hstr);
+    $("#instagramView").html("");
     if (project.instagramUsername || project.instagramTag)
       this.showInstagram(project);
   }

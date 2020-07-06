@@ -30,7 +30,7 @@ class FireDB:
         self.db = db
         print("db", db)
 
-    def dump(self):
+    def dump(self, jsonPath=None):
         print("-------------------")
 
         #obj = db.child("text").get(token)
@@ -39,6 +39,21 @@ class FireDB:
         print("obj:", obj)
         jstr = json.dumps(obj, indent=3)
         print(jstr)
+        if jsonPath:
+            open(jsonPath, 'w').write(jstr)
+
+    def saveProjects(self, jsonPath=None):
+        print("-------------------")
+
+        #obj = db.child("text").get(token)
+        objRef = self.db.get(self.token)
+        obj = objRef.val()
+        #print("obj:", obj)
+        projObjs = obj['topics']
+        jstr = json.dumps(projObjs, indent=3)
+        print(jstr)
+        if jsonPath:
+            open(jsonPath, 'w').write(jstr)
 
     def addUser(self):
         # data to save
@@ -61,7 +76,9 @@ class FireDB:
 
 if __name__ == '__main__':
     fdb = FireDB()
-    fdb.dump()
-    fdb.addProjects()
+    fdb.dump("firebase.db.json")
+    #fdb.saveProjects("../projects.bak.json")
+    #fdb.addProjects()
+    #fdb.addProjects("../projects.bak.json")
     #fdb.addUser()
 

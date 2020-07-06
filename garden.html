@@ -4,91 +4,100 @@
 This code was taken from
 https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effect/
 -->
+
 <head>
-<meta charset="UTF-8">
-<title>WorldViews Flower Garden</title>
-<style type="text/css">
-body {
-  margin: 0;
-  overflow: hidden;
-  height: 100vh;
-  xbackground: -webkit-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  xbackground: -moz-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  xbackground: -ms-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  xbackground: -o-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  xbackground: radial-gradient( farthest-corner circle at left bottom, #e1fd3e, #174709);
-}
+    <meta charset="UTF-8">
+    <title>WorldViews Flower Garden</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+            background-color: rgb(241, 239, 230);
+        }
 
-.buttons {
-  padding: 10px 10px;
-}
+        .buttons {
+            padding: 10px 10px;
+        }
 
-.stats {
-  height: 30px;
-}
+        .stats {
+            height: 30px;
+        }
 
-.webView {
-  width: 100%;
-  height: 500px;
-}
+        .webView {
+            width: 100%;
+            height: 500px;
+        }
 
-.imageView {
-  width: 240px;
-  height: 240px;
-}
+        .projectView {
+            padding: 10px;
+            width: 100%;
+            xheight: 500px;
+        }
 
-#flowerCanvas {
-  width: 100%; height: 50%;
-  background: -webkit-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: -moz-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: -ms-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: -o-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: radial-gradient( farthest-corner circle at left bottom, #e1fd3e, #174709);
-}
-</style>
+        .instagramView {
+            width: 240px;
+            height: 240px;
+        }
+
+        .rightPanel {
+            height: 640px;
+        }
+
+        #flowerCanvas {
+            width: 100%;
+            height: 93%;
+            background: -webkit-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
+            background: -moz-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
+            background: -ms-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
+            background: -o-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
+            background: radial-gradient(farthest-corner circle at left bottom, #e1fd3e, #174709);
+        }
+    </style>
 
 <body>
-<!--
-<canvas id="flowerCanvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
-<canvas id="canvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
--->
-<canvas id="flowerCanvas"></canvas>
-<div id="controls">
-  <span id="buttons" class="buttons">
-    <button id="save">save</button>
-  </span>
-  <span id="canvasStat" class = "stats">stats</span>  
-</div>
-<div>
-  <iframe id="webView" src="https://worldviews.org" class="webView"></iframe>
-</div>
+    <div id="gardenDiv" style="width: 100%; height: 100%">
+        <div style="width: 50%; height: 100%; float: left; background: green;">
+            <canvas id="flowerCanvas"></canvas>
+            <div id="controls">
+                <span id="buttons" class="buttons">
+                    <button id="save">save</button>
+                </span>
+                <span id="canvasStat" class="stats">stats</span>
+            </div>
+        </div>
+        <div style="margin-left: 50%; xheight: 100%;" class="rightPanel">
+            <div id="projectView" class="projectView" style="width: 100%; xheight: 100%">
+            </div>
+            <div id="instagramView" class="instagramView" style="width: 100%; height: 100%">
+            </div>
+        </div>
 
+        <script src="js/libs/jquery-3.1.0.min.js"></script>
+        <script src="js/libs/sprintf.js"></script>
+        <script src="js/CanvasTool.js"></script>
+        <script src="js/GardenTool.js"></script>
+        <script src="js/Flower.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/libs/jquery.instagramFeed.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+        <script>
+            var garden;
+            var gtool;
 
-<!--
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  
--->
-<script src="js/libs/jquery-3.1.0.min.js"></script>
-<script src="js/libs/sprintf.js"></script>
-<script src="js/CanvasTool.js"></script>
-<script src="js/GardenTool.js"></script>
-<script src="js/Flower.js"></script>
-<script src="js/util.js"></script>
-<script>
-  var garden;
-  var gtool;
- 
-  $(document).ready(function() {
-    //garden = new FlowerGarden();
-    gtool = new GardenTool("flowerCanvas", {numStartupFlowers: 0, maxNumFlowers: 200});
-    //gtool.addFlowers(2);
-    //gtool.startWildFlowers(4);
-    //gtool.loadPics(PICS);
-    gtool.start();
-    gtool.setView(0, 0, 800);
-    //gtool.loadGardenFile();
-    gtool.loadProjectFile();
-});
+            $(document).ready(function () {
+                //garden = new FlowerGarden();
+                gtool = new GardenTool("flowerCanvas", { numStartupFlowers: 0, maxNumFlowers: 200 });
+                //gtool.addFlowers(2);
+                //gtool.startWildFlowers(4);
+                //gtool.loadPics(PICS);
+                gtool.start();
+                gtool.setView(0, 0, 800);
+                //gtool.loadGardenFile();
+                gtool.loadFromFirebase();
+            });
 
-</script>
+        </script>
 </body>
-

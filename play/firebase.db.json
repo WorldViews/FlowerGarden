@@ -1,0 +1,220 @@
+{
+   "tags": {
+      "-MBM0t0-rk2-ShRDh51m": {
+         "country": "USA",
+         "name": "Los Angeles",
+         "state": "CA"
+      },
+      "-MBM0ueMKIf7l8XKofXw": {
+         "country": "USA",
+         "name": "Los Angeles",
+         "state": "CA"
+      },
+      "-MBM0utdkW8kLhlIv5Bu": {
+         "country": "USA",
+         "name": "Los Angeles",
+         "state": "CA"
+      },
+      "-MBM3IoFCFDFlHvhKGAZ": {
+         "country": "USA",
+         "name": "Los Angeles",
+         "state": "CA"
+      },
+      "-MBM3JF7oABGeh_dx3Bh": {
+         "country": "USA",
+         "name": "Los Angeles",
+         "state": "CA"
+      },
+      "-MBM3JdFW9pbg3Zmvp2O": {
+         "country": "USA",
+         "name": "Los Angeles",
+         "state": "CA"
+      },
+      "-MBM4gu7eFjDIyyLfbgx": {
+         "country": "USA",
+         "name": "Los Angeles",
+         "state": "CA"
+      },
+      "country": "USA",
+      "name": "Los Angeles",
+      "state": "CA"
+   },
+   "topics": {
+      "projects": [
+         {
+            "description": "<p>The Garden was created as a way to bring people and organizations together to work, play and dance. Some of its activities are in the form of service or creative projects, some are classes or workshops, some are performances, and some are open space mixers with no agenda.</p>",
+            "id": "The_Garden",
+            "image": "images/community.jpg",
+            "imageURL": "images/community.jpg",
+            "infoURL": "https://worldviews.org/site",
+            "name": "The Garden"
+         },
+         {
+            "description": "<p>The mission of this project is to create and nurture a vibrant community of people working on WorldViews, enjoying the project, or using it to share views of the world.</p>\n<p>&nbsp;</p>",
+            "id": "WorldViews_Organization_and_Community",
+            "imageURL": "images/virtualtour.jpg",
+            "infoURL": "https://worldviews.org",
+            "name": "WorldViews Organization and Community"
+         },
+         {
+            "description": "This project will make it easy to find people around any location who can tell you about that location and provide views or tours of the area. This works by listing current live streams or guides ready to stream using Periscope, Meerkat, or other mobile streaming technologies. We also have a ShareCamApp powered by the JumpCh.at WebRTC system that lets people take pictures together. The Registry lists active guides, or guides willing to provide views for upcoming events, and for others to list views or event coverage they would like to see.",
+            "id": "Guide_and_Expert_Registry",
+            "imageURL": "images/virtualtour.jpg",
+            "infoURL": "https://worldviews.org",
+            "name": "Guide and Expert Registry"
+         },
+         {
+            "description": "<p style=\"text-align: center;\"><img src=\"https://worldviews.org/images/worldviews.png\" alt=\"screen capture of televiewer\" /></p>\n<p>This activity is to build cool server and client software for furthering the WorldViews mission. All our software is open source, and built on open source. Currently the main efforts are building a client virtual earth browser called TeleViewer, which can show many layers of information, videos, and live video feeds. TeleViewer is built upon the open source CesiumJS. Another part of the current development is to develop a server to support many WorldViews capabilities. We currently support serving the TeleViewer using either nodejs, django, python flask, or a simple python server. We primarily are focusing on flask, and use the mongodb.</p>",
+            "id": "WorldViews_Technology_Development",
+            "imageURL": "https://worldviews.org/images/techdevelopment.jpg",
+            "infoURL": "https://worldviews.org",
+            "name": "WorldViews Technology Development"
+         },
+         {
+            "description": "Our first  project was TeleViewer, which is a digital earth supporting many different ways to see the world or any part of the world. These may be based on images, video, computer graphics, or live streamed views, telepresence robotic views, etc. It is inspired by Google Eath, StreetView and many great related projects, but we seek to build open source tools with core content in the creative commons. Our ultimate vision is to have free tools available to anyone to let them see the world or any part of the world in useful and inspiring ways.",
+            "id": "TeleViewer",
+            "imageURL": "images/TeleViewer.png",
+            "infoURL": "https://worldviews.org/static/TeleViewer.html",
+            "name": "TeleViewer"
+         },
+         {
+            "description": "<p>WorldViews is interested in ways to help connect people and share experiences across sister cities. We are working with the Cupertino Toyokawa Sister Cities program to explore ways to do this. Our first effort at this will be during the Cupertino Cherry Blossom Festival.</p>",
+            "id": "Cupertino_-_Toyokawa_Sister_City_Program",
+            "imageURL": "images/toyokawa.jpg",
+            "infoURL": "https://www.cupertinocherryblossomfestival.org/",
+            "name": "Cupertino - Toyokawa Sister City Program"
+         },
+         {
+            "description": "Polly was an FXPAL project, based on the idea of a 'parrot on the shoulder' serving as an avatar for someone wanting to virtualy visit a location they can't physically access. It is a bit like using a telepresence robot, but instead of the person connecting to a robot, they connect to the robotic parrot being carried by a guide. It was fun using Polly to take people on virtual tours, and was especially rewarding to take Henry and Jane Evans on a tour of the Stanford Business school, where Henry had received his MBA (shown in video above.) As is clearly seen, our prototype, designed and 3D printed by Don Severns worked, but was rather clunky and fragile. We always hoped for a Polly type device to become more available. Now DJI has put out a product called the Osmo mobile, which is very much like Polly. We are planning to use this to revive the Polly idea, and give more virtual tours. Enock has made good progress on this, getting the DJI sample code to work for controlling the gimbal.",
+            "id": "Next_Generation_Polly",
+            "imageURL": "images/polly-med.jpg",
+            "name": "Next Generation Polly"
+         },
+         {
+            "description": "<p>Inspired by the sites Travel By Drone and Travel With Drone we would like to have a layer that shows beautiful videos captured by drones from all around the world. We would also like to show current live drone videos, and allow users to make a request to have videos shot at various locations of their interest. We will also work to provide software so that drone flights can be remotely controlled (within geobox and safety control guidelines) by remote people watching on WorldViews.</p>",
+            "id": "Drone_Views",
+            "imageURL": "https://worldviews.org/images/droneView.jpg",
+            "infoURL": "https://travelwithdrone.com/",
+            "name": "Drone Views"
+         },
+         {
+            "description": "<h2 class=\"section-heading text-uppercase\"><img src=\"http://dance4healing.com/sandbox/img/d4h/class3.jpg\" width=\"369\" height=\"205\" /></h2>\n<h2 class=\"section-heading text-uppercase\">DANCE4HEALING</h2>\n<h3 class=\"section-subheading text-muted\">Educating, empowering, and inspiring anyone to leverage technology to build healthy habits with creative arts in a fun, easy way.</h3>\n<p>See <a href=\"http://dance4healing.com/sandbox/index.html\">Dance4Healing</a></p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+            "id": "Dance4Healing",
+            "imageURL": "https://dance4healing.com/sandbox/img/d4h/d4hlogowtagline_sm.png",
+            "infoURL": "https://dance4healing.com/sandbox/index.html",
+            "name": "Dance4Healing"
+         },
+         {
+            "description": "<section class=\"page-section\n    \n      layout-engine-section\n    \n    background-width--full-bleed\n    \n      section-height--medium\n    \n    \n      content-width--medium\n    \n    horizontal-alignment--center\n    vertical-alignment--middle\n     has-background\n    black\" data-section-id=\"5ea75e018459fc1567a7c04d\" data-controller=\"SectionWrapperController, MagicPaddingController\" data-current-styles=\"{\n  &quot;backgroundImage&quot; : {\n    &quot;id&quot; : &quot;5ead0dcb534ec14df0a1f284&quot;,\n    &quot;recordType&quot; : 2,\n    &quot;addedOn&quot; : 1588399563606,\n    &quot;updatedOn&quot; : 1588399615962,\n    &quot;workflowState&quot; : 1,\n    &quot;publishOn&quot; : 1588399563606,\n    &quot;authorId&quot; : &quot;5ea7543756abda5093aa4fda&quot;,\n    &quot;systemDataId&quot; : &quot;1588399600764-NLV41LV5VC4LTL3WKRQP&quot;,\n    &quot;systemDataVariants&quot; : &quot;2500x1875,100w,300w,500w,750w,1000w,1500w,2500w&quot;,\n    &quot;systemDataSourceType&quot; : &quot;PNG&quot;,\n    &quot;filename&quot; : &quot;Hero Banner-2.png&quot;,\n    &quot;mediaFocalPoint&quot; : {\n      &quot;x&quot; : 0.5,\n      &quot;y&quot; : 0.5,\n      &quot;source&quot; : 3\n    },\n    &quot;colorData&quot; : {\n      &quot;topLeftAverage&quot; : &quot;fdfdfd&quot;,\n      &quot;topRightAverage&quot; : &quot;fefefe&quot;,\n      &quot;bottomLeftAverage&quot; : &quot;886857&quot;,\n      &quot;bottomRightAverage&quot; : &quot;9e8a71&quot;,\n      &quot;centerAverage&quot; : &quot;80554a&quot;,\n      &quot;suggestedBgColor&quot; : &quot;fafafa&quot;\n    },\n    &quot;urlId&quot; : &quot;fqpvphvdic6fkp5njuztooid4om1jq&quot;,\n    &quot;title&quot; : &quot;&quot;,\n    &quot;body&quot; : null,\n    &quot;likeCount&quot; : 0,\n    &quot;commentCount&quot; : 0,\n    &quot;publicCommentCount&quot; : 0,\n    &quot;commentState&quot; : 2,\n    &quot;unsaved&quot; : false,\n    &quot;author&quot; : {\n      &quot;id&quot; : &quot;5ea7543756abda5093aa4fda&quot;,\n      &quot;displayName&quot; : &quot;Sydney Shiroyama&quot;,\n      &quot;firstName&quot; : &quot;Sydney&quot;,\n      &quot;lastName&quot; : &quot;Shiroyama&quot;,\n      &quot;avatarUrl&quot; : &quot;https://static1.squarespace.com/static/images/5ea754375c18f20c0fcb6be8&quot;,\n      &quot;bio&quot; : &quot;&quot;,\n      &quot;avatarAssetUrl&quot; : &quot;https://static1.squarespace.com/static/images/5ea754375c18f20c0fcb6be8&quot;\n    },\n    &quot;assetUrl&quot; : &quot;https://images.squarespace-cdn.com/content/v1/5ea754888e2597681a594e03/1588399600764-NLV41LV5VC4LTL3WKRQP/ke17ZwdGBToddI8pDm48kDHPSfPanjkWqhH6pl6g5ph7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0kT3PXaDTw6fk-7hFv8qtuO9cQCsc0TvODI6VkiZtuEfknLoiRIu-kWfCHsqWGB43w/Hero+Banner-2.png&quot;,\n    &quot;contentType&quot; : &quot;image/png&quot;,\n    &quot;items&quot; : [ ],\n    &quot;pushedServices&quot; : { },\n    &quot;pendingPushedServices&quot; : { },\n    &quot;recordTypeLabel&quot; : &quot;image&quot;,\n    &quot;originalSize&quot; : &quot;2500x1875&quot;\n  },\n  &quot;imageOverlayOpacity&quot; : 0.29,\n  &quot;video&quot; : {\n    &quot;playbackSpeed&quot; : 0.5,\n    &quot;filter&quot; : 1,\n    &quot;filterStrength&quot; : 0,\n    &quot;zoom&quot; : 0\n  },\n  &quot;backgroundWidth&quot; : &quot;background-width--full-bleed&quot;,\n  &quot;sectionHeight&quot; : &quot;section-height--medium&quot;,\n  &quot;customSectionHeight&quot; : 85,\n  &quot;horizontalAlignment&quot; : &quot;horizontal-alignment--center&quot;,\n  &quot;verticalAlignment&quot; : &quot;vertical-alignment--middle&quot;,\n  &quot;contentWidth&quot; : &quot;content-width--medium&quot;,\n  &quot;sectionTheme&quot; : &quot;black&quot;,\n  &quot;sectionAnimation&quot; : &quot;none&quot;,\n  &quot;backgroundMode&quot; : &quot;image&quot;\n}\" data-animation=\"none\" data-controllers-bound=\"SectionWrapperController, MagicPaddingController\" data-active=\"true\">\n<div class=\"section-background\"><img class=\"\" style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://images.squarespace-cdn.com/content/v1/5ea754888e2597681a594e03/1588399600764-NLV41LV5VC4LTL3WKRQP/ke17ZwdGBToddI8pDm48kDHPSfPanjkWqhH6pl6g5ph7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0kT3PXaDTw6fk-7hFv8qtuO9cQCsc0TvODI6VkiZtuEfknLoiRIu-kWfCHsqWGB43w/Hero+Banner-2.png?format=1000w\" alt=\"\" width=\"334\" height=\"250\" data-src=\"https://images.squarespace-cdn.com/content/v1/5ea754888e2597681a594e03/1588399600764-NLV41LV5VC4LTL3WKRQP/ke17ZwdGBToddI8pDm48kDHPSfPanjkWqhH6pl6g5ph7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0kT3PXaDTw6fk-7hFv8qtuO9cQCsc0TvODI6VkiZtuEfknLoiRIu-kWfCHsqWGB43w/Hero+Banner-2.png\" data-image=\"https://images.squarespace-cdn.com/content/v1/5ea754888e2597681a594e03/1588399600764-NLV41LV5VC4LTL3WKRQP/ke17ZwdGBToddI8pDm48kDHPSfPanjkWqhH6pl6g5ph7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0kT3PXaDTw6fk-7hFv8qtuO9cQCsc0TvODI6VkiZtuEfknLoiRIu-kWfCHsqWGB43w/Hero+Banner-2.png\" data-image-dimensions=\"2500x1875\" data-image-focal-point=\"0.5,0.5\" data-load=\"false\" data-parent-ratio=\"1.2\" data-image-resolution=\"1000w\" />\n<div class=\"section-background-overlay\" data-controller=\"SectionBackgroundOverlayController\" data-image-overlay-opacity=\"0.29\" data-controllers-bound=\"SectionBackgroundOverlayController\">&nbsp;</div>\n</div>\n<div class=\"content-wrapper\">\n<div class=\"content\">\n<div id=\"page-section-5ea75e018459fc1567a7c04d\" class=\"sqs-layout sqs-grid-12 columns-12\" data-type=\"page-section\">\n<div class=\"row sqs-row\">\n<div class=\"col sqs-col-12 span-12\">\n<div id=\"block-19ae3aec9060652a412b\" class=\"sqs-block html-block sqs-block-html\" data-block-type=\"2\">\n<div class=\"sqs-block-content\">\n<h4>/ t a i \u00e3\u0192\u00bb k o\u00e3\u0192\u00bbi n /</h4>\n<h4>Using the art of taiko to connect and feel connected</h4>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</section>\n<section class=\"page-section\n    \n      layout-engine-section\n    \n    background-width--full-bleed\n    \n      \n      \n    \n    \n      content-width--medium\n    \n    horizontal-alignment--center\n    vertical-alignment--middle\n    \n    \" data-section-id=\"5ea75e018459fc1567a7c04f\" data-controller=\"SectionWrapperController, MagicPaddingController\" data-current-styles=\"{\n  &quot;imageOverlayOpacity&quot; : 0.15,\n  &quot;video&quot; : {\n    &quot;playbackSpeed&quot; : 0.5,\n    &quot;filter&quot; : 1,\n    &quot;filterStrength&quot; : 0,\n    &quot;zoom&quot; : 0\n  },\n  &quot;backgroundWidth&quot; : &quot;background-width--full-bleed&quot;,\n  &quot;sectionHeight&quot; : &quot;section-height--custom&quot;,\n  &quot;customSectionHeight&quot; : 45,\n  &quot;horizontalAlignment&quot; : &quot;horizontal-alignment--center&quot;,\n  &quot;verticalAlignment&quot; : &quot;vertical-alignment--middle&quot;,\n  &quot;contentWidth&quot; : &quot;content-width--medium&quot;,\n  &quot;sectionTheme&quot; : &quot;&quot;,\n  &quot;sectionAnimation&quot; : &quot;none&quot;,\n  &quot;backgroundMode&quot; : &quot;image&quot;\n}\" data-animation=\"none\" data-controllers-bound=\"SectionWrapperController, MagicPaddingController\" data-active=\"true\">\n<div class=\"section-background\">&nbsp;</div>\n</section>",
+            "id": "Taiko-IN",
+            "imageURL": "https://images.squarespace-cdn.com/content/v1/5ea754888e2597681a594e03/1588399600764-NLV41LV5VC4LTL3WKRQP/ke17ZwdGBToddI8pDm48kDHPSfPanjkWqhH6pl6g5ph7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0kT3PXaDTw6fk-7hFv8qtuO9cQCsc0TvODI6VkiZtuEfknLoiRIu-kWfCHsqWGB43w/Hero+Banner-2.png?format=1000w",
+            "infoURL": "https://taiko-in.com/",
+            "instagramUsername": "taikoin",
+            "name": "Taiko-IN",
+            "projectType": "project"
+         },
+         {
+            "description": "<div id=\"i4c-draggable-container\" style=\"position: fixed; z-index: 1499; width: 0px; height: 0px;\">\n<div class=\"resolved\" style=\"all: initial;\" data-reactroot=\"\">&nbsp;</div>\n</div>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://images.squarespace-cdn.com/content/v1/531f8717e4b0fcd5fdbf0e6f/1531867075009-LFVVXTJY9Y6XP3RX6FZO/ke17ZwdGBToddI8pDm48kL5VdYVlKyCDq3kfJ3hoZSlZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpwNGpxh-WAYFXjy0UmE-nnft2QW2Hz77nDM2hjrqnm4ORRoiD5g_uKOgf8UH8HqJwA/new.pjlogo_white_interior.png?format=300w\" alt=\"new.pjlogo_white_interior.png\" width=\"197\" height=\"211\" /></p>\n<h3><a href=\"https://plantingjustice.org/\">Planting Justice</a> is a grassroots organization with a mission to empower people impacted by mass incarceration and other social inequities with the skills and resources to cultivate food sovereignty, economic justice, and community healing.&nbsp;&nbsp;</h3>\n<div id=\"i4c-dialogs-container\">&nbsp;</div>",
+            "id": "Planting_Justice",
+            "imageURL": "https://images.squarespace-cdn.com/content/v1/531f8717e4b0fcd5fdbf0e6f/1531867075009-LFVVXTJY9Y6XP3RX6FZO/ke17ZwdGBToddI8pDm48kL5VdYVlKyCDq3kfJ3hoZSlZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpwNGpxh-WAYFXjy0UmE-nnft2QW2Hz77nDM2hjrqnm4ORRoiD5g_uKOgf8UH8HqJwA/new.pjlogo_white_interior.png?format=300w",
+            "infoURL": "https://plantingjustice.org/",
+            "name": "Planting Justice",
+            "projectType": "nonprofit"
+         },
+         {
+            "description": "<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"http://static1.squarespace.com/static/579fed14b3db2b31eb589ca9/t/5e0f549f0eeb83355fdf9768/1592596783043/?format=1500w\" alt=\"Kinetech Arts\" width=\"376\" height=\"51\" /></p>\n<p><strong>Kinetech Arts</strong>, directed by Daiane Lopes da Silva and Weidong Yang, is a 501(c)(3) non-profit organization that combines the work of dancers, scientists, and digital artists to create innovative and socially responsible performances. Kinetech Arts work has been supported by Zellerbach Family Foundation, CA$H Grant, The Phyllis C. Wattis Foundation, Rainin Foundation, and Creative Work Fund. Each year, KA produces multiple performances and over 50 other public events, including Open Labs, Y-Exchange public talks and Dance Hack Festivals. KA residencies includes RAW at SAFEhouse Arts, Combustible at CounterPulse and participation in the Dancing Lab: Immersive Media Through Cunningham at NCCAkron. KA is currently in residency at Djerassi Resident Artists Program and ODC Theatre from 2018-2021.</p>",
+            "id": "Kinetech_Arts",
+            "imageURL": "https://worldviews.org/images/KA_logo.jpg",
+            "infoURL": "https://kinetecharts.org/",
+            "instagramTag": "kinetech",
+            "name": "Kinetech Arts"
+         },
+         {
+            "description": "<p><a href=\"https://climatemusic.org/\"><img src=\"https://climatemusic.org/wp-content/uploads/2019/04/ClimateMusic-Logo-blue.svg\" alt=\"ClimateMusic\" width=\"327\" height=\"57\" /></a></p>\n<h2>We seek to make climate science&nbsp;<em>personal</em></h2>\n<p>Combining the talents and expertise of world class scientists, composers, musicians, artists, and technology visionaries, we enable the creation and staging of science-guided music and visual experiences to inspire people to engage actively on the issue of climate change.</p>\n<p>Music is familiar, accessible, and&mdash;for most people&mdash;much easier to relate to than articles or lectures about the climate crisis. We created The ClimateMusic Project to harness this universal language to tell the urgent story of climate change to broad and diverse audiences in a way that resonates, educates, and motivates.</p>\n<p>&nbsp;</p>",
+            "id": "ClimateMusic_Project",
+            "imageURL": "https://climatemusic.org/wp-content/uploads/2019/04/blue-note.jpg",
+            "infoURL": "https://climatemusic.org/",
+            "name": "ClimateMusic Project"
+         },
+         {
+            "description": "<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://reachandteach.indiecommerce.com/sites/reachandteach.indiecommerce.com/files/rtlogo_books_toys_gifts1.jpg\" alt=\"Home\" width=\"327\" height=\"151\" /></p>\n<p>We are San Mateo's independent bookstore and shop for unique products that transform you and the world. Everything at Reach and Teach is focused on Gender Equality, Sustainable Living, and Peacemaking. We offer books, toys, puzzles, games, green lifestyle products, teacher resources, and fair trade gifts for all ages.</p>\n<p>&nbsp;</p>",
+            "id": "Reach_and_Teach",
+            "imageURL": "https://reachandteach.indiecommerce.com/sites/reachandteach.indiecommerce.com/files/rtlogo_books_toys_gifts1.jpg",
+            "infoURL": "https://shop.reachandteach.com/",
+            "name": "Reach and Teach",
+            "projectType": "business"
+         },
+         {
+            "description": "<p><a href=\"https://www.servicespace.org/\"><img style=\"color: #626262; display: block; margin-left: auto; margin-right: auto;\" src=\"https://www.servicespace.org/images/logo/home.jpg\" alt=\"image\" /></a></p>\n<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://www.servicespace.org/images/home_rotation/homeslide.jpg\" alt=\"image\" width=\"361\" height=\"225\" /></p>\n<p>ServiceSpace is an organization run entirely by volunteers. We leverage technology to encourage everyday people around the world to do small acts of service. Our aim is to ignite the fundamental generosity in ourselves and others, creating both inner and outer transformation.</p>\n<p>ServiceSpace was conceived by volunteers, was built by volunteers, and is run by volunteers -- all for the benefit of volunteers. Our projects range from a daily positive news service, to an acts-of-kindness portal, to a gift-economy restaurant. Regardless of the endeavor, we act in concert to create service opportunities for each other and to support each other's service journeys.</p>",
+            "id": "ServiceSpace",
+            "imageURL": "https://www.servicespace.org/images/home_rotation/homeslide.jpg",
+            "infoURL": "https://www.servicespace.org/",
+            "name": "ServiceSpace"
+         },
+         {
+            "description": "<p><a href=\"https://www.facebook.com/pages/category/Arts---Humanities-Website/Creatives-for-Compassionate-Communities-108372904096772\"><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-0/p180x540/101938118_146058990328163_908466354258968576_o.png?_nc_cat=106&amp;_nc_sid=dd9801&amp;_nc_ohc=PBkVsbVjVOAAX8adlDL&amp;_nc_ht=scontent-sjc3-1.xx&amp;oh=681ba29e8090b10525936d65e009ff89&amp;oe=5F16C59D\" alt=\"Image may contain: text that says 'Incubating Creative, Compassionate Communities CREATIVES for COMPASSIONATE COMMUNITIES'\" width=\"361\" height=\"203\" /></a></p>\n<p>This group hosts varous community based transformative projects such as bright word mandala workshops.</p>\n<p>&nbsp;</p>",
+            "id": "Creatives_for_Compassionate_Communities",
+            "imageURL": "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/87292578_108404274093635_249606877720084480_n.jpg?_nc_cat=102&_nc_sid=09cbfe&_nc_ohc=RdbXJaFlCxYAX8t36DF&_nc_ht=scontent-sjc3-1.xx&oh=ceeb325de25d804ee59e873b8a0f299f&oe=5F156842",
+            "infoURL": "https://www.facebook.com/Creatives-for-Compassionate-Communities-108372904096772/about/?ref=page_internal",
+            "instagramTag": "peacemandala",
+            "name": "Creatives for Compassionate Communities",
+            "projectType": "group"
+         },
+         {
+            "description": "<h2><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://images.squarespace-cdn.com/content/v1/5b71f58a365f028fe42c1455/1587857810676-4RVC3PNDSKXSJYYOVW0M/ke17ZwdGBToddI8pDm48kCDXzQYUSBTxiCpdvVd1PmB7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0qa3vtHVkxV52tP1hM2YGR3U6arEX0LJdXxy1oDxD71EtvDgcQ7gDFGzOgxPAf67pg/shirts-bonfire.png?format=500w\" alt=\"For T-shirts, click here to go to our  Bonfire  store!\" width=\"350\" height=\"238\" /></h2>\n<h5>Whether you're 5 or 85, drumming is for you! Kids who participate in music education do better in school, have more self-confidence, and are more disciplined. Adults who take our classes find a valuable outlet for creative expression and a new community of friends.</h5>\n<h5>Our instructors have helped thousands of people of all ages and backgrounds find their inner drummer. Sign up for a class today!</h5>",
+            "id": "South_Bay_Beat_Institute",
+            "imageURL": "https://images.squarespace-cdn.com/content/v1/5b71f58a365f028fe42c1455/1587857810676-4RVC3PNDSKXSJYYOVW0M/ke17ZwdGBToddI8pDm48kCDXzQYUSBTxiCpdvVd1PmB7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0qa3vtHVkxV52tP1hM2YGR3U6arEX0LJdXxy1oDxD71EtvDgcQ7gDFGzOgxPAf67pg/shirts-bonfire.png?format=500w",
+            "infoURL": "https://www.southbaybeatinstitute.com/",
+            "name": "South Bay Beat Institute",
+            "projectType": "organization"
+         },
+         {
+            "description": "<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/73409276_10157820296949216_4214237222393610240_n.jpg?_nc_cat=102&amp;_nc_sid=730e14&amp;_nc_ohc=bKk3IE-xHG8AX9n2nn9&amp;_nc_ht=scontent-sjc3-1.xx&amp;oh=f07f5c8654e50811ca45f8f34aa070c4&amp;oe=5F172739\" alt=\"Image may contain: plant and outdoor\" width=\"338\" height=\"254\" /></p>\n<p>This live webcam at <a class=\"oajrlxb2 g5ia77u1 qu0x051f esr5mh6w e9989ue4 r7d6kgcz rq0escxv nhd2j8a9 nc684nl6 p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso i1ao9s8h esuyzwwr f1sip0of lzcic4wl py34i1dx gpro0wi8\" tabindex=\"0\" role=\"link\" href=\"https://l.facebook.com/l.php?u=https%3A%2F%2Fbit.ly%2F144peacetree%3Ffbclid%3DIwAR3SbpabI6wJmPq0Ng0uegKiXAXDPqu3wolOVUuded1kd99pzCyJrP_g12U&amp;h=AT2G7ZWPaQFwNMAp7Z9R-D7J-9Q_b18dgQ6zHUuDBdvoBU4IagVhyfYBvEeMELad-y7IjmvS1uE12FjCOlHTPsmtF-gg42ZjjhSF6gxcrT9CAxUQ5LqaIPQV9r5r0C4BYg&amp;__tn__=-UK-R&amp;c[0]=AT0pWrdui8EbEU4yIrKOTZrQFaFZiqkNWZ54jBpzTWXeJVDqAGl9zy6t0cSPElFb3pMqVag2zsdPQsW4gX3U0E7wZwwWo7uWwI-OaKaXEYlRM5moAjdB6m3AN6cvdQTafGmbrrJwDAJWuamyVUH0pKM3OvQGk-3j4c3WajcQ0yjoEDiaBl2YRnjr0Js\" target=\"_blank\" rel=\"nofollow noopener\">bit.ly/144peacetree</a> is pointed at the Peace Tree located at Reach and Teach - Books, Toys, and Gifts in San Mateo. The lights on this tree become more or less active based on how many people are tweeting about ways they are creating peace in the world with the hashtags <a class=\"oajrlxb2 g5ia77u1 qu0x051f esr5mh6w e9989ue4 r7d6kgcz rq0escxv nhd2j8a9 nc684nl6 p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso i1ao9s8h esuyzwwr f1sip0of lzcic4wl py34i1dx gpro0wi8\" tabindex=\"0\" role=\"link\" href=\"https://www.facebook.com/hashtag/peacetree?__eep__=6&amp;__cft__[0]=AZUcyDstaDV8PBv3fwp5HC6D2dT_EpJ2BNd1a43P4SaJ8uXKm1odoAcln-LspisWLs285gcgqiz41AK0TxmI0oGxc-A3s9htcCbNQpuR_jdrf4YAURzvgs-2S6ApBIzPFRIh1lT0jykwlokrLDFyVqtg5_ImR6kugQ2GRaSC9N3U5Q&amp;__tn__=*NK-R\" target=\"_blank\" rel=\"noopener\">#peacetree</a> <a class=\"oajrlxb2 g5ia77u1 qu0x051f esr5mh6w e9989ue4 r7d6kgcz rq0escxv nhd2j8a9 nc684nl6 p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso i1ao9s8h esuyzwwr f1sip0of lzcic4wl py34i1dx gpro0wi8\" tabindex=\"0\" role=\"link\" href=\"https://www.facebook.com/hashtag/peace?__eep__=6&amp;__cft__[0]=AZUcyDstaDV8PBv3fwp5HC6D2dT_EpJ2BNd1a43P4SaJ8uXKm1odoAcln-LspisWLs285gcgqiz41AK0TxmI0oGxc-A3s9htcCbNQpuR_jdrf4YAURzvgs-2S6ApBIzPFRIh1lT0jykwlokrLDFyVqtg5_ImR6kugQ2GRaSC9N3U5Q&amp;__tn__=*NK-R\" target=\"_blank\" rel=\"noopener\">#peace</a></p>\n<p><a href=\"https://www.facebook.com/transformworld/\"><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/21811_10151261790314216_921670954_n.jpg?_nc_cat=104&amp;_nc_sid=d2e176&amp;_nc_ohc=-S7iSrwgkvsAX_RjOR9&amp;_nc_ht=scontent-sjc3-1.xx&amp;oh=c49b61b494c24aec9850c5f6e1650b98&amp;oe=5F16B6B7\" width=\"235\" height=\"176\" /></a></p>",
+            "id": "Peace_Tree",
+            "imageURL": "https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/73409276_10157820296949216_4214237222393610240_n.jpg?_nc_cat=102&_nc_sid=730e14&_nc_ohc=bKk3IE-xHG8AX9n2nn9&_nc_ht=scontent-sjc3-1.xx&oh=f07f5c8654e50811ca45f8f34aa070c4&oe=5F172739",
+            "infoURL": "https://worldviews.org/html/peaceTree.html",
+            "name": "Peace Tree",
+            "projectType": "project",
+            "xinfoURL": "https://z-m-www.facebook.com/transformworld/posts/10157820312269216"
+         },
+         {
+            "description": "<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"http://worldviews.org/images/mask.jpg\" width=\"310\" height=\"233\" /></p>\n<p>Manami has been making decorative protective masks.&nbsp; &nbsp;First she was giving them away.&nbsp; Then she collected donations for them, for <a href=\"https://www.shfb.org/\">Second Harvest food bank</a>.&nbsp; Then she solicited matching for the money raised.&nbsp; So far her project has led to over $2000 in contributions to Second Harvest.</p>\n<p>&nbsp;</p>",
+            "id": "Mamakat_Masks",
+            "imageURL": "https://worldviews.org/images/mask.jpg",
+            "infoURL": "https://worldviews.org/html/mamakatMasks.html",
+            "name": "Mamakat Masks",
+            "projectType": "project"
+         },
+         {
+            "description": "<p><a href=\"https://limitlesshorizonsixil.org/\"><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://limitlesshorizonsixil.org/wp-content/uploads/2013/11/Logo-with-tagline-for-website2.png\" /></a></p>\n<p>Cecillia is lives in Chajul Guatamala, and is getting a college degree on computer technology.</p>\n<p>She is being sponsored by some of the Garden teem.</p>\n<p>&nbsp;</p>",
+            "id": "Cecilia_Computer_School",
+            "infoURL": "https://limitlesshorizonsixil.org/",
+            "name": "Cecilia Computer School",
+            "projectType": "project"
+         },
+         {
+            "description": "<div id=\"i4c-draggable-container\" style=\"position: fixed; z-index: 1499; width: 0px; height: 0px;\">\n<div class=\"resolved\" style=\"all: initial;\" data-reactroot=\"\">&nbsp;</div>\n</div>\n<p><img src=\"https://www.nps.gov/grca/planyourvisit/images/powell-pt-640.jpg?maxwidth=650&amp;autorotate=false\" alt=\"Basic Information - Grand Canyon National Park (U.S. National Park ...\" width=\"382\" height=\"256\" /></p>\n<p>Enock will be hiking the Grand Canyon on a handcycle.</p>\n<div id=\"i4c-dialogs-container\">&nbsp;</div>\n<div id=\"i4c-dialogs-container\">&nbsp;</div>\n<div id=\"i4c-dialogs-container\">&nbsp;</div>",
+            "id": "The_Grand_Canyon_Adaptive_Hike",
+            "imageURL": "https://www.nps.gov/grca/planyourvisit/images/powell-pt-640.jpg?maxwidth=650&autorotate=false",
+            "infoURL": "https://gobeyondthefence.com",
+            "instagramUsername": "enockglidden",
+            "name": "The Grand Canyon Adaptive Hike",
+            "projectType": "project"
+         },
+         {
+            "description": "<p style=\"text-align: center;\"><img src=\"https://slack-imgs.com/?c=1&amp;o1=ro&amp;url=https%3A%2F%2Fwww.washingtonpost.com%2Fwp-apps%2Fimrs.php%3Fsrc%3Dhttps%3A%2F%2Farc-anglerfish-washpost-prod-washpost.s3.amazonaws.com%2Fpublic%2F2HZ4ABJ2DBFLVHUQZ3WZE6YZ4Q.jpg%26w%3D1440\" width=\"329\" height=\"265\" /></p>\n<h3 class=\"\n        font--headline\n        gray-darkest\n        mb-sm\n        null\n      \" data-qa=\"headline\">Michigan 9-year-old has sewn and donated more than 500 masks during the pandemic</h3>",
+            "id": "Munyuns_Masks",
+            "name": "Munyun's Masks",
+            "projectType": "article"
+         }
+      ]
+   },
+   "users": {
+      "-MBLljOsqJtJ91OZ3M6I": {
+         "name": "Mortimer 'Morty' Smith"
+      },
+      "-MBLoG6RDYcT_LCAt1av": {
+         "name": "Mortimer 'Morty' Smith"
+      }
+   }
+}
