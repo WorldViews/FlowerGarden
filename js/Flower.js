@@ -25,7 +25,7 @@ GARDEN.colors = [
 GARDEN.canvWidth = 300;
 GARDEN.canvHeight = 300;
 
-class Flower extends CanvasTool.Graphic {
+class Flower0 extends CanvasTool.Graphic {
   constructor(opts) {
     opts = opts || {};
     super(opts);
@@ -77,6 +77,7 @@ class Flower extends CanvasTool.Graphic {
       this.tool.showImage(this.imageURL);
     }
   }
+
   draw(canvas, ctx) {
     //super.draw(canvas, ctx);
     this.ctx = ctx;
@@ -206,6 +207,62 @@ class Flower extends CanvasTool.Graphic {
     }
     return pc;
   }
+}
+
+function interp(p1, p2, f) {
+  return {x: p1.x*(1-f) + p2.x*f,
+          y: p1.y*(1-f) + p2.y*f};
+}
+
+class Flower extends Flower0 {
+  constructor(opts) {
+    super(opts);
+    this.leafDy = 10;
+    this.waveSpeed = getFloatParameterByName("wave", 0);
+  }
+
+  draw(canvas, ctx) {
+    this.drawLeaves(canvas, ctx);
+    this.drawStem(canvas, ctx);
+    super.draw(canvas, ctx);
+  }
+
+  tick() {
+    if (this.waveSpeed == 0)
+      return;
+    //console.log("tick");
+    var t = getClockTime();
+    var w = this.waveSpeed;
+    this.leafDy = 10*Math.sin(w*t);
+  }
+
+  drawStem(canvas, ctx) {
+    this.strokeStyle = 'green';
+    this.lineWidth = 2.0;
+    var h = 50;
+    var gpt = {x: this.cx, y: this.cy+h};
+    var cpt = {x: this.cx, y: this.cy};
+    var pts = [gpt, cpt];
+    //console.log("pts", pts);
+    this.drawPolyLine(canvas, ctx, pts);
+  }
+
+  drawLeaves(canvas, ctx) {
+    this.strokeStyle = 'green';
+    this.lineWidth = 4.0;
+    var h = 50;
+    var g = this.leafDy;
+    var w = 15;
+    var gpt = {x: this.cx, y: this.cy+h};
+    var cpt = {x: this.cx, y: this.cy};
+    var mpt = interp(gpt, cpt, 0.3);
+    var lpt = {x: mpt.x - w, y: mpt.y-g};
+    var rpt = {x: mpt.x + w, y: mpt.y-g};
+    var pts = [lpt, mpt, rpt];
+    //console.log("pts", pts);
+    this.drawPolyLine(canvas, ctx, pts);
+  }
+
 }
 
 class GardenEditor {

@@ -352,6 +352,10 @@ class CanvasTool {
 
     tick() {
         //console.log("tick...");
+        this.tickTime = getClockTime();
+        for (var id in this.graphics) {
+            this.graphics[id].tick();
+        }
         this.draw();
     }
 
