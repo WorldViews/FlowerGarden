@@ -1,0 +1,56 @@
+<!--
+ *-->
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <h1>Register For Garden</h1>
+    <input id="email" width="200px"><br>
+    <input id="password" type="password"><br>
+    <input id="registerButton" type="button" value="Register">
+   <!--  The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBqAsqHaBZGT-UsC82ShV3koGWWgu-l8to",
+            authDomain: "fir-helloworld-39759.firebaseapp.com",
+            databaseURL: "https://fir-helloworld-39759.firebaseio.com",
+            projectId: "fir-helloworld-39759",
+            storageBucket: "fir-helloworld-39759.appspot.com",
+            messagingSenderId: "1080893233748",
+            appId: "1:1080893233748:web:1614aab0d167c094322bc1"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        $(document).ready(() => {
+            $("#registerButton").click(() => {
+                console.log("click");
+                var email = $("#email").val();
+                var password = $("#password").val();
+                console.log("create account", email, password);
+                firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert("error: "+errorMessage);
+                    // ...
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

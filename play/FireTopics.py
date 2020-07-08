@@ -76,8 +76,8 @@ class FireDB:
 
 if __name__ == '__main__':
     fdb = FireDB()
-    fdb.dump("firebase.db.json")
-    #fdb.saveProjects("../projects.bak.json")
+    #fdb.dump("firebase.db.json")
+    fdb.saveProjects("../projects.bak.json")
     #fdb.addProjects()
     #fdb.addProjects("../projects.bak.json")
     #fdb.addUser()

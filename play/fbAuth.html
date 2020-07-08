@@ -24,6 +24,9 @@
 <body>
     <h1>Hello</h1>
     <input id="addButton" type="button" value="click me!"><br>
+    <input id="loginButton" type="button" value="Login"><br>
+    <input id="email" width="200px"><br>
+    <input id="password" type="password"><br>
     <pre id="jsonArea"></pre>
     <div id="instagram-feed1" class="instagram_feed"></div>
     <script src="jquery.instagramFeed.js"></script>
@@ -67,21 +70,53 @@
             bigOne.innerText = jstr;
         });
 
+        firebase.auth().onAuthStateChanged(user => {
+            console.log("authStateChange", user);
+            if (user) {
+                // User is signed in.
+                var displayName = user.displayName;
+                var email = user.email;
+                var emailVerified = user.emailVerified;
+                var photoURL = user.photoURL;
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+                var providerData = user.providerData;
+                // ...
+            } else {
+                // User is signed out.
+                // ...
+            }
+        });
+
+
         $(document).ready(() => {
             $("#addButton").click(() => {
                 console.log("click");
                 dbRef.child("tags").push({
-                    name: "San Francisco",
+                    name: "Los Angeles",
                     state: "CA",
                     country: "USA"
                 })
-                .then(function () {
+                    .then(function () {
                         console.log("Document successfully written!");
-                })
-                .catch(function (error) {
+                    })
+                    .catch(function (error) {
                         console.error("Error writing document: ", error);
-                 });
+                    });
             });
+
+            $("#loginButton").click(() => {
+                var email = $("#email").val();
+                var password = $("#password").val();
+                console.log("login", email, password);
+                firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // ...
+                });
+
+            })
         })
     </script>
 </body>
