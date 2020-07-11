@@ -47,6 +47,8 @@ class Flower0 extends CanvasTool.Graphic {
       garden.colors[~~(Math.random() * garden.colors.length) + 1];
     f.numPetals = opts.numPetals || randomIntFromInterval(4, 10);
     f.spacing = randomIntFromInterval(4, 10);
+    this.rot = 0;
+    this.yscale = 1.0;
     this.radius = f.flowerRad;
     this.targetURL = opts.targetURL;
     this.project = opts.project;
@@ -55,18 +57,20 @@ class Flower0 extends CanvasTool.Graphic {
 
   getState() {
     var f = this;
-    var obj = {'type': 'Flower', x: f.cx, y: f.cy,
-    'flowerRad': f.flowerRad,
-    'centerRad': f.centerRad};
+    var obj = {
+      'type': 'Flower', x: f.cx, y: f.cy,
+      'flowerRad': f.flowerRad,
+      'centerRad': f.centerRad
+    };
     return obj;
   }
 
   onClick(e) {
-     if (this.project)
+    if (this.project)
       this.tool.showProject(this.project);
     if (this.targetURL)
       this.tool.showPage(this.targetURL);
-      //$("#webView").src = this.targetURL;
+    //$("#webView").src = this.targetURL;
     //window.open(this.targetURL, "gardenInfo");
     return true;
   }
@@ -89,16 +93,39 @@ class Flower0 extends CanvasTool.Graphic {
     this.drawFlower(ctx);
   }
 
+  lookAt(x, y, h) {
+    if (h == null)
+      h = 500.0;
+    var dx = this.cx - x;
+    var dy = this.cy - y;
+    var d = Math.sqrt(dx*dx + dy*dy);
+    var a = Math.atan2(dy, dx);
+    var phi = Math.atan2(d, h);
+    this.yscale = Math.cos(phi);
+    this.rot = a + Math.PI/2;
+  }
+
   drawFlower(ctx) {
+    //return this._drawFlower(ctx, this.cx, this.cy);
+    ctx.save();
+    ctx.translate(this.cx, this.cy);
+    ctx.rotate(this.rot);
+    ctx.scale(1.0, this.yscale);
+    this._drawFlower(ctx, 0, 0);
+    ctx.restore();
+  }
+
+  _drawFlower(ctx, cx, cy) {
     var f = this;
     ctx.fillStyle = f.petalStyle;
-    var petals = this.buildPetals(f.flowerRad, f.centerRad, f.cx, f.cy, f.numPetals, f.spacing);
+    var petals = this.buildPetals(f.flowerRad, f.centerRad, cx, cy, f.numPetals, f.spacing);
+    //var petals = this.buildPetals(f.flowerRad, f.centerRad, 0, 0, f.numPetals, f.spacing);
     for (var petal = 0; petal < petals.length; petal++) {
       this.drawCurve(petals[petal]);
     }
     ctx.beginPath();
     ctx.fillStyle = f.centerStyle;
-    ctx.arc(f.cx, f.cy, f.centerRad * 10, 0, 2 * Math.PI)
+    ctx.arc(cx, cy, f.centerRad * 10, 0, 2 * Math.PI);
     ctx.fill();
   }
 
@@ -210,8 +237,10 @@ class Flower0 extends CanvasTool.Graphic {
 }
 
 function interp(p1, p2, f) {
-  return {x: p1.x*(1-f) + p2.x*f,
-          y: p1.y*(1-f) + p2.y*f};
+  return {
+    x: p1.x * (1 - f) + p2.x * f,
+    y: p1.y * (1 - f) + p2.y * f
+  };
 }
 
 class Flower extends Flower0 {
@@ -219,6 +248,7 @@ class Flower extends Flower0 {
     super(opts);
     this.leafDy = 10;
     this.waveSpeed = getFloatParameterByName("wave", 0);
+    this.lookAtH = getFloatParameterByName("lookAtH", 0);
   }
 
   draw(canvas, ctx) {
@@ -227,21 +257,36 @@ class Flower extends Flower0 {
     super.draw(canvas, ctx);
   }
 
+  XXXdrawFlower(ctx) {
+    ctx.save();
+    if (window.G) {
+
+      ctx.translate(10, 0);
+      ctx.rotate(G.r);
+    }
+    super.drawFlower(ctx);
+    ctx.restore();
+  }
+
   tick() {
+    var tool = window.gtool;
+    if (tool.lastMousePos && this.lookAtH) {
+        this.lookAt(tool.lastMousePos.x, tool.lastMousePos.y, this.lookAtH)
+    }
     if (this.waveSpeed == 0)
       return;
     //console.log("tick");
     var t = getClockTime();
     var w = this.waveSpeed;
-    this.leafDy = 10*Math.sin(w*t);
+    this.leafDy = 10 * Math.sin(w * t);
   }
 
   drawStem(canvas, ctx) {
     this.strokeStyle = 'green';
     this.lineWidth = 2.0;
     var h = 50;
-    var gpt = {x: this.cx, y: this.cy+h};
-    var cpt = {x: this.cx, y: this.cy};
+    var gpt = { x: this.cx, y: this.cy + h };
+    var cpt = { x: this.cx, y: this.cy };
     var pts = [gpt, cpt];
     //console.log("pts", pts);
     this.drawPolyLine(canvas, ctx, pts);
@@ -253,11 +298,11 @@ class Flower extends Flower0 {
     var h = 50;
     var g = this.leafDy;
     var w = 15;
-    var gpt = {x: this.cx, y: this.cy+h};
-    var cpt = {x: this.cx, y: this.cy};
+    var gpt = { x: this.cx, y: this.cy + h };
+    var cpt = { x: this.cx, y: this.cy };
     var mpt = interp(gpt, cpt, 0.3);
-    var lpt = {x: mpt.x - w, y: mpt.y-g};
-    var rpt = {x: mpt.x + w, y: mpt.y-g};
+    var lpt = { x: mpt.x - w, y: mpt.y - g };
+    var rpt = { x: mpt.x + w, y: mpt.y - g };
     var pts = [lpt, mpt, rpt];
     //console.log("pts", pts);
     this.drawPolyLine(canvas, ctx, pts);
@@ -269,27 +314,27 @@ class GardenEditor {
 }
 
 class FlowerEditor extends GardenEditor {
-    constructor(garden, flower) {
-        super();
-        this.gtool = gtool;
-        if (flower)
-            this.setFlower(flower);
-    }
+  constructor(garden, flower) {
+    super();
+    this.gtool = gtool;
+    if (flower)
+      this.setFlower(flower);
+  }
 
-    setFlower(flower) {
-        this.selectedFlower = flower;
-        if (!this.gui) {
-            var gui = new dat.GUI();
-            this.gui = gui;
-            var f = flower;
-            gui.add(f, 'numPetals', 2, 20);
-            gui.add(f, 'centerRad', 0, 10);
-            gui.add(f, 'flowerRad', 0, 50);
-            gui.add(f, 'spacing', 3, 14);
-            gui.addColor(f, 'centerStyle');
-            gui.addColor(f, 'petalStyle');
+  setFlower(flower) {
+    this.selectedFlower = flower;
+    if (!this.gui) {
+      var gui = new dat.GUI();
+      this.gui = gui;
+      var f = flower;
+      gui.add(f, 'numPetals', 2, 20);
+      gui.add(f, 'centerRad', 0, 10);
+      gui.add(f, 'flowerRad', 0, 50);
+      gui.add(f, 'spacing', 3, 14);
+      gui.addColor(f, 'centerStyle');
+      gui.addColor(f, 'petalStyle');
 
-        }
     }
+  }
 }
 

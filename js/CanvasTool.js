@@ -111,6 +111,7 @@ class CanvasTool {
     mouseMove(e) {
         var pt = this.getMousePos(e);
         var cpt = this.getMousePosCanv(e);
+        this.lastMousePos = pt;
         var id = "";
         var g = this.getHit(e);
         if (g)
