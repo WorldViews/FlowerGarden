@@ -112,6 +112,7 @@ class Flower0 extends CanvasTool.Graphic {
     ctx.translate(this.cx, this.cy);
     ctx.rotate(this.rot);
     ctx.scale(1.0, this.yscale);
+    ctx.rotate(-this.rot);
     this._drawFlower(ctx, 0, 0);
     ctx.restore();
   }
