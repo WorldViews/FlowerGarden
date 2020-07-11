@@ -47,6 +47,7 @@ class Flower0 extends CanvasTool.Graphic {
       garden.colors[~~(Math.random() * garden.colors.length) + 1];
     f.numPetals = opts.numPetals || randomIntFromInterval(4, 10);
     f.spacing = randomIntFromInterval(4, 10);
+    f.showFaces = false;
     this.rot = 0;
     this.yscale = 1.0;
     this.radius = f.flowerRad;
@@ -102,7 +103,7 @@ class Flower0 extends CanvasTool.Graphic {
     var a = Math.atan2(dy, dx);
     var phi = Math.atan2(d, h);
     this.yscale = Math.cos(phi);
-    this.rot = a + Math.PI/2;
+    this.rot = a - Math.PI/2;
   }
 
   drawFlower(ctx) {
@@ -127,6 +128,32 @@ class Flower0 extends CanvasTool.Graphic {
     ctx.fillStyle = f.centerStyle;
     ctx.arc(cx, cy, f.centerRad * 10, 0, 2 * Math.PI);
     ctx.fill();
+    if (this.showFaces)
+      this.drawFace(ctx, cx, cy, f.centerRad);
+  }
+
+  drawFace(ctx, cx, cy, r) {
+    ctx.fillStyle = 'black';
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = .7;
+    r = r*10;
+    var d = .3*r;
+    var leyex = cx - d;
+    var leyey = cy - d;
+    var reyex = cx + d;
+    var reyey = cx - d;
+    var er = 0.1*r;
+    ctx.beginPath();
+    ctx.arc(leyex, leyey, er, 0, 2*Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(reyex, reyey, er, 0, 2*Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    var a0 = Math.PI/2 - 0.7;
+    var a1 = Math.PI/2 + 0.7;
+    ctx.arc(cx, cy, 0.5*r, a0, a1);
+    ctx.stroke();
   }
 
 
@@ -249,6 +276,7 @@ class Flower extends Flower0 {
     this.leafDy = 10;
     this.waveSpeed = getFloatParameterByName("wave", 0);
     this.lookAtH = getFloatParameterByName("lookAtH", 0);
+    this.showFaces = getBooleanParameterByName("faces", false);
   }
 
   draw(canvas, ctx) {
@@ -257,16 +285,6 @@ class Flower extends Flower0 {
     super.draw(canvas, ctx);
   }
 
-  XXXdrawFlower(ctx) {
-    ctx.save();
-    if (window.G) {
-
-      ctx.translate(10, 0);
-      ctx.rotate(G.r);
-    }
-    super.drawFlower(ctx);
-    ctx.restore();
-  }
 
   tick() {
     var tool = window.gtool;
