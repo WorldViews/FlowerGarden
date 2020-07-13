@@ -90,6 +90,7 @@ class GardenTool extends CanvasTool {
     ctx.shadowColor = "#333";
     ctx.globalAlpha = .85;
     this.flowers = [];
+    this.user = null;
     this.initGUI();
   }
 
@@ -132,6 +133,12 @@ class GardenTool extends CanvasTool {
       e.stopPropagation();
     });
     $(dropzone).on('drop', (e) => inst.handleDrop(e));
+    $("#login").click(e => inst.handleLogin());
+  }
+
+  handleLogin() {
+   // window.open('./PlayAuth/auth.html');
+    window.location = './PlayAuth/authGarden.html';
   }
 
 
@@ -316,7 +323,33 @@ class GardenTool extends CanvasTool {
       appId: "1:1080893233748:web:1614aab0d167c094322bc1"
     };
     // Initialize Firebase
+    //TODO: move firebase initialization to early place before we
+    // go to fetch data.
     firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged(user => {
+      console.log("authStateChange", user);
+      inst.user = user;
+      if (user) {
+        // User is signed in.
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+        $("#userInfo").html(user.displayName + " " + user.email);
+        $("#login").html("signout");
+        // ...
+      } else {
+        // User is signed out.
+        // ...
+        $("#userInfo").html("guest");
+        $("#login").html("login");
+      }
+    });
+
     var db = firebase.database();
     console.log("db:", db);
     //var dbRef = db.ref('/text');

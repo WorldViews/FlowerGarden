@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Garden Auth</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- include the core Firebase JS SDK first: update the version number as needed -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-app.js"></script>
+
+    <!-- include only the Firebase features as you need -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-auth.js"></script>
+
+    <!-- initialize the Firebase Auth UI module -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+
+    <!-- shouldn't need any other javascripts -->
+
+    <!-- Styling: -->
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="firebaseui-auth-container"></div>
+    </div>
+
+    <script type="text/javascript">
+        // Your web app's Firebase configuration:
+        /*
+        var firebaseConfig = {
+            apiKey: "AIzaSyAq4dQBC0iwxBQnSVbw2fCNJGHp20l7KG4",
+            authDomain: "virtual-flowers.firebaseapp.com",
+            databaseURL: "https://virtual-flowers.firebaseio.com",
+            projectId: "virtual-flowers",
+            storageBucket: "virtual-flowers.appspot.com",
+            messagingSenderId: "805770564705",
+            appId: "1:805770564705:web:4209d18b9edd946755c620",
+            measurementId: "G-D1F91JGZP7"
+        };
+        */
+        var firebaseConfig = {
+            apiKey: "AIzaSyBqAsqHaBZGT-UsC82ShV3koGWWgu-l8to",
+            authDomain: "fir-helloworld-39759.firebaseapp.com",
+            databaseURL: "https://fir-helloworld-39759.firebaseio.com",
+            projectId: "fir-helloworld-39759",
+            storageBucket: "fir-helloworld-39759.appspot.com",
+            messagingSenderId: "1080893233748",
+            appId: "1:1080893233748:web:1614aab0d167c094322bc1"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // FirebaseUI config.
+        var uiConfig = {
+            // Url to redirect to after a successful sign-in.
+            signInSuccessUrl: '/gardenAuth.html', // shouldn't it be crane.html?
+            callbacks: {
+                signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+                    // User successfully signed in.
+                    // Return type determines whether we continue the redirect automatically
+                    // or whether we leave that to developer to handle.				
+                    if (window.opener) {
+                        // The widget has been opened in a popup, so close the window
+                        // and return false to not redirect the opener.
+                        window.close();
+                        return false;
+                    } else {
+                        // The widget has been used in redirect mode, so we redirect to the signInSuccessUrl.
+                        return true;
+                    }
+                }
+            },
+            signInOptions: [
+                firebase.auth.EmailAuthProvider.PROVIDER_ID
+            ],
+            // Terms of service url:
+            tosUrl: './service.html',
+            // Privacy policy url:
+            privacyPolicyUrl: './privacy.html'
+        };
+
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        ui.disableAutoSignIn(); // is this necessary?
+
+        // The start method will wait until the DOM is loaded to include the FirebaseUI sign-in widget
+        // within the element corresponding to the selector specified.
+        ui.start('#firebaseui-auth-container', uiConfig);			
+    </script>
+</body>
+
+</html>
