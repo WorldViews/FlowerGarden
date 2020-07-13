@@ -42,8 +42,8 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
 
         .rightPanel {
             height: 640px;
-			overflow-y: auto;
-			overflow-x: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         #flowerCanvas {
@@ -94,11 +94,17 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
                 gtool = new GardenTool("flowerCanvas", { numStartupFlowers: 0, maxNumFlowers: 200 });
                 //gtool.addFlowers(2);
                 //gtool.startWildFlowers(4);
-                //gtool.loadPics(PICS);
                 gtool.start();
                 gtool.setView(0, 0, 800);
                 //gtool.loadGardenFile();
-                gtool.loadFromFirebase();
+                var gardenName = getParameterByName("garden");
+                if (gardenName) {
+                    var gardenURL = sprintf("gardens/%s.json", gardenName)
+                    gtool.loadGardenFile(gardenURL);
+                }
+                else {
+                    gtool.loadFromFirebase();
+                }
             });
 
         </script>

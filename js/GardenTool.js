@@ -185,6 +185,14 @@ class GardenTool extends CanvasTool {
     this.addGraphic(imgGraphic);
   }
 
+  async addItem(item) {
+    console.log("addItem", item);
+    var otype = item.type;
+    var obj = await createObject(item);
+    console.log("addItem got", obj);
+    this.addGraphic(obj);
+  }
+
   handleMouseDown(e) {
     if (e.which != 1)
       return;
@@ -276,7 +284,7 @@ class GardenTool extends CanvasTool {
   }
 
   // load flowers from a JSON object
-  loadGardenJSON(obj) {
+  async loadGardenJSON(obj) {
     console.log("loadGardenJSON");
     obj.flowers.forEach(flower => {
       console.log("flower:", flower);
@@ -287,7 +295,14 @@ class GardenTool extends CanvasTool {
         this.addPic(pic);
       })
     }
+    if (obj.items) {
+      obj.items.forEach(item => {
+        this.addItem(item);
+      })
+    }
   }
+
+
 
   async loadFromFirebase() {
     var inst = this;
@@ -369,24 +384,6 @@ class GardenTool extends CanvasTool {
     $("#instagramView").html("");
     if (project.instagramUsername || project.instagramTag)
       this.showInstagram(project);
-  }
-
-  showInstagramOLD(project) {
-    console.log("showInstagram");
-    $.instagramFeed({
-      //      'username': 'taikoin',
-      'username': project.instagramUsername,
-      //      'container': "#instagram-feed1",
-      'container': "#instagramView",
-      'display_profile': true,
-      'display_biography': true,
-      'display_gallery': true,
-      'callback': null,
-      'styling': true,
-      'items': 8,
-      'items_per_row': 4,
-      'margin': 1
-    });
   }
 
   showInstagram(project) {

@@ -128,3 +128,32 @@ function downloadFromBrowser(filename, text) {
 
     document.body.removeChild(element);
 }
+
+async function createObject(spec) {
+    var className = spec.type;
+    var cls;
+    try {
+        cls = eval(className);
+    }
+    catch (e) {};
+    if (!cls) {
+        cls = await loadPackage(className);
+    }
+    console.log("cls", cls);
+    var inst = new cls(spec);
+    console.log("inst", inst);
+    //window.INST = inst;
+    return inst;
+}
+
+async function loadPackage(packageName) {
+    console.log("Load class ", packageName);
+    url = sprintf("js/%s.js", packageName);
+    await $.getScript(url);
+    console.log("Successfully loaded", packageName);
+    //var cls = window[packageName];
+    var cls = eval(packageName);
+    console.log("cls", cls);
+    // var inst = eval(`new ${packageName}()`);
+    return cls;
+}
