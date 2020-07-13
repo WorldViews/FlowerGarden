@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+			#div1 { 
+				position: relative; 
+				height: 150px; 
+				width: 150px; 
+				margin-left: 60px; 
+				border: 1px solid blue; 
+				perspective: 100px; 
+			}
+			
+			#div2 { 
+				padding: 50px; 
+				position: absolute; 
+				border: 1px solid black; 
+				background-color: red; 
+				background: rgba(100,100,100,0.5); 
+				transform-style: preserve-3d; 
+				transform: rotateX(10deg); 
+			}
+    </style>		
+  </head>
+  <body>
+		<h1>Perspectives</h1>
+        <input id="tilt" style="width:80%;" type="range" min="-20" max="50">
+        <br>
+    <div id="div1">DIV1
+			<div id="div2">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/uUkcD9jD5xY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            $("#tilt").on('input', () => {
+                var val = $("#tilt").val();
+                console.log("val", val);
+                var tstr = 'rotateX('+val+'deg)';
+                console.log("tstr", tstr);
+                $("#div2").css('transform', tstr);
+            })
+        })
+    </script>
+	</body>
+</html>
