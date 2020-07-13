@@ -29,12 +29,27 @@ class PeaceTree extends CanvasTool.Graphic {
     }
 
     draw(canvas, ctx) {
-        this.drawText(canvas, ctx, this.x, this.y, this.name);
         this.drawRect(canvas, ctx, this.x, this.y, 10, 10);
+        var drawLines = true;
+        if (drawLines) {
+            var prevPt = this.pts[0];
+            ctx.beginPath();
+            ctx.lineWidth = 0.2;
+            ctx.strokeStyle = 'black';
+            for (var i=1; i<this.pts.length; i++) {
+                var pt = this.pts[i];
+                ctx.moveTo(prevPt[0], prevPt[1]);
+                ctx.lineTo(pt[0], pt[1]);
+                prevPt = pt;
+            }
+            ctx.stroke();
+        }
         for (var i=0; i<this.pts.length; i++) {
             var pt = this.pts[i];
-            this.drawCircle(canvas, ctx, 5, pt[0], pt[1]);
+            this.drawCircle(canvas, ctx, 3, pt[0], pt[1]);
         }
+
+        this.drawText(canvas, ctx, this.x, this.y, this.name);
     }
 }
 
