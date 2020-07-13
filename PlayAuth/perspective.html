@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+			#div1 { 
+				position: relative; 
+				height: 150px; 
+				width: 150px; 
+				margin-left: 60px; 
+				border: 1px solid blue; 
+				perspective: 100px; 
+			}
+			
+			#div2 { 
+				padding: 50px; 
+				position: absolute; 
+				border: 1px solid black; 
+				background-color: red; 
+				background: rgba(100,100,100,0.5); 
+				transform-style: preserve-3d; 
+				transform: rotateX(45deg); 
+			}
+    </style>		
+  </head>
+  <body>
+		<h1>Perspectives</h1>
+		<h2>100px</h2>
+    <div id="div1">DIV1
+			<div id="div2">DIV2</div>
+    </div>
+	</body>
+</html>
