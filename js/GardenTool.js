@@ -137,8 +137,17 @@ class GardenTool extends CanvasTool {
   }
 
   handleLogin() {
-   // window.open('./PlayAuth/auth.html');
-    window.location = './PlayAuth/authGarden.html';
+    // window.open('./PlayAuth/auth.html');
+    if (this.user) {
+      firebase.auth().signOut().then(function () {
+        // Sign-out successful.
+      }).catch(function (error) {
+        // An error happened.
+      });
+    }
+    else {
+      window.location = './PlayAuth/authGarden.html';
+    }
   }
 
 
@@ -326,6 +335,7 @@ class GardenTool extends CanvasTool {
     //TODO: move firebase initialization to early place before we
     // go to fetch data.
     firebase.initializeApp(firebaseConfig);
+    inst.firebase = firebase;
 
     firebase.auth().onAuthStateChanged(user => {
       console.log("authStateChange", user);
