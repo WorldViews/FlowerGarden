@@ -318,10 +318,10 @@ class GardenTool extends CanvasTool {
     }
   }
 
-
-
-  async loadFromFirebase() {
+  async initFirebase() {
     var inst = this;
+    if (inst.firebase)
+      return;
     var firebaseConfig = {
       apiKey: "AIzaSyBqAsqHaBZGT-UsC82ShV3koGWWgu-l8to",
       authDomain: "fir-helloworld-39759.firebaseapp.com",
@@ -351,16 +351,29 @@ class GardenTool extends CanvasTool {
         var providerData = user.providerData;
         $("#userInfo").html(user.displayName + " " + user.email);
         $("#login").html("signout");
+        inst.heartBeater = setInterval(() => inst.produceHeartBeat(), 5000);
         // ...
       } else {
         // User is signed out.
         // ...
         $("#userInfo").html("guest");
         $("#login").html("login");
+        if (inst.heartBeater) {
+          clearInterval(inst.heartBeater);
+          inst.heartBeater = null;
+        }
       }
     });
+  }
 
-    var db = firebase.database();
+  produceHeartBeat() {
+    console.log("heartbeat tick...");
+  }
+
+  async loadFromFirebase() {
+    var inst = this;
+    this.initFirebase();
+    var db = inst.firebase.database();
     console.log("db:", db);
     //var dbRef = db.ref('/text');
     var dbRef = db.ref();
