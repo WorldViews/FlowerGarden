@@ -225,7 +225,8 @@ class GardenTool extends CanvasTool {
     //var ctx = this.canvas.getContext('2d');
     var ctx = this.ctx;
     var canvas = this.canvas;
-    ctx.resetTransform();
+    //ctx.resetTransform(); // stupid -- internet explorer doesn't have this
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -336,6 +337,13 @@ class GardenTool extends CanvasTool {
     // go to fetch data.
     firebase.initializeApp(firebaseConfig);
     inst.firebase = firebase;
+    var db = firebase.database();
+    inst.firebaseDB = db;
+    var dbRef = db.ref('/userState');
+    //console.log("Got dbRef", dbRef);
+    dbRef.on('value', snap => {
+      inst.noticeUserStates(snap);
+    });
 
     firebase.auth().onAuthStateChanged(user => {
       console.log("authStateChange", user);
@@ -351,7 +359,7 @@ class GardenTool extends CanvasTool {
         var providerData = user.providerData;
         $("#userInfo").html(user.displayName + " " + user.email);
         $("#login").html("signout");
-        inst.heartBeater = setInterval(() => inst.produceHeartBeat(), 5000);
+        inst.heartBeater = setInterval(() => inst.produceHeartBeat(), 15000);
         // ...
       } else {
         // User is signed out.
@@ -366,30 +374,48 @@ class GardenTool extends CanvasTool {
     });
   }
 
-  produceHeartBeat() {
-    console.log("heartbeat tick...");
+  noticeUserStates(snap) {
+    console.log("noticeUserStates Got", snap);
+    var obj = snap.val();
+    console.log("obj", obj);
+    var jstr = JSON.stringify(obj, null, 3);
+    console.log("userState", jstr);
+  }
+
+
+  async produceHeartBeat() {
+    var uid = this.user.uid;
+    var email = this.user.email;
+    var t = getClockTime();
+    console.log("heartbeat tick...", uid, email, t);
+    var userState = {
+      email, uid, energy: 3, affect: 5, lastUpdate: t
+    }
+    console.log("userState", userState);
+    var dbRef = this.firebaseDB.ref();
+    await dbRef.child("/userState/"+uid).set(userState);
+    console.log("Successfully updated");
+
   }
 
   async loadFromFirebase() {
     var inst = this;
     this.initFirebase();
-    var db = inst.firebase.database();
+    var db = inst.firebaseDB;
     console.log("db:", db);
-    //var dbRef = db.ref('/text');
-    var dbRef = db.ref();
+    var dbRef = db.ref('/topics');
     console.log("Got dbRef", dbRef);
     dbRef.on('value', snap => {
-      console.log("Got", snap);
+        console.log("Got", snap);
       var obj = snap.val();
       console.log("obj", obj);
       var jstr = JSON.stringify(obj, null, 3);
-      console.log("projects", jstr);
-      inst.showProjects(obj.topics);
+      inst.showProjects(obj);
     });
   }
 
   async loadGardenFromDB(url) {
-    url = url || "/getGaden";
+    url = url || "/getGarden";
     var obj = await loadJSON(url);
     console.log("got garden data: " + JSON.stringify(obj));
     this.loadGardenJSON(obj);

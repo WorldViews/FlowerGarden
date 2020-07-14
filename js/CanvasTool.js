@@ -269,7 +269,8 @@ class CanvasTool {
         //var ctx = this.canvas.getContext('2d');
         var ctx = this.ctx;
         var canvas = this.canvas;
-        ctx.resetTransform();
+        //ctx.resetTransform(); // stupid -- internet explorer doesn't have this
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.globalAlpha = 1;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -281,7 +282,8 @@ class CanvasTool {
     }
 
     setTransform(ctx) {
-        ctx.resetTransform();
+        //ctx.resetTransform(); // stupid -- internet explorer doesn't have this
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.translate(this.tx, this.ty);
         ctx.scale(this.sx, this.sy);
         //ctx.translate(this.tx, this.ty);
