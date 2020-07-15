@@ -19,7 +19,7 @@ class FireDB:
         self.auth = self.firebase.auth()
         print("got auth:", self.auth)
         #user = auth.sign_in_with_email_and_password("donkimber@gmail.com", "chickenlittle")
-        self.user = self.auth.sign_in_with_email_and_password("donkimber@gmail.com", "xxxyyy")
+        self.user = self.auth.sign_in_with_email_and_password("donkimber@gmail.com", "xxxxxx")
         #print("user", user)
         self.token = self.user['idToken']
         print("token", self.token)
@@ -51,6 +51,17 @@ class FireDB:
         #print("obj:", obj)
         projObjs = obj['topics']
         jstr = json.dumps(projObjs, indent=3)
+        print(jstr)
+        if jsonPath:
+            open(jsonPath, 'w').write(jstr)
+
+    def saveDB(self, jsonPath=None):
+        print("--------save DB -----------")
+
+        #obj = db.child("text").get(token)
+        objRef = self.db.get(self.token)
+        obj = objRef.val()
+        jstr = json.dumps(obj, indent=3)
         print(jstr)
         if jsonPath:
             open(jsonPath, 'w').write(jstr)

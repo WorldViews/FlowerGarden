@@ -57,7 +57,7 @@
          "name": "Drone Views"
       },
       {
-         "description": "<h2 class=\"section-heading text-uppercase\"><img src=\"http://dance4healing.com/sandbox/img/d4h/class3.jpg\" width=\"369\" height=\"205\" /></h2>\n<h2 class=\"section-heading text-uppercase\">DANCE4HEALING</h2>\n<h4 class=\"section-subheading text-muted\">Educating, empowering, and inspiring anyone to leverage technology to build healthy habits with creative arts in a fun, easy way.</h4>\n<p>See <a href=\"http://dance4healing.com/sandbox/index.html\">Dance4Healing</a></p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+         "description": "<h2 class=\"section-heading text-uppercase\"><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"http://dance4healing.com/sandbox/img/d4h/class3.jpg\" width=\"369\" height=\"205\" /></h2>\n<h2 class=\"section-heading text-uppercase\">DANCE4HEALING</h2>\n<h4 class=\"section-subheading text-muted\">Educating, empowering, and inspiring anyone to leverage technology to build healthy habits with creative arts in a fun, easy way.</h4>\n<p>See <a href=\"http://dance4healing.com/sandbox/index.html\">Dance4Healing</a></p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
          "id": "Dance4Healing",
          "imageURL": "https://dance4healing.com/sandbox/img/d4h/d4hlogowtagline_sm.png",
          "infoURL": "https://dance4healing.com/sandbox/index.html",
@@ -100,6 +100,7 @@
          "id": "Reach_and_Teach",
          "imageURL": "https://reachandteach.indiecommerce.com/sites/reachandteach.indiecommerce.com/files/rtlogo_books_toys_gifts1.jpg",
          "infoURL": "https://shop.reachandteach.com/",
+         "instagramUsername": "reachandteach1",
          "name": "Reach and Teach",
          "projectType": "business"
       },
@@ -145,8 +146,9 @@
          "projectType": "project"
       },
       {
-         "description": "<p><a href=\"https://limitlesshorizonsixil.org/\"><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://limitlesshorizonsixil.org/wp-content/uploads/2013/11/Logo-with-tagline-for-website2.png\" /></a></p>\n<p>Cecillia is lives in Chajul Guatamala, and is getting a college degree on computer technology.</p>\n<p>She is being sponsored by some of the Garden teem.</p>\n<p>&nbsp;</p>",
+         "description": "<p><a href=\"https://limitlesshorizonsixil.org/\"><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://limitlesshorizonsixil.org/wp-content/uploads/2013/11/Logo-with-tagline-for-website2.png\" /></a></p>\n<p>Cecillia lives in Chajul Guatamala, and is getting a college degree in computer technology.&nbsp; She also helps other students in the community.</p>\n<p>She is being sponsored by some of the Garden team.</p>\n<p>&nbsp;</p>",
          "id": "Cecilia_Computer_School",
+         "imageURL": "https://i0.wp.com/limitlesshorizonsixil.org/wp-content/uploads/2020/06/Osman-y-papa.jpeg?resize=1080%2C675&ssl=1",
          "infoURL": "https://limitlesshorizonsixil.org/",
          "name": "Cecilia Computer School",
          "projectType": "project"
@@ -165,6 +167,34 @@
          "id": "Munyuns_Masks",
          "name": "Munyun's Masks",
          "projectType": "article"
+      },
+      {
+         "description": "<p>Anika has some awesome anime artwork.</p>\n<p>&nbsp;</p>",
+         "id": "proj_1594164725_272",
+         "instagramUsername": "qiujang",
+         "name": "Anika's Artwork",
+         "projectType": "artist"
+      },
+      {
+         "description": "<p>&nbsp;</p>\n<h3>This is a really cool project Kathleen Tuite is working on.&nbsp; She will tell you more about it.</h3>\n<h5><a href=\"https://photograph.superfiretruck.com/\">https://photograph.superfiretruck.com/</a></h5>",
+         "id": "proj_1594415133_248",
+         "imageURL": "https://graphphotography.s3.amazonaws.com/photograph/photos/8e/ae/8eae4ee49df7bbc3163be04df4ba2739_300.jpg?AWSAccessKeyId=AKIAZXBJGGNVYOKWWMNV&Signature=4E%2Ba264RJ0vcy5rswwzwgFPPTDI%3D&Expires=1594423356",
+         "infoURL": "https://photograph.superfiretruck.com/",
+         "name": "PhotoGraph"
+      },
+      {
+         "description": "<p><a class=\"fusion-logo-link\" href=\"https://www.paradoxsports.org/\"><img class=\"fusion-standard-logo\" style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://www.paradoxsports.org/wp-content/uploads/2019/10/Paradox-Blue-SQUARE-150x150-1.png\" srcset=\"https://www.paradoxsports.org/wp-content/uploads/2019/10/Paradox-Blue-SQUARE-150x150-1.png 1x\" alt=\"Paradox Sports Logo\" width=\"151\" height=\"151\" /></a></p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>Paradox Sports is dedicated to transforming lives and communities through adaptive climbing opportunities that defy convention.</p>\n<p>&nbsp;</p>",
+         "id": "proj_1594418158_294",
+         "infoURL": "https://www.paradoxsports.org/#",
+         "instagramTag": "#paradoxsports",
+         "instagramUsername": "paradoxsports",
+         "name": "Paradox Sports",
+         "projectType": "Organization"
+      },
+      {
+         "description": "<p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://www.crophungerwalk.org/Content/Events/CWSGlobal/img/crop-hunger-walk-logo-medium.png\" alt=\"CROP Hunger Walks\" width=\"338\" height=\"106\" /></p>\n<h4>We believe in ending hunger. And, in 2020, we will continue to fight against the new challenges of disease and disaster that leave people hungry.<br /><br />Join with us in raising funds to help neighbors near and far get the meals they need this year.</h4>",
+         "id": "proj_1594675095_034",
+         "name": "CROP Hunger Walk"
       }
    ]
 }
