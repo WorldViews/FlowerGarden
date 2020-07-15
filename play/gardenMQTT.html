@@ -1,0 +1,55 @@
+<!--
+ *-->
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../js/libs/paho-mqtt.js"></script>
+    <script src="../js/GardenMQTT.js"></script>
+    <style>
+        #jsonHere {
+            max-height: 60vh;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello</h1>
+    <button id="send" >click me!</button><br>
+    <button id="peace">Peace!</button><br>
+    <button id="peace2">Peace!!</button>
+    <pre id="jsonArea"></pre>
+    <script>
+
+        var mqtt = null;
+
+        $(document).ready(() => {
+            mqtt = new GardenMQTT();
+            mqtt.connect();
+            $("#send").click(() => {
+                console.log("click send");
+                mqtt.sendMessage("foo");
+            });
+            $("#peace").click(() => {
+                console.log("peace");
+                t = new Date().getTime();
+                url = "http://www.reachandteach.com/peacetree.php?rttime="+t;
+                console.log("url: ", url);
+                $.getJSON(url);
+            });
+            $("#peace2").click(() => {
+                console.log("peace2");
+                t = new Date().getTime();
+                url = "http://www.reachandteach.com/peacetree2.php?rttime="+t;
+                console.log("url: ", url);
+                 $.getJSON(url);
+            });
+        })
+    </script>
+</body>
+
+</html>

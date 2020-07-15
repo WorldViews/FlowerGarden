@@ -14,18 +14,51 @@ class PeaceTree extends CanvasTool.Graphic {
         this.pts = [];
         this.addSpiral(32, 25);
         window.PT = this;
+        this.value = 0;
+        this.dataUrl = "https://io.adafruit.com/api/v2/reachandteach/feeds/peacetree";
+        this.getData();
+        this.mqtt = null;
+        this.startMQTT();
+    }
+
+    startMQTT() {
+        var inst = this;
+        try {
+            this.mqtt = new GardenMQTT();
+            this.mqtt.observer = val => inst.noticeVal(val);
+            this.mqtt.connect();
+        }
+        catch (e) {
+            console.log("Cannot get and connect MQTT", e);
+        }
+    }
+
+    noticeVal(val) {
+        console.log("PeaceTree.noticeVal", val);
+        this.value = Number(val);
+    }
+
+    async getData() {
+        var data = await loadJSON(this.dataUrl);
+        console.log("***** PeaceTree score ****", data);
+        this.value = Number(data.last_value);
     }
 
     addSpiral(n, r0) {
         this.pts = [];
         var r = r0;
-        for (var i=0; i<n; i++) {
-            var t = 2*i;
-            var x = this.x + r* Math.cos(t);
-            var y = this.y + r*Math.sin(t);
-            this.pts.push([x,y]);
+        for (var i = 0; i < n; i++) {
+            var t = 2 * i;
+            var x = this.x + r * Math.cos(t);
+            var y = this.y + r * Math.sin(t);
+            this.pts.push([x, y]);
             r += 1;
         }
+    }
+
+    getColor() {
+        var r = Math.floor(this.value/4);
+        return sprintf("rgb(%d,%d,%d)", r, 100, 0);
     }
 
     draw(canvas, ctx) {
@@ -36,7 +69,7 @@ class PeaceTree extends CanvasTool.Graphic {
             ctx.beginPath();
             ctx.lineWidth = 0.2;
             ctx.strokeStyle = 'black';
-            for (var i=1; i<this.pts.length; i++) {
+            for (var i = 1; i < this.pts.length; i++) {
                 var pt = this.pts[i];
                 ctx.moveTo(prevPt[0], prevPt[1]);
                 ctx.lineTo(pt[0], pt[1]);
@@ -44,7 +77,8 @@ class PeaceTree extends CanvasTool.Graphic {
             }
             ctx.stroke();
         }
-        for (var i=0; i<this.pts.length; i++) {
+        this.fillStyle = this.getColor();
+        for (var i = 0; i < this.pts.length; i++) {
             var pt = this.pts[i];
             this.drawCircle(canvas, ctx, 3, pt[0], pt[1]);
         }

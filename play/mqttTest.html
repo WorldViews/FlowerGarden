@@ -1,0 +1,76 @@
+<!--
+ *-->
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../js/libs/paho-mqtt.js"></script>
+    <style>
+        #jsonHere {
+            max-height: 60vh;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello</h1>
+    <input id="addButton" type="button" value="click me!"><br>
+    <input id="email" width="200px"><br>
+    <input id="password" type="password"><br>
+    <pre id="jsonArea"></pre>
+    <script>
+
+        // Create a client instance
+        var host = "io.adafruit.com";
+        var port = 443;
+        //var port = 8883;
+        var client = new Paho.MQTT.Client(host, port, "test1234");
+        console.log("client", client);
+
+        // set callback handlers
+        client.onConnectionLost = onConnectionLost;
+        client.onMessageArrived = onMessageArrived;
+
+        // connect the client
+        opts = { onSuccess: onConnect,
+                 userName: "donkimber",
+                 password: "aio_pNca44mdiZm4C6tpMK3yGOPx3eBA"};
+        console.log("initiating connect");
+        client.connect(opts);
+        console.log("initiated....");
+
+        // called when the client connects
+        function onConnect() {
+            // Once a connection has been made, make a subscription and send a message.
+            console.log("onConnect");
+            client.subscribe("reachandteach/feeds/peacetree");
+            message = new Paho.MQTT.Message("Hello");
+            message.destinationName = "World";
+            //client.send(message);
+        }
+
+        // called when the client loses its connection
+        function onConnectionLost(responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.log("onConnectionLost:" + responseObject.errorMessage);
+            }
+        }
+
+        // called when a message arrives
+        function onMessageArrived(message) {
+            console.log("onMessageArrived:" + message.payloadString);
+        }
+
+        $(document).ready(() => {
+            $("#addButton").click(() => {
+                console.log("click");
+             });
+        })
+    </script>
+</body>
+
+</html>

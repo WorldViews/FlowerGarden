@@ -21,7 +21,7 @@ class Bobble:
         host="io.adafruit.com"
         print("Connecting to", host)
         #client.connect("mqtt.eclipse.org", 1883, 60)
-        client.username_pw_set("donkimber", "aio_ZScm78k3SWhSxScOkB8v6kb5ff6h")
+        client.username_pw_set("donkimber", "aio_pNca44mdiZm4C6tpMK3yGOPx3eBA")
         client.connect(host, 1883, 60)
 
     # The callback for when the client receives a CONNACK response from the server.
@@ -79,6 +79,6 @@ def test():
     t.run()
 
 if __name__ == '__main__':
-    #peaceTree()
-    test()
+    peaceTree()
+    #test()
 
