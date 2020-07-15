@@ -27,7 +27,8 @@ class GardenMQTT {
         var opts = {
             onSuccess: () => inst.onConnect(),
             userName: "donkimber",
-            password: "aio_pNca44mdiZm4C6tpMK3yGOPx3eBA"
+            password: "aio_pNca44mdiZm4C6tpMK3yGOPx3eBA",
+            useSSL: true
         };
         console.log("initiating connect", opts);
         this.client.connect(opts);

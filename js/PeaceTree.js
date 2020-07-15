@@ -18,7 +18,8 @@ class PeaceTree extends CanvasTool.Graphic {
         this.dataUrl = "https://io.adafruit.com/api/v2/reachandteach/feeds/peacetree";
         this.getData();
         this.mqtt = null;
-        this.startMQTT();
+        //this.startMQTT();
+        this.startPolling();
     }
 
     startMQTT() {
@@ -36,6 +37,11 @@ class PeaceTree extends CanvasTool.Graphic {
     noticeVal(val) {
         console.log("PeaceTree.noticeVal", val);
         this.value = Number(val);
+    }
+
+    startPolling() {
+        var inst = this;
+        this.pollingId = setInterval(() => inst.getData(), 5000);
     }
 
     async getData() {
