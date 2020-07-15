@@ -106,3 +106,4 @@ dist
 # TernJS port file
 .tern-port
 *.pyc
+play/firebaseDB.bak.0.json
