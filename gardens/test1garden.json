@@ -43,11 +43,31 @@
       }
    ],
    "items": [
-       {
-           "x": 200,
-           "y": -100,
-           "type": "PeaceTree",
-           "name": "Reach&Teach"
-       }
+      {
+         "x": -250,
+         "y": -200,
+         "type": "PeaceTree",
+         "name": "Reach&Teach"
+      },
+      {
+         "x": 100,
+         "y": -200,
+         "type": "Taiko",
+         "name": "Taiko1"
+      }
+   ],
+   "gardeners": [
+      {
+         "type": "WildFlowers",
+         "x": 20,
+         "y": 30,
+         "maxNumWildFlowers": 5
+      },
+      {
+         "type": "xProjectGarden",
+         "x": 20,
+         "y": 30,
+         "dbName": "foo"
+      }
    ]
 }

@@ -439,6 +439,8 @@ app.get('/quire/api*', async function (req, res) {
     //res.end(jstr);
     res.json(obj);
 });
+// End of quire stuff..
+
 
 /////////////////////////////////////////////////////////////////////
 // Setup Socket.io server listening to our app

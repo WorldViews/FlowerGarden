@@ -157,18 +157,6 @@ class GardenTool extends CanvasTool {
     super.start();
   }
 
-  startWildFlowers(maxNumWildFlowers) {
-    var inst = this;
-    inst.numWildFlowers = 0;
-    inst.maxNumWildFlowers = maxNumWildFlowers;
-    setInterval(() => {
-      if (inst.numWildFlowers < inst.maxNumWildFlowers) {
-        inst.numWildFlowers++;
-        inst.addFlowers(1);
-      }
-    }, 500);
-  }
-
   loadPics(pics) {
     var inst = this;
     pics.forEach(pic => inst.addPic(pic));
@@ -203,10 +191,16 @@ class GardenTool extends CanvasTool {
 
   async addItem(item) {
     console.log("addItem", item);
+    item.gtool = this;
     var otype = item.type;
     var obj = await createObject(item);
     console.log("addItem got", obj);
-    this.addGraphic(obj);
+    if (obj == null) {
+      console.log("Couldn't create", item);
+      return;
+    }
+    if (obj instanceof CanvasTool.Graphic)
+      this.addGraphic(obj);
   }
 
   handleMouseDown(e) {
@@ -237,86 +231,27 @@ class GardenTool extends CanvasTool {
     //ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
-  async loadProjectFile(url) {
-    if (url == null) {
-      garden = getParameterByName("projects");
-      if (garden)
-        url = garden + ".json"
-    }
-    url = url || "projects.json";
-    console.log("Reading project file " + url);
-    var obj = await loadJSON(url);
-    //console.log("got project data: " + JSON.stringify(obj));
-    this.showProjects(obj);
-  }
-
-  showProjects(obj) {
-    this.addProjectFlowers(obj);
-
-    var pic = new FramedPic({
-      id: 'PicViewer', x: 0, y: -200,
-      width: 160, height: 120, url: "images/logo1.png"
-    });
-    this.addGraphic(pic);
-    this.picViewer = pic;
-  }
-
-  addProjectFlowers(obj) {
-    console.log("addProjectFlowers", obj);
-    var i = 0;
-    var ncols = 5;
-    var spacing = 100;
-    var x0 = -200;
-    var y0 = 0;
-    obj.projects.forEach(proj => {
-      var row = i % ncols;
-      var col = Math.floor(i / ncols);
-      console.log("project", proj);
-      var name = proj.name;
-      var desc = proj.descriptiong;
-      console.log(row, col, "name:", name);
-      var opts = { x: x0 + row * spacing, y: y0 + col * spacing };
-      opts.id = proj.id;
-      opts.targetURL = proj.infoURL || "https://worldviews.org";
-      if (proj.imageURL) {
-        opts.imageURL = proj.imageURL;
-      }
-      opts.project = proj;
-      this.addFlower(opts);
-      i++;
-    })
-  }
-
   async loadGardenFile(url) {
+    var gardenName = "garden0";
     if (url == null) {
-      garden = getParameterByName("garden");
-      if (garden)
-        url = garden + ".json"
+      gardenName = getParameterByName("garden");
+      if (gardenName)
+        url = gardenName + ".json"
     }
     url = url || "garden.json";
     console.log("Reading garden file " + url);
     var obj = await loadJSON(url);
     console.log("got garden data: " + JSON.stringify(obj));
-    this.loadGardenJSON(obj);
+    return await this.loadGarden(obj);
+    return garden;
   }
 
   // load flowers from a JSON object
-  async loadGardenJSON(obj) {
-    console.log("loadGardenJSON");
-    obj.flowers.forEach(flower => {
-      console.log("flower:", flower);
-      this.addFlower(flower);
-    })
-    if (obj.pictures) {
-      obj.pictures.forEach(pic => {
-        this.addPic(pic);
-      })
-    }
-    if (obj.items) {
-      obj.items.forEach(item => {
-        this.addItem(item);
-      })
-    }
+  async loadGarden(obj) {
+    console.log("loadGarden");
+    var garden = new Garden({name: "garden0", gtool: this});
+    garden.load(obj);
+    return garden;
   }
 
   async initFirebase() {
@@ -399,26 +334,7 @@ class GardenTool extends CanvasTool {
   }
 
   async loadFromFirebase() {
-    var inst = this;
-    this.initFirebase();
-    var db = inst.firebaseDB;
-    console.log("db:", db);
-    var dbRef = db.ref('/topics');
-    console.log("Got dbRef", dbRef);
-    dbRef.on('value', snap => {
-        console.log("Got", snap);
-      var obj = snap.val();
-      console.log("obj", obj);
-      var jstr = JSON.stringify(obj, null, 3);
-      inst.showProjects(obj);
-    });
-  }
-
-  async loadGardenFromDB(url) {
-    url = url || "/getGarden";
-    var obj = await loadJSON(url);
-    console.log("got garden data: " + JSON.stringify(obj));
-    this.loadGardenJSON(obj);
+    var garden = new ProjectGarden({name: "projects", gtool, dbName: "foo"});
   }
 
   getGardenStateObj() {
@@ -453,7 +369,7 @@ class GardenTool extends CanvasTool {
         var data = JSON.parse(jstr);
         console.log("data", data);
         inst.clear();
-        inst.loadGardenJSON(data);
+        inst.loadGarden(data);
       };
       var txt = reader.readAsText(file);
     }

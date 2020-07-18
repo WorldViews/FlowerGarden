@@ -82,6 +82,7 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
     <script src="js/libs/sprintf.js"></script>
     <script src="js/CanvasTool.js"></script>
     <script src="js/GardenTool.js"></script>
+    <script src="js/Garden.js">d</script>
     <script src="js/Flower.js"></script>
     <script src="js/util.js"></script>
     <script src="js/libs/jquery.instagramFeed.js"></script>
@@ -93,8 +94,8 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script>
-        var garden;
         var gtool;
+        var garden;
 
         $(document).ready(function () {
             //garden = new FlowerGarden();
@@ -108,10 +109,10 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
             var gardenName = getParameterByName("garden");
             if (gardenName) {
                 var gardenURL = sprintf("gardens/%s.json", gardenName)
-                gtool.loadGardenFile(gardenURL);
+                garden = gtool.loadGardenFile(gardenURL);
             }
             else {
-                gtool.loadFromFirebase();
+                garden = gtool.loadFromFirebase();
             }
         });
 

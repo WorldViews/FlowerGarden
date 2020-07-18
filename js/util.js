@@ -135,11 +135,21 @@ async function createObject(spec) {
     try {
         cls = eval(className);
     }
-    catch (e) {};
+    catch (e) {
+        console.log("no class "+ className);
+    };
     if (!cls) {
-        cls = await loadPackage(className);
+        try {
+            cls = await loadPackage(className);
+        }
+        catch (e) {
+            alert("Can't load class "+className);
+            return null;
+        }
     }
     console.log("cls", cls);
+    if (cls == null)
+        return null;
     var inst = new cls(spec);
     console.log("inst", inst);
     //window.INST = inst;
@@ -149,8 +159,14 @@ async function createObject(spec) {
 async function loadPackage(packageName) {
     console.log("Load class ", packageName);
     url = sprintf("js/%s.js", packageName);
-    await $.getScript(url);
-    console.log("Successfully loaded", packageName);
+    try {
+        await $.getScript(url);
+        console.log("Successfully loaded", packageName);
+    }
+    catch (e) {
+        console.log("Unable to load url", url);
+        return null;
+    }
     //var cls = window[packageName];
     var cls = eval(packageName);
     console.log("cls", cls);

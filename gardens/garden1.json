@@ -1,0 +1,40 @@
+{
+   "flowers": [
+   ],
+   "pictures": [
+   ],
+   "items": [
+      {
+         "x": -300,
+         "y": -200,
+         "type": "PeaceTree",
+         "name": "Reach&Teach"
+      },
+      {
+         "type": "Taiko",
+         "name": "Taiko1", 
+         "x": 200, "y": -200
+      },
+      {
+         "type": "Penguin",
+         "name": "penguin1", 
+         "x": 280, "y": -200, "targetURL": "https://xerox.com"
+      },
+      {
+         "type": "Bee",
+         "x": 280, "y": 100
+      },
+      {
+         "type": "WildFlowers",
+         "x": 20,
+         "y": 30,
+         "maxNumWildFlowers": 5
+      },
+      {
+         "type": "ProjectGarden",
+         "x": 20,
+         "y": 30,
+         "dbName": "foo"
+      }
+   ]
+}
