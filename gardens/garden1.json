@@ -7,7 +7,7 @@
       {
          "x": -300,
          "y": -200,
-         "type": "PeaceTree",
+         "type": "PeaceTree", "id": "peaceTree1",
          "name": "Reach&Teach"
       },
       {
@@ -28,7 +28,8 @@
          "type": "WildFlowers",
          "x": 20,
          "y": 30,
-         "maxNumWildFlowers": 5
+         "xMin": -350, "xMax": -270, "yMin": -80, "yMax": 400,
+         "maxNumWildFlowers": 25
       },
       {
          "type": "ProjectGarden",

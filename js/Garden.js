@@ -14,13 +14,6 @@ class Garden {
         console.log("loadGardenJSON");
         var gtool = this.gtool;
         var inst = this;
-        /*
-        if (obj.gardeners) {
-            obj.gardeners.forEach(async spec => {
-                await inst.loadGardenerSpec(spec);
-            })
-        }
-        */
         if (obj.flowers) {
             obj.flowers.forEach(flower => {
                 console.log("flower:", flower);
@@ -51,22 +44,37 @@ class Garden {
 
 class WildFlowers {
     constructor(opts) {
-        console.log("******* Bingo bingo .... WildFlowers...");
+        console.log("******* Bingo bingo .... WildFlowers...", opts);
         this.gtool = opts.gtool;
         var num = opts.maxNumWildFlowers || 100;
+        this.xMin = opts.xMin || -100;
+        this.xMax = opts.xMax || 100;
+        this.yMin = opts.yMin || -100,
+        this.yMax = opts.yMax || 100;
+        this.timer = null;
+        this.flowers = [];
         this.startWildFlowers(num);
-    }
+        window.WF = this;
+        console.log("xLow xHigh", this.xLow, this.xHigh);
+     }
 
     startWildFlowers(maxNumWildFlowers) {
         var inst = this;
         inst.numWildFlowers = 0;
         inst.maxNumWildFlowers = maxNumWildFlowers;
-        setInterval(() => {
-            if (inst.numWildFlowers < inst.maxNumWildFlowers) {
-                inst.numWildFlowers++;
-                inst.gtool.addFlowers(1);
-            }
-        }, 500);
+        this.timer = setInterval(() => inst.addFlower(), 500);
+    }
+
+    addFlower() {
+        if (this.numWildFlowers < this.maxNumWildFlowers) {
+            this.numWildFlowers++;
+            var x = uniform(this.xMin, this.xMax);
+            var y = uniform(this.yMin, this.yMax);
+            var opts = {x,y};
+            console.log("adding flower ", opts);
+            var f = this.gtool.addFlower(opts);
+            this.flowers.push(f);
+        }
     }
 }
 

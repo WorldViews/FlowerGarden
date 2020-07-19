@@ -47,7 +47,7 @@ class PeaceTree extends CanvasTool.Graphic {
     async getData() {
         var data = await loadJSON(this.dataUrl);
         console.log("***** PeaceTree score ****", data);
-        this.value = Number(data.last_value);
+        this.noticeVal(Number(data.last_value));
     }
 
     addSpiral(n, r0) {
