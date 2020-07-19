@@ -224,11 +224,14 @@ class GardenTool extends CanvasTool {
     ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = '#999';
-    ctx.fillStyle = this.background;
-    ctx.strokeRect(0, 0, canvas.width, canvas.height);
-    //ctx.fillRect(0, 0, canvas.width, canvas.height);
+    var drawBorder = false;
+    if (drawBorder) {
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = '#999';
+      ctx.fillStyle = this.background;
+      ctx.strokeRect(0, 0, canvas.width, canvas.height);
+      //ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
   }
 
   async loadGardenFile(url) {
@@ -249,7 +252,7 @@ class GardenTool extends CanvasTool {
   // load flowers from a JSON object
   async loadGarden(obj) {
     console.log("loadGarden");
-    var garden = new Garden({name: "garden0", gtool: this});
+    var garden = new Garden({ name: "garden0", gtool: this });
     garden.load(obj);
     return garden;
   }
@@ -310,11 +313,11 @@ class GardenTool extends CanvasTool {
   }
 
   noticeUserStates(snap) {
-    console.log("noticeUserStates Got", snap);
+    //console.log("noticeUserStates Got", snap);
     var obj = snap.val();
-    console.log("obj", obj);
+    //console.log("obj", obj);
     var jstr = JSON.stringify(obj, null, 3);
-    console.log("userState", jstr);
+    //console.log("userState", jstr);
   }
 
 
@@ -326,15 +329,14 @@ class GardenTool extends CanvasTool {
     var userState = {
       email, uid, energy: 3, affect: 5, lastUpdate: t
     }
-    console.log("userState", userState);
+    //console.log("userState", userState);
     var dbRef = this.firebaseDB.ref();
-    await dbRef.child("/userState/"+uid).set(userState);
-    console.log("Successfully updated");
-
+    await dbRef.child("/userState/" + uid).set(userState);
+    //console.log("Successfully updated");
   }
 
   async loadFromFirebase() {
-    var garden = new ProjectGarden({name: "projects", gtool, dbName: "foo"});
+    var garden = new ProjectGarden({ name: "projects", gtool, dbName: "foo" });
   }
 
   getGardenStateObj() {

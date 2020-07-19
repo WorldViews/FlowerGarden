@@ -106,13 +106,13 @@ class ProjectGarden extends Garden {
 
     async loadProjectFile(url) {
         if (url == null) {
-            garden = getParameterByName("projects");
-            if (garden)
-                url = garden + ".json"
+            var projs = getParameterByName("projects");
+            if (projs)
+                url = projs + ".json"
         }
         url = url || "projects.json";
         console.log("Reading project file " + url);
-        var obj = await load(url);
+        var obj = await loadJSON(url);
         //console.log("got project data: " + JSON.stringify(obj));
         this.load(obj);
     }

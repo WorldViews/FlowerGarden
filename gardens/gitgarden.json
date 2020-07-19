@@ -1,0 +1,15 @@
+{
+   "items": [
+      {
+         "type": "Penguin",
+         "name": "penguin1", 
+         "x": 280, "y": -200
+      },
+      {
+         "type": "GitGarden",
+         "x0": 0,
+         "y0": -200,
+         "organization": "WorldViews"
+      }
+   ]
+}
