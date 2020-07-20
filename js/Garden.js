@@ -49,8 +49,8 @@ class WildFlowers {
         var num = opts.maxNumWildFlowers || 10;
         this.xMin = opts.xMin || -100;
         this.xMax = opts.xMax || 100;
-        this.yMin = opts.yMin || -100,
-            this.yMax = opts.yMax || 100;
+        this.yMin = opts.yMin || -100;
+        this.yMax = opts.yMax || 100;
         this.timer = null;
         this.flowers = [];
         this.startWildFlowers(num);

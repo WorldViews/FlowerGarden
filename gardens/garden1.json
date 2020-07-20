@@ -34,8 +34,8 @@
          "type": "WildFlowers",
          "x": 20,
          "y": 30,
-         "xMin": -350, "xMax": -270, "yMin": -80, "yMax": 400,
-         "maxNumWildFlowers": 25
+         "xMin": -550, "xMax": -320, "yMin": 0, "yMax": 500,
+         "maxNumWildFlowers": 30
       },
       {
          "type": "ProjectGarden",
@@ -45,8 +45,8 @@
       },
       {
          "type": "GitGarden",
-         "x": 20,
-         "y": 30,
+         "x0": 700,
+         "y0": 0,
          "organization": "WorldViews"
       }
    ]
