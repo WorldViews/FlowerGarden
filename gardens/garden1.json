@@ -21,6 +21,12 @@
          "x": 280, "y": -200, "targetURL": "https://xerox.com"
       },
       {
+         "type": "Pic",
+         "name": "unicorn1",
+         "width": 100, "height": 80,
+         "x": 300, "y": -20, "url": "images/unicorn2.png"
+      },
+      {
          "type": "Bee",
          "x": 280, "y": 100
       },

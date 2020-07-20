@@ -32,6 +32,13 @@ getBooleanParameterByName = function (name, defaultVal) {
     return val;
 }
 
+function arrayRemove(v, val)
+{
+    var i = v.indexOf(val);
+    if (i > -1)
+        v.splice(i, 1);
+}
+
 function getVal(val, def) {
     if (val == null)
         return def;

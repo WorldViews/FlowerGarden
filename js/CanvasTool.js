@@ -348,6 +348,8 @@ class CanvasTool {
     }
 
     removeGraphic(id) {
+        if (id instanceof CanvasTool.Graphic)
+            id = id.id;
         console.log('removing graphic with id ' + id);
         delete this.graphics[id];
         this.draw();

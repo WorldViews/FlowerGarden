@@ -1,0 +1,10 @@
+{
+   "items": [
+      {
+         "type": "PeaceTree",
+         "name": "pt1",
+         "w": 0.6,
+         "x": 0, "y": 0
+      }
+   ]
+}

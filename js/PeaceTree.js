@@ -10,8 +10,12 @@ class PeaceTree extends CanvasTool.Graphic {
     constructor(opts) {
         super(opts);
         this.name = opts.name;
+        this.w = opts.w || 2.0;
+        this.dr = opts.dr || 1.1;
         console.log("PeaceTree ...yup ... opts", opts);
         this.pts = [];
+        this.colors = [];
+        this.lastRotTime = 0;
         this.addSpiral(32, 25);
         window.PT = this;
         this.value = 0;
@@ -54,21 +58,41 @@ class PeaceTree extends CanvasTool.Graphic {
         this.pts = [];
         var r = r0;
         for (var i = 0; i < n; i++) {
-            var t = 2 * i;
+            var t = this.w * i;
             var x = this.x + r * Math.cos(t);
             var y = this.y + r * Math.sin(t);
             this.pts.push([x, y]);
-            r += 1;
+            r += this.dr;
+            this.colors.push(this.getColor());
         }
     }
 
     getColor() {
         var r = Math.floor(this.value/4);
-        return sprintf("rgb(%d,%d,%d)", r, 100, 0);
+        return sprintf("rgb(%d,%d,%d)", r, 160, 100);
+    }
+
+    tick() {
+        var t = getClockTime();
+        var dt = t - this.lastRotTime;
+        if (dt > 0.5) {
+            this.rotate()
+            this.lastRotTime = t;
+        }
+    }
+
+    rotate() {
+        var colors = this.colors;
+        for (var i=this.colors.length-1; i>0; i--) {
+            colors[i] = colors[i-1];
+        }
+        colors[0] = this.getColor();
     }
 
     draw(canvas, ctx) {
+        ctx.save();
         this.drawRect(canvas, ctx, this.x, this.y, 10, 10);
+        var t = getClockTime();
         var drawLines = true;
         if (drawLines) {
             var prevPt = this.pts[0];
@@ -86,10 +110,14 @@ class PeaceTree extends CanvasTool.Graphic {
         this.fillStyle = this.getColor();
         for (var i = 0; i < this.pts.length; i++) {
             var pt = this.pts[i];
+            this.fillStyle = this.colors[i];
+            if (t % 1.0 < 0.5)
+                this.fillStyle = "gray";
             this.drawCircle(canvas, ctx, 3, pt[0], pt[1]);
         }
-
         this.drawText(canvas, ctx, this.x, this.y, this.name);
+        ctx.restore();
     }
 }
 
+//# sourceURL=js/PeaceTree.js

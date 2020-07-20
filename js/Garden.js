@@ -46,35 +46,43 @@ class WildFlowers {
     constructor(opts) {
         console.log("******* Bingo bingo .... WildFlowers...", opts);
         this.gtool = opts.gtool;
-        var num = opts.maxNumWildFlowers || 100;
+        var num = opts.maxNumWildFlowers || 10;
         this.xMin = opts.xMin || -100;
         this.xMax = opts.xMax || 100;
         this.yMin = opts.yMin || -100,
-        this.yMax = opts.yMax || 100;
+            this.yMax = opts.yMax || 100;
         this.timer = null;
         this.flowers = [];
         this.startWildFlowers(num);
         window.WF = this;
         console.log("xLow xHigh", this.xLow, this.xHigh);
-     }
+    }
+
+    numFlowers() { return this.flowers.length; }
 
     startWildFlowers(maxNumWildFlowers) {
         var inst = this;
-        inst.numWildFlowers = 0;
         inst.maxNumWildFlowers = maxNumWildFlowers;
         this.timer = setInterval(() => inst.addFlower(), 500);
     }
 
     addFlower() {
-        if (this.numWildFlowers < this.maxNumWildFlowers) {
-            this.numWildFlowers++;
+        if (this.numFlowers() < this.maxNumWildFlowers) {
             var x = uniform(this.xMin, this.xMax);
             var y = uniform(this.yMin, this.yMax);
-            var opts = {x,y};
+            var opts = { x, y };
             console.log("adding flower ", opts);
             var f = this.gtool.addFlower(opts);
             this.flowers.push(f);
         }
+        if (this.numFlowers() == this.maxNumWildFlowers) {
+            this.removeFlower(this.flowers[0]);
+        }
+    }
+
+    removeFlower(f) {
+        this.gtool.removeFlower(f);
+        arrayRemove(this.flowers, f);
     }
 }
 
