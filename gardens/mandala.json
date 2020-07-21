@@ -1,0 +1,11 @@
+{
+   "items": [
+      {
+         "type": "MandalaGarden",
+         "name": "mandala",
+         "dbName": "garden",
+         "w": 0.6,
+         "x": 0, "y": 0
+      }
+   ]
+}
