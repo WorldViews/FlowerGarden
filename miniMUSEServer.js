@@ -133,7 +133,8 @@ try {
     
 
 app.get('/', function (req, res) {
-    res.sendFile('./static/index.html', {root: __dirname});
+    console.log("request index");
+    res.sendFile('./index.html', {root: __dirname});
 });
 
 //app.use(express.static("./static"));
@@ -163,9 +164,10 @@ app.use('/api', proxy('localhost:8080', {
 */
 
 app.get('/version', function (req, res) {
-  res.send('Version '+VERSION)
+    res.send('Version '+VERSION)
 });
 
+    
 app.get('/stats', function(req, resp){
     resp.writeHead(200, {'Content-Type': 'text/html'});
     var t = getClockTime();
