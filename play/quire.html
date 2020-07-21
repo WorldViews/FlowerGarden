@@ -86,10 +86,10 @@
         async function testAPI() {
             console.log("testAPI");
             var str = "";
-            var user = await loadJSON("../quire/getUser");
+            var user = await loadJSON("../api/quire/getUser");
             str += JSON.stringify(user, null, 3) + "<br>";
             $("#jsonArea").html(str);
-            var orgs = await loadJSON("../quire/getOrganizations");
+            var orgs = await loadJSON("../api/quire/getOrganizations");
             str += JSON.stringify(orgs, null, 3);
             $("#jsonArea").html(str);       
         }
@@ -97,11 +97,11 @@
          async function getProjects(getTasks) {
             console.log("getProjects");
             var str = "";
-            var projects = await loadJSON("../quire/api/project/list/id/Garden_Team");
+            var projects = await loadJSON("../api/quire/api/project/list/id/Garden_Team");
             if (getTasks) {
                 for (var i=0; i<projects.length; i++) {
                     var project = projects[i];
-                    var url = "../quire/api/task/list/"+project.oid;
+                    var url = "../api/quire/api/task/list/"+project.oid;
                     var tasks = await loadJSON(url);
                     console.log("got tasks", tasks);
                     project.tasks = tasks;
@@ -109,7 +109,7 @@
             }
             str += JSON.stringify(projects, null, 3);
             $("#jsonArea").html(str);
-            uploadToFile("/quireData", projects, "quireProjects.json");
+            //uploadToFile("/quireData", projects, "quireProjects.json");
         }
 
         $(document).ready(() => {
@@ -141,15 +141,15 @@
     <p>
         So instead its necessary to have the server act as an intermediary.  To do this,
         first use the URL <br>
-        <a href="../quireStart" target="quire">http://server/quireStart</a><br>
+        <a href="../api/quireStart" target="quire">http://server/quireStart</a><br>
         This will require a page with a "Connect Quire" link.  Click that 
         link
         and it will bring up a page from quire asking about permissions.  Grant permissions
         and it will bring up a callback page that should say "callback ok code ...." <br>
         Now the API can be used.<br>
         Commands like 
-        <a href="../quire/getUser">http://server/quire/getUser</a><br>
-        <a href="../quire/getOrganizations">http://server/quire/getOrganizations</a><br>
+        <a href="../api/quire/getUser">http://server/api/quire/getUser</a><br>
+        <a href="../api/quire/getOrganizations">http://server/api/quire/getOrganizations</a><br>
         or you could try
         <p></p>
         <button id="testAPIButton">Test API</button>
