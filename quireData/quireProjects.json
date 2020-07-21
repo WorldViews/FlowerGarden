@@ -1,0 +1,488 @@
+[
+   {
+      "oid": "eVBzctWSm8dFayDgKgMlLyZr",
+      "id": "Evaluate_Technology",
+      "name": "Evaluate Technology",
+      "description": "",
+      "iconColor": "31",
+      "image": "",
+      "createdAt": "2020-04-28T16:04:46.331Z",
+      "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+      "nameText": "Evaluate Technology",
+      "nameHtml": "Evaluate Technology",
+      "descriptionHtml": "",
+      "descriptionText": "",
+      "url": "https://quire.io/w/Evaluate_Technology",
+      "organization": "hBxfH1zGxko1CfUzduguttA8",
+      "followers": [],
+      "editedAt": "2020-05-04T19:32:11.413Z",
+      "taskCount": 1,
+      "activeCount": 1,
+      "rootCount": 1,
+      "tasks": [
+         {
+            "oid": "Y2kh5JynnwYMCHCu.7j4~y6w",
+            "id": 1,
+            "name": "Evaluate and try simple project with notion.so",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [
+               "7Fy4N6SsT8tBogFvS2jbmUw0"
+            ],
+            "assignors": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "order": 0,
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [],
+            "createdAt": "2020-05-04T19:28:18.847Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 0,
+            "attachments": [],
+            "nameText": "Evaluate and try simple project with notion.so",
+            "nameHtml": "Evaluate and try simple project with notion.so",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Evaluate_Technology/1",
+            "childCount": 0
+         }
+      ]
+   },
+   {
+      "oid": "TjTsfA0OZ4GIL5TFGfaxvEHp",
+      "id": "Set_Up_Website_and_Documents",
+      "name": "Set Up Website and Documents",
+      "description": "",
+      "iconColor": "37",
+      "image": "",
+      "createdAt": "2020-05-04T07:18:34.693Z",
+      "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+      "nameText": "Set Up Website and Documents",
+      "nameHtml": "Set Up Website and Documents",
+      "descriptionHtml": "",
+      "descriptionText": "",
+      "url": "https://quire.io/w/Set_Up_Website_and_Documents",
+      "organization": "hBxfH1zGxko1CfUzduguttA8",
+      "followers": [
+         "jeLzY9-Eus.jP~POVSIgkgy3"
+      ],
+      "editedAt": "2020-06-06T00:11:13.802Z",
+      "taskCount": 9,
+      "activeCount": 9,
+      "rootCount": 9,
+      "tasks": [
+         {
+            "oid": "cBX7oub2q0XeiZZ0PLRFXZeF",
+            "id": 1,
+            "name": "Create Logo",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [],
+            "assignors": [],
+            "order": 0,
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [],
+            "createdAt": "2020-05-04T07:18:34.968Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 0,
+            "attachments": [],
+            "nameText": "Create Logo",
+            "nameHtml": "Create Logo",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Set_Up_Website_and_Documents/1",
+            "childCount": 0
+         },
+         {
+            "oid": "Dlnk-Xqngv3mYtJzKkx5D5Ur",
+            "id": 2,
+            "name": "Get Website up (WorldViews)",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [],
+            "assignors": [],
+            "order": 0,
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [],
+            "createdAt": "2020-05-04T07:18:44.480Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 0,
+            "attachments": [],
+            "nameText": "Get Website up (WorldViews)",
+            "nameHtml": "Get Website up (WorldViews)",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Set_Up_Website_and_Documents/2",
+            "childCount": 0
+         },
+         {
+            "oid": "zNjYrEy8silgAM2gWxAxVtWn",
+            "id": 3,
+            "name": "Move worldviews.org domain to digital ocean server",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [],
+            "assignors": [],
+            "order": 0,
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [],
+            "createdAt": "2020-06-02T22:11:14.526Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 0,
+            "attachments": [],
+            "nameText": "Move worldviews.org domain to digital ocean server",
+            "nameHtml": "Move worldviews.org domain to digital ocean server",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Set_Up_Website_and_Documents/3",
+            "childCount": 0
+         },
+         {
+            "oid": "8uWPN.g6PrJvF.V_RvrvE.gT",
+            "id": 4,
+            "name": "get nginx properly configured to handle https using letsencript script and certificate",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [],
+            "assignors": [],
+            "order": 0,
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [],
+            "createdAt": "2020-06-02T22:11:32.582Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 0,
+            "attachments": [],
+            "nameText": "get nginx properly configured to handle https using letsencript script and certificate",
+            "nameHtml": "get nginx properly configured to handle https using letsencript script and certificate",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Set_Up_Website_and_Documents/4",
+            "childCount": 0
+         },
+         {
+            "oid": "bua4sUfTO_7Fl5BsreWNZO3B",
+            "id": 5,
+            "name": "get some sample using a DB such as mongoDB",
+            "description": "",
+            "priority": 2,
+            "tags": [],
+            "assignees": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "assignors": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "order": 0,
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "editedAt": "2020-06-05T06:12:55.163Z",
+            "createdAt": "2020-06-02T22:12:01.247Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 0,
+            "attachments": [],
+            "nameText": "get some sample using a DB such as mongoDB",
+            "nameHtml": "get some sample using a DB such as mongoDB",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Set_Up_Website_and_Documents/5",
+            "childCount": 0
+         },
+         {
+            "oid": "qQkbdQMgDGkG9icfNmzBl_c8",
+            "id": 6,
+            "name": "Set up a simple project management workflow",
+            "description": "{color: orange|\n- [ ] write a quick summary of Don’s vision, desired technical features, and potential business ventures\n- [ ] discuss about our co-working  principles or ground rules, e.g.  shall we bother to track  other  member’s task progress\n- [ ] prepare a basic operations che-che: e.g. IP addresses, SSH instructions, etc.}",
+            "priority": 0,
+            "tags": [],
+            "assignees": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "assignors": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "board": "YLm85TOpBORE5c8hul3s~cqL",
+            "order": 0,
+            "followers": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "favorites": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "editedAt": "2020-06-06T00:11:13.712Z",
+            "createdAt": "2020-06-05T06:27:30.206Z",
+            "createdBy": "jeLzY9-Eus.jP~POVSIgkgy3",
+            "status": 0,
+            "attachments": [],
+            "nameText": "Set up a simple project management workflow",
+            "nameHtml": "Set up a simple project management workflow",
+            "descriptionHtml": "<p>{color: orange|</p><ul><li class=\"todo\"><input disabled=\"disabled\" class=\"todo\" type=\"checkbox\" /> write a quick summary of Don’s vision, desired technical features, and potential business ventures</li><li class=\"todo\"><input disabled=\"disabled\" class=\"todo\" type=\"checkbox\" /> discuss about our co-working  principles or ground rules, e.g.  shall we bother to track  other  member’s task progress</li><li class=\"todo\"><input disabled=\"disabled\" class=\"todo\" type=\"checkbox\" /> prepare a basic operations che-che: e.g. IP addresses, SSH instructions, etc.}</li></ul>",
+            "descriptionText": "\n- [ ] write a quick summary of Don’s vision, desired technical features, and potential business ventures\n- [ ] discuss about our co-working  principles or ground rules, e.g.  shall we bother to track  other  member’s task progress\n- [ ] prepare a basic operations che-che: e.g. IP addresses, SSH instructions, etc.",
+            "url": "https://quire.io/w/Set_Up_Website_and_Documents/6",
+            "childCount": 0
+         },
+         {
+            "oid": "sbeL3YUmx77fs3bkoXP9ORqj",
+            "id": 7,
+            "name": "Setup a hosted MongoDB instance",
+            "description": "Use mLab’s free sandbox version (what are the limitations?)",
+            "priority": 0,
+            "tags": [],
+            "assignees": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "assignors": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "board": "YLm85TOpBORE5c8hul3s~cqL",
+            "order": 99,
+            "followers": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "favorites": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "editedAt": "2020-06-05T06:59:57.017Z",
+            "createdAt": "2020-06-05T06:27:49.777Z",
+            "createdBy": "jeLzY9-Eus.jP~POVSIgkgy3",
+            "status": 0,
+            "attachments": [],
+            "nameText": "Setup a hosted MongoDB instance",
+            "nameHtml": "Setup a hosted MongoDB instance",
+            "descriptionHtml": "<p>Use mLab’s free sandbox version (what are the limitations?)</p>",
+            "descriptionText": "Use mLab’s free sandbox version (what are the limitations?)",
+            "url": "https://quire.io/w/Set_Up_Website_and_Documents/7",
+            "childCount": 0
+         },
+         {
+            "oid": "DY4gfaZgZ87yo956Gq~zc-St",
+            "id": 8,
+            "name": "sublist task #1",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "assignors": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "order": 0,
+            "followers": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "favorites": [],
+            "createdAt": "2020-06-05T06:29:50.694Z",
+            "createdBy": "jeLzY9-Eus.jP~POVSIgkgy3",
+            "status": 0,
+            "attachments": [],
+            "nameText": "sublist task #1",
+            "nameHtml": "sublist task #1",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Set_Up_Website_and_Documents/8",
+            "childCount": 0
+         },
+         {
+            "oid": "bNhOwWV-xPEMohMYw9OOWcHN",
+            "id": 9,
+            "name": "sublist task #2",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "assignors": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "order": 0,
+            "followers": [
+               "jeLzY9-Eus.jP~POVSIgkgy3"
+            ],
+            "favorites": [],
+            "createdAt": "2020-06-05T06:30:05.827Z",
+            "createdBy": "jeLzY9-Eus.jP~POVSIgkgy3",
+            "status": 0,
+            "attachments": [],
+            "nameText": "sublist task #2",
+            "nameHtml": "sublist task #2",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Set_Up_Website_and_Documents/9",
+            "childCount": 0
+         }
+      ]
+   },
+   {
+      "oid": "9SgX3Pws0q6gZtjvIaOOgBIy",
+      "id": "Get_FXPAL_FX_on_board",
+      "name": "Get FXPAL & FX on board",
+      "description": "",
+      "iconColor": "22",
+      "image": "",
+      "createdAt": "2020-04-23T00:54:15.946Z",
+      "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+      "nameText": "Get FXPAL & FX on board",
+      "nameHtml": "Get FXPAL &amp; FX on board",
+      "descriptionHtml": "",
+      "descriptionText": "",
+      "url": "https://quire.io/w/Get_FXPAL_FX_on_board",
+      "organization": "hBxfH1zGxko1CfUzduguttA8",
+      "followers": [],
+      "editedAt": "2020-04-30T22:18:34.320Z",
+      "taskCount": 2,
+      "activeCount": 1,
+      "rootCount": 2,
+      "tasks": [
+         {
+            "oid": "GXbRR2bI6PE-2KSQJWXyS3r~",
+            "id": 1,
+            "name": "Find out Lynn's opinion",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [],
+            "assignors": [],
+            "order": 0,
+            "toggledBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "toggledAt": "2020-04-30T22:18:34.236Z",
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [],
+            "createdAt": "2020-04-23T00:54:16.278Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 100,
+            "attachments": [],
+            "nameText": "Find out Lynn's opinion",
+            "nameHtml": "Find out Lynn's opinion",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Get_FXPAL_FX_on_board/1",
+            "childCount": 0
+         },
+         {
+            "oid": "I.ieU_QgVuHpi~T6r45f2utO",
+            "id": 2,
+            "name": "Prepare Research Talk presentation with Yasha",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "due": "2020-05-10T00:00:00.000Z",
+            "assignees": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "assignors": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "order": 0,
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [],
+            "createdAt": "2020-04-30T01:22:00.717Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 0,
+            "attachments": [],
+            "nameText": "Prepare Research Talk presentation with Yasha",
+            "nameHtml": "Prepare Research Talk presentation with Yasha",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Get_FXPAL_FX_on_board/2",
+            "childCount": 0
+         }
+      ]
+   },
+   {
+      "oid": "4VE-Hdy38Uk7u3U0yGpfbv6p",
+      "id": "Coordinate_with_Kinetech_Arts_ClimateMusic_Project",
+      "name": "Coordinate with Kinetech Arts & ClimateMusic Project",
+      "description": "",
+      "iconColor": "31",
+      "image": "",
+      "createdAt": "2020-04-23T00:48:56.801Z",
+      "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+      "nameText": "Coordinate with Kinetech Arts & ClimateMusic Project",
+      "nameHtml": "Coordinate with Kinetech Arts &amp; ClimateMusic Project",
+      "descriptionHtml": "",
+      "descriptionText": "",
+      "url": "https://quire.io/w/Coordinate_with_Kinetech_Arts_ClimateMusic_Project",
+      "organization": "hBxfH1zGxko1CfUzduguttA8",
+      "followers": [],
+      "editedAt": "2020-04-23T00:56:43.312Z",
+      "taskCount": 2,
+      "activeCount": 2,
+      "rootCount": 2,
+      "tasks": [
+         {
+            "oid": "xGnqzS.HsNsnQhMBjnlQBWU~",
+            "id": 1,
+            "name": "Get approval to have KA & CMP be participants in the Garden",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [],
+            "assignors": [],
+            "order": 0,
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [],
+            "createdAt": "2020-04-23T00:48:57.204Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 0,
+            "attachments": [],
+            "nameText": "Get approval to have KA & CMP be participants in the Garden",
+            "nameHtml": "Get approval to have KA &amp; CMP be participants in the Garden",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Coordinate_with_Kinetech_Arts_ClimateMusic_Project/1",
+            "childCount": 0
+         },
+         {
+            "oid": "h_3raTWOgk4gITL9VpwDRPpQ",
+            "id": 2,
+            "name": "Describe Garden methodology for community projects as year 1 implementation strategy in CAC proposal",
+            "description": "",
+            "priority": 0,
+            "tags": [],
+            "assignees": [],
+            "assignors": [],
+            "order": 0,
+            "followers": [
+               "73thMd0LbbeCEiVcZsADvTIN"
+            ],
+            "favorites": [],
+            "createdAt": "2020-04-23T00:49:23.734Z",
+            "createdBy": "73thMd0LbbeCEiVcZsADvTIN",
+            "status": 0,
+            "attachments": [],
+            "nameText": "Describe Garden methodology for community projects as year 1 implementation strategy in CAC proposal",
+            "nameHtml": "Describe Garden methodology for community projects as year 1 implementation strategy in CAC proposal",
+            "descriptionHtml": "",
+            "descriptionText": "",
+            "url": "https://quire.io/w/Coordinate_with_Kinetech_Arts_ClimateMusic_Project/2",
+            "childCount": 0
+         }
+      ]
+   }
+]

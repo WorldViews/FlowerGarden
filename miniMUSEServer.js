@@ -3,6 +3,7 @@ function report(str) { console.log(str); }
 function getClockTime() { return new Date()/1000.0; }
 
 var verbosity = 1;
+var VERSION = "GardenServer 0.0.0";
 
 //var CHANNELS = ["position", "command", "people"];
 var CHANNELS = ["MUSE"];
@@ -162,7 +163,7 @@ app.use('/api', proxy('localhost:8080', {
 */
 
 app.get('/version', function (req, res) {
-  res.send('Version 0.0.0')
+  res.send('Version '+VERSION)
 });
 
 app.get('/stats', function(req, resp){
@@ -317,6 +318,7 @@ app.get('/getYoutubeVid*', function (req, resp) {
     console.log("url: "+url);
     ytl.load(url);
 });
+
 
 //Beginning of quire stuff
 var clientId = ":vHCsZnwSWPG-arDM79AqLtvC5HD";
