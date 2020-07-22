@@ -309,7 +309,8 @@ app.get('/getYoutubeVid*', function (req, resp) {
 var clientId = ":vHCsZnwSWPG-arDM79AqLtvC5HD";
 var clientSecret = "cr7a64fs6amxpjtjfghfzqw6rw91akp6gik5bdje";
 //const redirectURI = 'http://quire/callback';
-const redirectURI = 'http://localhost/api/quire/callback';
+//const redirectURI = 'http://localhost/api/quire/callback';
+const redirectURI = 'http://worldviews.org/FlowerGarden/api/quire/callback';
 
 const authorizationUrl = 'https://quire.io/oauth';
 const tokenUrl = 'https://quire.io/oauth/token';
