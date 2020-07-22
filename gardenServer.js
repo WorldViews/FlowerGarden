@@ -1,6 +1,6 @@
 
 function report(str) { console.log(str); }
-function getClockTime() { return new Date()/1000.0; }
+function getClockTime() { return new Date() / 1000.0; }
 
 var verbosity = 1;
 var VERSION = "GardenServer 0.0.0";
@@ -18,7 +18,7 @@ var http = require('http');
 var https = require('https');
 var fs = require('fs');
 var path = require('path');
-    // NEVER use a Sync function except at start-up!
+// NEVER use a Sync function except at start-up!
 var express = require('express');
 var proxy = require('express-http-proxy');
 var bodyParser = require('body-parser');
@@ -30,8 +30,8 @@ function fixPath(pstr) {
     //console.log("fixPath", pstr)
     var i = pstr.indexOf(":")
     //console.log("i", i)
-    if (i >= 0 && i < pstr.length-1) {
-        if (pstr[i+1] == "/" || pstr[i+1] == "\\") {
+    if (i >= 0 && i < pstr.length - 1) {
+        if (pstr[i + 1] == "/" || pstr[i + 1] == "\\") {
             // its alread ok
         }
         else {
@@ -75,7 +75,7 @@ async function getFlowersFromDB(url) {
     var url = url || "mongodb://localhost:27017/";
     var db = await MongoClient.connect(url);
     var dbo = db.db("db1");
-    console.log("dbo: "+dbo);
+    console.log("dbo: " + dbo);
     var recs = await dbo.collection("flowers").find().toArray();
     recs.forEach(rec => {
         rec._id = rec._id.toString();
@@ -89,23 +89,22 @@ async function dumpFlowersFromDB() {
     console.log("recs", recs);
 }
 
-function getConfig()
-{
+function getConfig() {
     if (process.argv.length <= 2) {
-	console.log("No config file requested");
-	return;
+        console.log("No config file requested");
+        return;
     }
-    var confPath = __dirname + "/"+ process.argv[2];
-    console.log("Config: "+confPath);
-/*
-    if (!fs.existsSync(confPath)) {
-	console.log("No config file");
-	return null;
-    }
-*/
+    var confPath = __dirname + "/" + process.argv[2];
+    console.log("Config: " + confPath);
+    /*
+        if (!fs.existsSync(confPath)) {
+        console.log("No config file");
+        return null;
+        }
+    */
     var buf = fs.readFileSync(confPath);
     var conf = JSON.parse(buf);
-    console.log("conf:\n"+JSON.stringify(conf, null, 3));
+    console.log("conf:\n" + JSON.stringify(conf, null, 3));
     return conf;
 }
 
@@ -121,16 +120,16 @@ var app = express();
 var server = http.createServer(app);
 
 try {
-    var privateKey  = fs.readFileSync('ssl/server.key', 'utf8');
+    var privateKey = fs.readFileSync('ssl/server.key', 'utf8');
     var certificate = fs.readFileSync('ssl/server.crt', 'utf8');
-    var credentials = {key: privateKey, cert: certificate};
+    var credentials = { key: privateKey, cert: certificate };
     serverSSL = https.createServer(credentials, app);
 } catch (e) {
     console.log(e);
     //process.exit();
     console.log("Running with no https server");
 }
-    
+
 
 //app.use(express.static("./static"));
 app.use(express.static("."));
@@ -142,31 +141,31 @@ app.use(fileupload());
 // just a test to check deployment using nginx
 app.get('/api', function (req, res) {
     console.log("request index");
-    res.sendFile('./index.html', {root: __dirname});
+    res.sendFile('./index.html', { root: __dirname });
 });
 
 
 app.get('/api/version', function (req, res) {
-    res.send('Version '+VERSION)
+    res.send('Version ' + VERSION)
 });
 
-    
-app.get('/api/stats', function(req, resp){
-    resp.writeHead(200, {'Content-Type': 'text/html'});
+
+app.get('/api/stats', function (req, resp) {
+    resp.writeHead(200, { 'Content-Type': 'text/html' });
     var t = getClockTime();
     var str = "Active Clients:\n";
     str += "<pre>\n";
     activeSockets.forEach(sock => {
-	var info = sock._info;
-	str += "client: "+sock.client.conn.remoteAddress+"\n";
-	str += "Num from: "+info.numFrom;
-	str += " num to: "+info.numTo +"\n";
-	if (info.lastMsgTo) {
-	    var msg = info.lastMsgTo;
-	    var dt = t - msg._sys.time;
-	    str += sprintf("Last msg to (%.2f sec ago)\n", dt);
-	    str += JSON.stringify(msg, null ,3);
-	}
+        var info = sock._info;
+        str += "client: " + sock.client.conn.remoteAddress + "\n";
+        str += "Num from: " + info.numFrom;
+        str += " num to: " + info.numTo + "\n";
+        if (info.lastMsgTo) {
+            var msg = info.lastMsgTo;
+            var dt = t - msg._sys.time;
+            str += sprintf("Last msg to (%.2f sec ago)\n", dt);
+            str += JSON.stringify(msg, null, 3);
+        }
         str += "\n";
     });
     str += "</pre>";
@@ -174,58 +173,58 @@ app.get('/api/stats', function(req, resp){
     str += "Channels:<br>\n";
     str += "<pre>\n";
     for (var channel in CHANNEL_STATS) {
-	var stats = CHANNEL_STATS[channel];
-	str += channel +"\n";
-	str += "Num from: "+stats.numFrom+" num to: "+stats.numTo+"\n";
-	if (stats.lastMsgTo) {
-	    var msg = stats.lastMsgTo;
-	    var dt = t - stats.lastTime;
-	    str += sprintf("Last msg to %.2f sec ago from %s:\n", dt, msg._sys.addr)
-	    str += JSON.stringify(msg, null,3)+"\n";
-	}
-	str += "\n";
+        var stats = CHANNEL_STATS[channel];
+        str += channel + "\n";
+        str += "Num from: " + stats.numFrom + " num to: " + stats.numTo + "\n";
+        if (stats.lastMsgTo) {
+            var msg = stats.lastMsgTo;
+            var dt = t - stats.lastTime;
+            str += sprintf("Last msg to %.2f sec ago from %s:\n", dt, msg._sys.addr)
+            str += JSON.stringify(msg, null, 3) + "\n";
+        }
+        str += "\n";
     }
     str += "</pre>";
     str += "<hr>";
     resp.end(str);
 });
 
-app.post('/update/*', function(request, response){
-   var obj = request.body;
-   console.log("/update path: "+request.path);
-   var fileName = request.path.slice("/update/".length);
-   fs.writeFileSync(fileName, JSON.stringify(obj, null, 4));
-   console.log("fileName: "+fileName);
-   console.log("/update got: "+JSON.stringify(obj));
-   obj.size = 'big';
-   console.log("returning obj: "+JSON.stringify(obj));      // your JSON
-   response.send(obj);    // echo the result back
+app.post('/update/*', function (request, response) {
+    var obj = request.body;
+    console.log("/update path: " + request.path);
+    var fileName = request.path.slice("/update/".length);
+    fs.writeFileSync(fileName, JSON.stringify(obj, null, 4));
+    console.log("fileName: " + fileName);
+    console.log("/update got: " + JSON.stringify(obj));
+    obj.size = 'big';
+    console.log("returning obj: " + JSON.stringify(obj));      // your JSON
+    response.send(obj);    // echo the result back
 });
 
-app.post('/upload/*', function(request, response){
-   var obj = request.body;
-   console.log("/upload path: "+request.path);
-   console.log("body:", obj);
-   var fileName = request.path.slice("/update/".length);
-   //fileName = "../"+fileName; 
-   console.log("fileName: "+fileName);
-   fs.writeFileSync("../"+fileName, JSON.stringify(obj, null, 4));
-   console.log("/upload got: "+JSON.stringify(obj));
-   obj.size = 'big';
-   console.log("returning obj: "+JSON.stringify(obj));      // your JSON
-   response.send(obj);    // echo the result back
+app.post('/upload/*', function (request, response) {
+    var obj = request.body;
+    console.log("/upload path: " + request.path);
+    console.log("body:", obj);
+    var fileName = request.path.slice("/update/".length);
+    //fileName = "../"+fileName; 
+    console.log("fileName: " + fileName);
+    fs.writeFileSync("../" + fileName, JSON.stringify(obj, null, 4));
+    console.log("/upload got: " + JSON.stringify(obj));
+    obj.size = 'big';
+    console.log("returning obj: " + JSON.stringify(obj));      // your JSON
+    response.send(obj);    // echo the result back
 });
 
-app.post('/uploadfile', function (req,res,next) {
+app.post('/uploadfile', function (req, res, next) {
     console.log('/uploadfile');
     if (!req.files) {
         console.log("No files provided");
-      return res.json({error:'no files were uploaded.'});
+        return res.json({ error: 'no files were uploaded.' });
     }
     var dir = req.body.dir;
     console.log("dir", dir);
     if (!dir)
-      return res.json({error:'no dir'});
+        return res.json({ error: 'no dir' });
 
     var keys = Object.keys(req.files);
 
@@ -238,8 +237,7 @@ app.post('/uploadfile', function (req,res,next) {
     console.log("outdir", outdir);
     var done = false;
     var n = keys.length;
-    for (var i=0;i<n;i++)
-    {
+    for (var i = 0; i < n; i++) {
         var key = keys[i];
         console.log("key", key);
         var sampleFile = req.files[key];
@@ -258,24 +256,24 @@ app.post('/uploadfile', function (req,res,next) {
                 res.status(200).json({ success: 'ok' });
             }
         });
-    }   
+    }
 })
 
 app.get('/dir/*', function (req, resp) {
-    console.log("/dir path: "+req.path);
+    console.log("/dir path: " + req.path);
     var dirPath = req.path.slice("/dir/".length);
-    dirPath =__dirname.replace("controls","data") + "/"+ dirPath;
-    var obj = {dir: dirPath};
-    console.log("dirPath: "+dirPath);
-    fs.readdir(dirPath, function(err, items) {
-        console.log("err: "+err);
+    dirPath = __dirname.replace("controls", "data") + "/" + dirPath;
+    var obj = { dir: dirPath };
+    console.log("dirPath: " + dirPath);
+    fs.readdir(dirPath, function (err, items) {
+        console.log("err: " + err);
         if (err) {
             obj.error = err;
             resp.send(obj);
             return;
         }
         console.log(items);
-        for (var i=0; i<items.length; i++) {
+        for (var i = 0; i < items.length; i++) {
             console.log(items[i]);
         }
         obj.items = items;
@@ -285,22 +283,22 @@ app.get('/dir/*', function (req, resp) {
 });
 
 app.get('/sendMessage*', function (req, resp) {
-    console.log("/sendMessage path: "+req.path);
+    console.log("/sendMessage path: " + req.path);
     var query = req.query;
-    console.log("query: "+JSON.stringify(query));
+    console.log("query: " + JSON.stringify(query));
     var channel = query.channel || "MUSE";
     var msg = query;
-    console.log("channel: "+channel + " msg: "+JSON.stringify(msg));
+    console.log("channel: " + channel + " msg: " + JSON.stringify(msg));
     handleChannel(channel, msg, null);
     resp.end("sendMessage OK");
 });
 
 app.get('/getYoutubeVid*', function (req, resp) {
-    console.log("/getYoutubeVid path: "+req.path);
+    console.log("/getYoutubeVid path: " + req.path);
     var query = req.query;
-    console.log("query: "+JSON.stringify(query));
+    console.log("query: " + JSON.stringify(query));
     var url = query.url;
-    console.log("url: "+url);
+    console.log("url: " + url);
     ytl.load(url);
 });
 
@@ -322,92 +320,96 @@ var quireTokenTime = 0;
 var request = require('request');
 
 async function exchangeAccessToken(code) {
-    return new Promise(function(resolve, reject){
+    return new Promise(function (resolve, reject) {
         request.post({
-            url: tokenUrl, 
+            url: tokenUrl,
             form: {
-              grant_type: 'authorization_code',
-              code: code,
-              client_id: clientId,
-              client_secret: clientSecret
+                grant_type: 'authorization_code',
+                code: code,
+                client_id: clientId,
+                client_secret: clientSecret
             }
-          }, 
-          function (error, httpResponse, body) {
-            if (error) {
-              return reject(error);
-            }
-            console.log("body: "+body);
-            resolve(JSON.parse(body))
-          });
+        },
+            function (error, httpResponse, body) {
+                if (error) {
+                    return reject(error);
+                }
+                console.log("body: " + body);
+                resolve(JSON.parse(body))
+            });
     });
 }
 
 function getAPIData(apiPath, token) {
-    return new Promise(function(resolve, reject){
+    return new Promise(function (resolve, reject) {
         var url = apiUrlBase + apiPath;
         //var url = 'http://quire.io/api/organization/list';
         console.log("getAPIData ", token, url);
         request.get({
-            url: url, 
+            url: url,
             headers: {
                 //"Authorization": "Bearer " + quireToken
                 "Authorization": "Bearer " + token
             }
-          }, 
-          function (error, httpResponse, body) {
-            if (error) {
-              return reject(error);
-            }
-            console.log("got response....", body);
-            var obj;
-            try {
-                obj = JSON.parse(body);
-                console.log("obj", obj, JSON.stringify(obj, null, 3));
-            }
-            catch (e) {
-                obj = {'error': 'JSON parse error',
+        },
+            function (error, httpResponse, body) {
+                if (error) {
+                    return reject(error);
+                }
+                console.log("got response....", body);
+                var obj;
+                try {
+                    obj = JSON.parse(body);
+                    console.log("obj", obj, JSON.stringify(obj, null, 3));
+                }
+                catch (e) {
+                    obj = {
+                        'error': 'JSON parse error',
                         'url': url,
-                        'string': body}
-            }
-            resolve(obj);
-          });
+                        'string': body
+                    }
+                }
+                resolve(obj);
+            });
     });
 }
 
 app.get('/api/quireStart', function (req, res) {
-    console.log("/quire "+req.path);
+    console.log("/quire " + req.path);
     var query = req.query;
-    console.log("query: "+JSON.stringify(query));
-    var authUrl = authorizationUrl 
-    + '?client_id=' + clientId 
-    //+ '&redirect_uri=' + encodeURIComponent(redirectURI);
-    + '&redirect_uri=' + redirectURI;
+    console.log("query: " + JSON.stringify(query));
+    var authUrl = authorizationUrl
+        + '?client_id=' + clientId
+        //+ '&redirect_uri=' + encodeURIComponent(redirectURI);
+        + '&redirect_uri=' + redirectURI;
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.write(
-     '<html><body>' 
-    + '<a href="' + authUrl + '">Connect Quire</a>' 
-    + '</body></html>');
+        '<html><body>'
+        + '<a href="' + authUrl + '">Connect Quire</a>'
+        + '</body></html>');
     res.end();
 });
 
 app.get('/api/quire/getState', function (req, res) {
-    var obj = {'type': 'quireState',
-            'token': quireToken,
-            'tokenTime': quireTokenTime,
-            'tokenData': quireTokenData, 'code': quireCode}; 
+    var obj = {
+        'type': 'quireState',
+        'token': quireToken,
+        'tokenTime': quireTokenTime,
+        'tokenData': quireTokenData, 'code': quireCode
+    };
     res.json(obj);
 });
 
 app.get('/api/quire/callback', async function (req, resp) {
-    console.log("/quire "+req.path);
+    console.log("/quire " + req.path);
     var query = req.query;
-    console.log("query: "+JSON.stringify(query));
+    console.log("query: " + JSON.stringify(query));
     quireCode = query['code'];
     quireTokenData = await exchangeAccessToken(quireCode);
     quireToken = quireTokenData['access_token'];
     quireTokenTime = getClockTime();
     var request = require('request');
-    resp.end("callback ok code "+quireCode + " token "+quireToken);
+    resp.end("callback ok code " + quireCode + " token " + quireToken);
 });
 
 app.get('/api/quire/getUser', async function (req, res) {
@@ -453,21 +455,19 @@ else {
     console.log("No SSL server being used");
 }
 
-function handleDisconnect(socket)
-{
-    report("disconnected "+socket);
+function handleDisconnect(socket) {
+    report("disconnected " + socket);
     var index = activeSockets.indexOf(socket);
     if (index >= 0) {
         activeSockets.splice(index, 1);
     }
 }
 
-function getChannelStats(channel)
-{
+function getChannelStats(channel) {
     var stats = CHANNEL_STATS[channel];
     if (!stats) {
-	stats = {numTo: 0, numFrom: 0};
-	CHANNEL_STATS[channel] = stats;
+        stats = { numTo: 0, numFrom: 0 };
+        CHANNEL_STATS[channel] = stats;
     }
     return stats;
 }
@@ -480,44 +480,45 @@ function handleChannel(channel, msg, sock) {
     stats.lastMsgTo = msg;
     stats.lastTime = t;
     activeSockets.forEach(s => {
-	if (s == sock) {
-	    return;
-	}
-	try {
-	    s.emit(channel, msg);
-	    s._info.lastMsgTo = msg;
-	    s._info.numTo++;
-	}
-	catch (e) {
-	    report("failed to send to socket "+s);
-	}
+        if (s == sock) {
+            return;
+        }
+        try {
+            s.emit(channel, msg);
+            s._info.lastMsgTo = msg;
+            s._info.numTo++;
+        }
+        catch (e) {
+            report("failed to send to socket " + s);
+        }
     });
-    var _sys = {time: getClockTime(), addr: 'self'};
+    var _sys = { time: getClockTime(), addr: 'self' };
     if (sock) {
-	sock._info.numFrom++;
-	sock._info.lastMsgFrom = msg;
-	_sys.addr = sock.client.conn.remoteAddress;
+        sock._info.numFrom++;
+        sock._info.lastMsgFrom = msg;
+        _sys.addr = sock.client.conn.remoteAddress;
     }
     msg._sys = _sys;
 }
 
 // Emit welcome message on connection
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
     // Use socket to communicate with this particular client only, sending it it's own id
-    report("got connection "+socket);
-    socket._info = {numFrom: 0, numTo: 0, lastMsg: null};
+    report("got connection " + socket);
+    socket._info = { numFrom: 0, numTo: 0, lastMsg: null };
     activeSockets.push(socket);
     CHANNELS.forEach(channel => {
-	var stats = getChannelStats(channel);
-	report("setting up events on channel "+channel);
-	//socket.on(channel, msg => handleChannel(channel, msg));
-	socket.on(channel, msg => {
-	    stats.numFrom += 1;
-	    if (typeof msg == 'string') {
-		//report("warning ... converting string to obj");
-		msg = JSON.parse(msg);
-	    }
-	    handleChannel(channel, msg, socket)});
+        var stats = getChannelStats(channel);
+        report("setting up events on channel " + channel);
+        //socket.on(channel, msg => handleChannel(channel, msg));
+        socket.on(channel, msg => {
+            stats.numFrom += 1;
+            if (typeof msg == 'string') {
+                //report("warning ... converting string to obj");
+                msg = JSON.parse(msg);
+            }
+            handleChannel(channel, msg, socket)
+        });
     });
     socket.on('disconnect', obj => handleDisconnect(socket, obj));
 });
@@ -528,22 +529,22 @@ var addr = "0.0.0.0";
 if (process.argv[3]) {
     port = process.argv[3];
 }
-report("listening on address: "+addr+" port:"+port);
+report("listening on address: " + addr + " port:" + port);
 //app.listen(port, addr);
 server.listen(port, addr);
 
 if (serverSSL) {
-    report("listening SSL on address: "+addr+" port:"+portSSL);
+    report("listening SSL on address: " + addr + " port:" + portSSL);
     serverSSL.listen(portSSL, addr);
 }
 
 var localAddress = null;
 if (process.argv[2]) {
     localAddress = process.argv[2];
-    console.log("Got local address "+localAddress);
+    console.log("Got local address " + localAddress);
 } else {
     require('dns').lookup(require('os').hostname(), function (err, add, fam) {
         localAddress = add;
-        console.log("Got local address "+localAddress);
-    })    
+        console.log("Got local address " + localAddress);
+    })
 }
