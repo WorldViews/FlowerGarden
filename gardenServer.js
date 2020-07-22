@@ -318,6 +318,7 @@ const apiUrlBase = 'https://quire.io/api';
 var quireCode = null;
 var quireTokenData = null;
 var quireToken = null;
+var quireTokenTime = 0;
 var request = require('request');
 
 async function exchangeAccessToken(code) {
@@ -389,6 +390,14 @@ app.get('/api/quireStart', function (req, res) {
     res.end();
 });
 
+app.get('/api/quire/getState', function (req, resp) {
+    var obj = {'type': 'quireState',
+            'token': quireToken,
+            'tokenTime': quireTokenTime;
+            'tokenData': quireTokenData, 'code': quireCode}; 
+    res.json(obj);
+});
+
 app.get('/api/quire/callback', async function (req, resp) {
     console.log("/quire "+req.path);
     var query = req.query;
@@ -396,6 +405,7 @@ app.get('/api/quire/callback', async function (req, resp) {
     quireCode = query['code'];
     quireTokenData = await exchangeAccessToken(quireCode);
     quireToken = quireTokenData['access_token'];
+    quireTokenTime = getClockTime();
     var request = require('request');
     resp.end("callback ok code "+quireCode + " token "+quireToken);
 });
