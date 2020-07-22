@@ -17,41 +17,33 @@
 </head>
 
 <body>
-    <h1>Quire Test</h1>
-    <button id="dump" >click me!</button><br>
-    <!--
-    <a href="https://quire.io/oauth?client_id=:vHCsZnwSWPG-arDM79AqLtvC5HD&redirect_uri=localhost/play/quire.html">auth<a>
-    -->
-    <button id="authButton">auth</button>
-    <a href="https://quire.io/oauth?client_id=:_s5xE_UZTl3YSBqsW65cjY2w3kW&redirect_uri=http://localhost/play/quire.html">auth<a>
+    <h1>Quire API access</h1>
     <script>
         // TestApp1
-        //var clientId = ":vHCsZnwSWPG-arDM79AqLtvC5HD";
-        //var clientSecret = "cr7a64fs6amxpjtjfghfzqw6rw91akp6gik5bdje";
         // TestApp2
         var clientId = ":_s5xE_UZTl3YSBqsW65cjY2w3kW";
         var clientSecret = "shl2pflakkl9vc1ge5m9zkbm68xeoodfu4s7kzqq";
-        const redirectURI = 'http://localhost:3000/callback';
-  
+        //const redirectURI = 'http://localhost:3000/callback';
+
         const authorizationUrl = 'https://quire.io/oauth';
         const tokenUrl = 'https://quire.io/oauth/token';
         const apiUrl = 'https://quire.io/api';
 
         function getCurrentUser(token) {
-            return new Promise(function(resolve, reject){
+            return new Promise(function (resolve, reject) {
                 request.get({
-                    url: apiUrl + '/user/id/me', 
+                    url: apiUrl + '/user/id/me',
                     headers: {
                         "Authorization": "Bearer " + token
                     }
-                }, 
-                function (error, httpResponse, body) {
-                    if (error) {
-                        return reject(error);
-                    }
-                    console.log("Got "+body);
-                    resolve(JSON.parse(body))
-                });
+                },
+                    function (error, httpResponse, body) {
+                        if (error) {
+                            return reject(error);
+                        }
+                        console.log("Got " + body);
+                        resolve(JSON.parse(body))
+                    });
             });
         }
 
@@ -63,24 +55,24 @@
             var url = "https://quire.io/oauth/token";
             var dataToBeSent = {
                 code: code,
-                grant_type:	'authorization_code',
+                grant_type: 'authorization_code',
                 client_id: clientId,
                 client_secret: clientSecret
             };
             console.log("dataToBeSent", dataToBeSent);
             console.log("url", url);
-            $.post(url, dataToBeSent, function(data, textStatus) {
+            $.post(url, dataToBeSent, function (data, textStatus) {
                 //data contains the JSON object
                 //textStatus contains the status: success, error, etc
                 console.log("Got data", data);
                 console.log("textStatus", textStatus);
-                }, "json");
-                /*
-            var res = await loadJSON(url);
-            console.log("url:", url);
-            var jstr = JSON.stringify(res, null, 3);
-            $("#jsonArea").html(jstr);
-            */
+            }, "json");
+            /*
+        var res = await loadJSON(url);
+        console.log("url:", url);
+        var jstr = JSON.stringify(res, null, 3);
+        $("#jsonArea").html(jstr);
+        */
         }
 
         async function testAPI() {
@@ -91,17 +83,17 @@
             $("#jsonArea").html(str);
             var orgs = await loadJSON("../api/quire/getOrganizations");
             str += JSON.stringify(orgs, null, 3);
-            $("#jsonArea").html(str);       
+            $("#jsonArea").html(str);
         }
 
-         async function getProjects(getTasks) {
+        async function getProjects(getTasks) {
             console.log("getProjects");
             var str = "";
             var projects = await loadJSON("../api/quire/api/project/list/id/Garden_Team");
             if (getTasks) {
-                for (var i=0; i<projects.length; i++) {
+                for (var i = 0; i < projects.length; i++) {
                     var project = projects[i];
-                    var url = "../api/quire/api/task/list/"+project.oid;
+                    var url = "../api/quire/api/task/list/" + project.oid;
                     var tasks = await loadJSON(url);
                     console.log("got tasks", tasks);
                     project.tasks = tasks;
@@ -135,28 +127,35 @@
     <h4>Notes:</h4>
     <p>
         This HTML page attempts to use the quire.io API from the web browser client.
-        It fails because of a CORS issue.  The material returned from the quire.io api server
+        It fails because of a CORS issue. The material returned from the quire.io api server
         is blocked from the browser.
     </p>
     <p>
-        So instead its necessary to have the server act as an intermediary.  To do this,
+        So instead its necessary to have the server act as an intermediary. To do this,
         first use the URL <br>
         <a href="../api/quireStart" target="quire">http://server/quireStart</a><br>
-        This will require a page with a "Connect Quire" link.  Click that 
+        This will require a page with a "Connect Quire" link. Click that
         link
-        and it will bring up a page from quire asking about permissions.  Grant permissions
+        and it will bring up a page from quire asking about permissions. Grant permissions
         and it will bring up a callback page that should say "callback ok code ...." <br>
         Now the API can be used.<br>
-        Commands like 
+        Commands like
         <a href="../api/quire/getUser">http://server/api/quire/getUser</a><br>
         <a href="../api/quire/getOrganizations">http://server/api/quire/getOrganizations</a><br>
         or you could try
-        <p></p>
-        <button id="testAPIButton">Test API</button>
-        <button id="projectsButton">Projects</button>
-        <button id="tasksButton">Tasks</button>
+    <p></p>
+    <button id="testAPIButton">Test API</button>
+    <button id="projectsButton">Projects</button>
+    <button id="tasksButton">Tasks</button>
     </p>
     <pre id="jsonArea"></pre>
+    <p></p>
+    <!--
+    <h1>Quire Test</h1>
+    <button id="dump" >click me!</button><br>
+    <button id="authButton">auth</button>
+    <a href="https://quire.io/oauth?client_id=:_s5xE_UZTl3YSBqsW65cjY2w3kW&redirect_uri=http://localhost/play/quire.html">auth<a>
+    -->
 </body>
 
 </html>
