@@ -76,7 +76,8 @@ async function getProjects(getTasks) {
     if (getTasks) {
         for (var i = 0; i < projects.length; i++) {
             var project = projects[i];
-            var url = "../api/quire/api/task/list/" + project.oid;
+            //var url = "../api/quire/api/task/list/" + project.oid;
+            var url = "https://worldviews.org/FlowerGarden/api/quire/api/task/list/" + project.oid;
             var tasks = await loadJSON(url);
             console.log("got tasks", tasks);
             project.tasks = tasks;
@@ -85,6 +86,7 @@ async function getProjects(getTasks) {
     str += JSON.stringify(projects, null, 3);
     $("#jsonArea").html(str);
     //uploadToFile("/quireData", projects, "quireProjects.json");
+    return projects;
 }
 
 function requestQuirePermission() {

@@ -18,42 +18,49 @@ class QuireGarden extends Garden {
     async getData() {
         //var url = sprintf("https://api.github.com/orgs/%s/repos", this.org);
         //console.log("GitGarden.getData", url);
-        var obj = await getProjects();
-        console.log("org repos", obj);
-        //this.addRepoFlowers(obj);
+        var projects = await getProjects(true);
+        console.log("projects", projects);
+        this.addProjectFlowers(projects);
+        var tasks = [];
+        projects.forEach(proj => {
+            console.log("proj", proj);
+            console.log("proj.tasks", proj.tasks);
+            proj.tasks.forEach(task => {
+                tasks.push(task);
+            });
+        });
+        console.log("tasks",tasks);
+        this.addProjectFlowers(tasks);
     }
 
-    addRepoFlowers(dataObj) {
-        console.log("addRepoFlowers", dataObj);
-        var repos = dataObj;
+    addProjectFlowers(projects) {
+        console.log("addProjectFlowers", projects);
         var inst = this;
-        var nrepos = repos.length;
+        var nprojects = projects.length;
         var i = 0;
         var ncols = 5;
         var spacing = 100;
         var x0 = this.x0 - ncols*spacing/2.0;
         var y0 = this.y0;
-        repos.forEach(repo => {
+        projects.forEach(proj => {
             var row = i % ncols;
             var col = Math.floor(i / ncols);
-            console.log("repo", repo);
-            var name = repo.name;
-            var desc = repo.description || "";
+            console.log("proj", proj);
+            var name = proj.nameText;
+            var desc = proj.descriptionText || "";
             if (1) {
-                var url = sprintf("https://github.com/%s/%s", inst.org, name);
-                console.log("repo url", url);
-                desc += sprintf("<p>size %s<br>", repo.size);
-                desc += sprintf("created %s<br>", repo.created_at);
-                desc += sprintf("updated %s<br>", repo.updated_at);
-                var link = sprintf('<p><a href="%s" target="other">view on git</a>', url);
-                desc += link;
-                repo.description = desc;
+                var url = "foo";
+                console.log("proj url", url);
+                //desc += sprintf("<p>size %s<br>", 1);
+                desc += sprintf("created %s<br>", proj.createdAt);
+                desc += sprintf("due %s<br>", proj.due);
+               proj.description = desc;
             }
             console.log(row, col, "name:", name);
             var opts = { x: x0 + row * spacing, y: y0 + col * spacing };
-            opts.id = sprintf("gitrepo%s", repo.id);
-            opts.targetURL = repo.url || "https://worldviews.org";
-            opts.project = repo;
+            opts.id = sprintf("quire%s", proj.id);
+            opts.targetURL = "https://worldviews.org";
+            opts.project = proj;
             inst.gtool.addFlower(opts);
             i++;
         })
