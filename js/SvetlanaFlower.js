@@ -16,7 +16,7 @@ class SvetlanaFlower extends Flower {
         ctx.beginPath();
         var a0 = Math.PI / 2 - 0.7;
         var a1 = Math.PI / 2 + 0.7;
-        ctx.arc(0, 0, 20, a0, a1);
+        ctx.arc(this.cx, this.cy, 20, a0, a1);
         ctx.fill();
         ctx.stroke();
     }
