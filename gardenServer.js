@@ -23,7 +23,7 @@ var express = require('express');
 var proxy = require('express-http-proxy');
 var bodyParser = require('body-parser');
 var exec = require("child_process").exec;
-//var cors = require('cors');
+var cors = require('cors');
 var fileupload = require('express-fileupload');
 
 function fixPath(pstr) {
@@ -136,7 +136,7 @@ app.use(express.static("."));
 app.use(bodyParser.json());
 
 app.use(fileupload());
-//app.use(cors());
+app.use(cors());
 
 // just a test to check deployment using nginx
 app.get('/api', function (req, res) {
