@@ -390,7 +390,7 @@ app.get('/api/quireStart', function (req, res) {
     res.end();
 });
 
-app.get('/api/quire/getState', function (req, resp) {
+app.get('/api/quire/getState', function (req, res) {
     var obj = {'type': 'quireState',
             'token': quireToken,
             'tokenTime': quireTokenTime,
