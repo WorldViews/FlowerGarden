@@ -104,6 +104,13 @@
             //uploadToFile("/quireData", projects, "quireProjects.json");
         }
 
+        function requestQuirePermission() {
+            var url = "../api/quireStart";
+            popupWindow = window.open(url,
+            'popUpWindow',
+            'height=500,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+        }
+
         $(document).ready(() => {
             $("#dump").click(() => {
                 console.log("click dump");
@@ -122,24 +129,24 @@
             $("#tasksButton").click(() => {
                 getProjects(true);
             });
-        })
+            $("#requestQuireButton").click(requestQuirePermission);
+        });
     </script>
     <p>
         To use quire its necessary to first give it permission.   First do <br>
+        <button id="requestQuireButton">Approve Quire Permission</button> <br>
+        <!--
         <a href="../api/quireStart" target="quire">http://server/quireStart</a><br>
-        This will require a page with a "Connect Quire" link. Click that
-        link
-        and it will bring up a page from quire asking about permissions. Grant permissions
-        and it will bring up a callback page that should say "callback ok code ...." <br>
-        Now the API can be used.<br>
-        Commands like
-        <a href="../api/quire/getUser">http://server/api/quire/getUser</a><br>
-        <a href="../api/quire/getOrganizations">http://server/api/quire/getOrganizations</a><br>
-        or you could try
+        -->
     <p></p>
     <button id="testAPIButton">Test API</button>
     <button id="projectsButton">Projects</button>
     <button id="tasksButton">Tasks</button>
+    <br>
+    You could try commands like<br>
+    <a href="../api/quire/getUser">http://server/api/quire/getUser</a><br>
+    <a href="../api/quire/getOrganizations">http://server/api/quire/getOrganizations</a><br>
+
     </p>
     <pre id="jsonArea"></pre>
     <p></p>
