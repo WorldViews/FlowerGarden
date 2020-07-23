@@ -180,6 +180,10 @@ class GardenTool extends CanvasTool {
     return f;
   }
 
+  getFlower(id) {
+    return this.getGraphic(id);
+  }
+
   removeFlower(f) {
     this.removeGraphic(f);
     arrayRemove(this.flowers, f);

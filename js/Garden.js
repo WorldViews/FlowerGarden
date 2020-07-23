@@ -149,7 +149,7 @@ class ProjectGarden extends Garden {
             var col = Math.floor(i / ncols);
             console.log("project", proj);
             var name = proj.name;
-            var desc = proj.descriptiong;
+            var desc = proj.description;
             console.log(row, col, "name:", name);
             var opts = { x: x0 + row * spacing, y: y0 + col * spacing };
             opts.id = proj.id;

@@ -347,6 +347,10 @@ class CanvasTool {
         this.graphics[graphic.id] = graphic;
     }
 
+    getGraphic(id) {
+        return this.graphics[id];
+    }
+
     removeGraphic(id) {
         if (id instanceof CanvasTool.Graphic)
             id = id.id;

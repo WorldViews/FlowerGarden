@@ -1,0 +1,11 @@
+{
+   "items": [
+      {
+         "type": "PeopleGarden",
+         "name": "peopleGarden",
+         "dbName": "foo",
+         "w": 0.6,
+         "x": 0, "y": 0
+      }
+   ]
+}
