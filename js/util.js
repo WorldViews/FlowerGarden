@@ -172,6 +172,7 @@ async function loadPackage(packageName) {
     }
     catch (e) {
         console.log("Unable to load url", url);
+        alert("Unable to load "+packageName);
         return null;
     }
     //var cls = window[packageName];
