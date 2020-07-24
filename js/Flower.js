@@ -46,7 +46,7 @@ class Flower0 extends CanvasTool.Graphic {
     f.centerStyle = opts.centerStyle ||
       garden.colors[~~(Math.random() * garden.colors.length) + 1];
     f.numPetals = opts.numPetals || randomIntFromInterval(4, 10);
-    f.spacing = randomIntFromInterval(4, 10);
+    f.spacing = opts.spacing || randomIntFromInterval(4, 10);
     f.showFaces = false;
     this.rot = 0;
     this.yscale = 1.0;
@@ -61,9 +61,23 @@ class Flower0 extends CanvasTool.Graphic {
     var obj = {
       'type': 'Flower', x: f.cx, y: f.cy,
       'flowerRad': f.flowerRad,
-      'centerRad': f.centerRad
+      'centerRad': f.centerRad,
+      'fillStyle': f.fillStyle,
+      'centerStyle': f.centerStyle,
+      'petalStyle': f.petalStyle,
+      'numPetals': f.numPetals,
+      'spacing': f.spacing
     };
     return obj;
+  }
+
+  setProps(opts) {
+    var f = this;
+    var PROPS = ['petalStyle', 'centerStyle', 'fillStyle', 'centerRad', 'flowerRad', 'numPetals', 'spacing'];
+    PROPS.forEach(prop => {
+      if (opts[prop] != null)
+        f[prop] = opts[prop];
+    });
   }
 
   onClick(e) {
