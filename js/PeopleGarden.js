@@ -51,14 +51,23 @@ class PeopleGarden extends Garden {
         var y0 = 0;
         for (var uid in people) {
             var person = people[uid];
+            console.log("person", person);
             var row = this.numAdded % ncols;
             var col = Math.floor(this.numAdded / ncols);
             var name = person.email;
             var id = "person_" + person.uid;
-            console.log(row, col, "name:", name, "idL", id);
+            console.log(row, col, name, "id", id);
+            var fOpts = person.flower;
             var f = inst.gtool.getFlower(id);
             if (f) {
                 console.log("******* update flower f", f);
+                console.log("fOpts", fOpts);
+                if (fOpts) {
+                    f.setProps(fOpts);
+                }
+                else {
+                    console.log("Np flower opts for", id);
+                }
             }
             else {
                 var opts = { x: x0 + row * spacing, y: y0 + col * spacing };
@@ -66,11 +75,14 @@ class PeopleGarden extends Garden {
                 opts.targetURL = "https://worldviews.org";
                 //if (proj.imageURL) {
                 //    opts.imageURL = proj.imageURL;
-               // }
+                // }
                 opts.project = person;
-                inst.gtool.addFlower(opts);
+                var f = inst.gtool.addFlower(opts);
+                if (fOpts)
+                    f.setProps(opts);
                 this.numAdded++;
             }
+            console.log(" ");
         }
     }
 }

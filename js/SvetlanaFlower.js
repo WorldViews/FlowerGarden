@@ -5,7 +5,7 @@
 class SvetlanaFlower extends Flower {
     constructor(opts) {
         super(opts);
-        this.showFaces = true;
+        this.showFace = true;
     }
 
     draw(canvas, ctx) {

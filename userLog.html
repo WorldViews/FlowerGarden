@@ -4,83 +4,129 @@
 This code was taken from
 https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effect/
 -->
+
 <head>
-<meta charset="UTF-8">
-<title>Flowers Editor</title>
-<style type="text/css">
-canvas {
-  margin: 0;
-  overflow: hidden;
-  background: -webkit-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: -moz-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: -ms-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: -o-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: radial-gradient( farthest-corner circle at left bottom, #e1fd3e, #174709);
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Flowers Editor</title>
+    <style type="text/css">
+        canvas {
+            margin: 0;
+            overflow: hidden;
+            background: -webkit-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
+            background: -moz-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
+            background: -ms-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
+            background: -o-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
+            background: radial-gradient(farthest-corner circle at left bottom, #e1fd3e, #174709);
+        }
+    </style>
 
 <body>
-<!--
+    <!--
 <canvas id="flowerCanvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
 <canvas id="canvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
 -->
-<canvas id="flowerCanvas" style = "width: 100%; height: 90%;"></canvas>
-<div id="controls">
-    <span id="buttons" class="buttons">
-        <button id="login">login</button>
-        <button id="save">save</button>
-        <span id="userInfo">null</span>
-    </span>
-    <span id="canvasStat" class="stats">stats</span><br>
-    How Happy:<br>
-    <input id="happySlider" type="range" min="1" max="10"><br>
-    How Energetic:<br>
-    <input id="energySlider" type="range" min="2" max="10"><br>
-</div>
+    <canvas id="flowerCanvas" style="width: 100%; height: 90%;"></canvas>
+    <div id="controls">
+        <span id="buttons" class="buttons">
+            <button id="login">login</button>
+            <button id="save">save</button>
+            <span id="userInfo">null</span>
+        </span>
+        <span id="canvasStat" class="stats">stats</span><br>
+        <button id="updateButton">Update</button>
+        How Happy:<br>
+        <input id="happySlider" type="range" min="1" max="10"><br>
+        How Energetic:<br>
+        <input id="energySlider" type="range" min="2" max="10"><br>
+    </div>
 
-<!--
+    <!--
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  
 -->
-<script src="js/libs/jquery-3.1.0.min.js"></script>
-<script src="js/libs/sprintf.js"></script>
-<script src="js/libs/dat.gui.js"></script>
-<script src="js/CanvasTool.js"></script>
-<script src="js/GardenTool.js"></script>
-<script src="js/Flower.js"></script>
-<script src="js/util.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
-<script>
-  var garden;
-  var gtool;
-  var editor;
- 
-  function showUserUpdate(field, val) {
-      console.log(field, val);
-  }
-  $(document).ready(function() {
-    //garden = new FlowerGarden();
-    gtool = new GardenTool("flowerCanvas");
-    gtool.initFirebase();
-    gtool.start();
-    gtool.setView(0, 0, 800);
-    var f = gtool.addFlower();
-    editor = new FlowerEditor(gtool, f);
-    $("#happySlider").change((v) => {
-        console.log("slider input", v);
-        var v = $("#happySlider").val();
-        console.log("val", v);
-        showUserUpdate("affect", v)
-    })
-    $("#energySlider").change((v) => {
-        console.log("slider input", v);
-        var v = $("#energySlider").val();
-        console.log("val", v);
-        showUserUpdate("energy", v)
-    })
-});
+    <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <script src="js/libs/sprintf.js"></script>
+    <script src="js/libs/dat.gui.js"></script>
+    <script src="js/CanvasTool.js"></script>
+    <script src="js/GardenTool.js"></script>
+    <script src="js/Flower.js"></script>
+    <script src="js/util.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script>
+        var garden;
+        var gtool;
+        var editor;
+        var affect = 5;
+        var energy = 5;
+        var flower = null;
 
-</script>
+        async function handleUpdate() {
+            var user = gtool.user;
+            console.log("handleUpdate", user);
+            if (!user)
+                return;
+            var t = getClockTime();
+            var uid = user.uid;
+            var flowerOpts = flower.getState();
+            var userState = {
+                email: user.email, uid, energy, affect, lastUpdate: t,
+                flower: flowerOpts
+            };
+            console.log("userState", userState);
+            var dbRef = gtool.firebaseDB.ref();
+            await dbRef.child("/userState/" + uid).set(userState);
+        }
+            
+        async function showUserUpdate(field, val) {
+            var user = gtool.user;
+            var t = getClockTime();
+            console.log(field, val, user);
+            if (user) {
+                var uid = user.uid;
+                var userState = {
+                    email: user.email, uid, energy: 3, affect: 5, lastUpdate: t
+                };
+                userState[field] = Number(val);
+                console.log("userState", userState);
+                var dbRef = gtool.firebaseDB.ref();
+                await dbRef.child("/userState/" + uid).set(userState);
+            }
+        }
+
+        async function setupEditor() {
+            var opts = {};
+            var ftype = getParameterByName("flowerType");
+            if (ftype)
+                opts.type = ftype;
+            console.log("create flower");
+            var f = await gtool.addFlower(opts);
+            console.log("got it", f);
+            flower = f;
+            editor = new FlowerEditor(gtool, f);
+        }
+
+        $(document).ready(function () {
+            //garden = new FlowerGarden();
+            gtool = new GardenTool("flowerCanvas");
+            gtool.initFirebase();
+            gtool.start();
+            gtool.setView(0, 0, 800);
+            setupEditor();
+            $("#happySlider").change((v) => {
+                console.log("slider input", v);
+                affect = Number($("#happySlider").val());
+                console.log("affect", affect);
+                showUserUpdate("affect", affect);
+            })
+            $("#energySlider").change((v) => {
+                console.log("slider input", v);
+                energy = Number($("#energySlider").val());
+                console.log("energy", energy);
+                showUserUpdate("energy", energy);
+            });
+            $("#updateButton").click(handleUpdate);
+        });
+
+    </script>
 </body>
-
