@@ -91,6 +91,7 @@ class GardenTool extends CanvasTool {
     ctx.globalAlpha = .85;
     this.flowers = [];
     this.user = null;
+    this.plantOnClick = false;
     this.initGUI();
   }
 
@@ -168,13 +169,23 @@ class GardenTool extends CanvasTool {
       this.addFlower();
   }
 
-  addFlower(opts) {
+  async addFlower(opts) {
     opts = opts || {};
     if (opts.x == null)
       opts.x = uniform(-100, 100);
     if (opts.y == null)
       opts.y = uniform(-100, 100);
-    var f = new Flower(opts);
+    var f;
+    if (opts.type) {
+      f = await createObject(opts);
+      if (!f) {
+        alert("Couldn't create flower");
+        console.log("couldn't create flower for", opts);
+      }
+    }
+    else {
+      f = new Flower(opts);
+    }
     this.addGraphic(f);
     this.flowers.push(f);
     return f;
@@ -218,6 +229,8 @@ class GardenTool extends CanvasTool {
     var x = e.clientX;
     var y = e.clientY;
     var pt = this.getMousePos(e);
+    if (!this.plantOnClick)
+      return;
     console.log("new flower ", pt);
     var f = new Flower(pt);
     this.addGraphic(f);
