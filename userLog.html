@@ -69,6 +69,7 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
             var t = getClockTime();
             var uid = user.uid;
             var flowerOpts = flower.getState();
+            flower.affect = affect;
             var userState = {
                 email: user.email, uid, energy, affect, lastUpdate: t,
                 flower: flowerOpts

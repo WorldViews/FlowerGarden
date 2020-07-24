@@ -6,9 +6,10 @@ class SvetlanaFlower extends Flower {
     constructor(opts) {
         super(opts);
         this.showFace = true;
+        this.affect = 5;
     }
 
-    draw(canvas, ctx) {
+    xxxdraw(canvas, ctx) {
         //super.draw(canvas, ctx);
         ctx.fillStyle = 'red';
         ctx.strokeStyle = 'black';
@@ -23,6 +24,7 @@ class SvetlanaFlower extends Flower {
 
 
     drawFace(ctx, cx, cy, r) {
+        console.log("drawFace affect", this.affect);
         ctx.fillStyle = 'red';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = .7;
@@ -39,6 +41,8 @@ class SvetlanaFlower extends Flower {
         ctx.beginPath();
         ctx.arc(reyex, reyey, er, 0, 2 * Math.PI);
         ctx.fill();
+        if (this.affect < 5)
+            return;
         ctx.beginPath();
         var a0 = Math.PI / 2 - 0.7;
         var a1 = Math.PI / 2 + 0.7;
