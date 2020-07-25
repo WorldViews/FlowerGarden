@@ -47,7 +47,7 @@ class Flower0 extends CanvasTool.Graphic {
       garden.colors[~~(Math.random() * garden.colors.length) + 1];
     f.numPetals = opts.numPetals || randomIntFromInterval(4, 10);
     f.spacing = opts.spacing || randomIntFromInterval(4, 10);
-    f.showFaces = false;
+    f.showFace = false;
     this.rot = 0;
     this.yscale = 1.0;
     this.radius = f.flowerRad;
@@ -143,7 +143,7 @@ class Flower0 extends CanvasTool.Graphic {
     ctx.fillStyle = f.centerStyle;
     ctx.arc(cx, cy, f.centerRad * 10, 0, 2 * Math.PI);
     ctx.fill();
-    if (this.showFaces)
+    if (this.showFace)
       this.drawFace(ctx, cx, cy, f.centerRad);
   }
 
@@ -291,7 +291,7 @@ class Flower extends Flower0 {
     this.leafDy = 10;
     this.waveSpeed = getFloatParameterByName("wave", 0);
     this.lookAtH = getFloatParameterByName("lookAtH", 0);
-    this.showFaces = getBooleanParameterByName("faces", false);
+    this.showFace = getBooleanParameterByName("faces", false);
   }
 
   draw(canvas, ctx) {
