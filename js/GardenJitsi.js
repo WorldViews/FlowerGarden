@@ -27,7 +27,7 @@ class GardenJitsi extends Garden {
         this.api = api;
         api.addEventListener('participantJoined', e => inst.participantJoined(e));
         api.addEventListener('participantLeft', e => inst.participantLeft(e));
-        alert("Jitsi Initiated");
+        //alert("Jitsi Initiated");
     }
 
     participantJoined(e) {
@@ -35,14 +35,14 @@ class GardenJitsi extends Garden {
         window.LAST_E = e;
         console.log("id", e.id);
         console.log("name", e.displayName);
-        alert("participant joined "+e.displayName);
+        //alert("participant joined "+e.displayName);
     }
 
     participantLeft(e) {
         console.log("participantLeft", e);
         window.LAST_E = e;
         console.log("id", e.id);
-        alert("left");
+        //alert("left");
     }
 
 }
