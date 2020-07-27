@@ -181,3 +181,11 @@ async function loadPackage(packageName) {
     // var inst = eval(`new ${packageName}()`);
     return cls;
 }
+
+//TODO: combine and share this with CanvasTool getUniqueId
+function genUniqueId(idtype) {
+    idtype = idtype || "obj";
+    var id = idtype + '_' + getClockTime();
+    id = id.replace(/\./g, "_");
+    return id;
+}

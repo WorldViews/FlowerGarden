@@ -357,6 +357,22 @@ class GardenTool extends CanvasTool {
     //console.log("Successfully updated");
   }
 
+  async addURL(url) {
+    var obj = { 'type': 'URL', url };
+    return await this.addTopic(obj);
+  }
+
+  async addTopic(obj) {
+    console.log("addTopic", obj);
+    if (!obj.id) {
+      obj.id = genUniqueId();
+    }
+    var dbRef = this.firebaseDB.ref();
+    var ret = await dbRef.child("/topics/urls/" + obj.id).set(obj);
+    console.log("topic added");
+    return ret;
+  }
+
   async loadFromFirebase() {
     var garden = new ProjectGarden({ name: "projects", gtool, dbName: "foo" });
   }
@@ -375,7 +391,12 @@ class GardenTool extends CanvasTool {
 
   handleDrop(e) {
     var inst = this;
+    console.log("handleDrop", e);
+    window.Exxx = e;
+    e.preventDefault();
+    e.stopPropagation();
     if (e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files.length) {
+      console.log("handle fild data");
       e.preventDefault();
       e.stopPropagation();
       var files = e.originalEvent.dataTransfer.files;
@@ -396,6 +417,15 @@ class GardenTool extends CanvasTool {
         inst.loadGarden(data);
       };
       var txt = reader.readAsText(file);
+    }
+    else {
+      //alert("other drop event");
+      const lines = e.originalEvent.dataTransfer.getData("text/uri-list").split("\n");
+      lines.forEach(async line => {
+        console.log("*** line", line);
+        var url = line;
+        await inst.addURL(url);
+      });
     }
   }
 
