@@ -12,5 +12,11 @@
         "w": 0.6,
         "x": 0, "y": 100
      }
+     {
+      "type": "SvetlanaFlower",
+      "name": "myfirst something",
+      "w": 1,
+      "x": 1, "y": 99
+   }
  ]
 }
