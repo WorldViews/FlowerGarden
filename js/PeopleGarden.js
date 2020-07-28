@@ -18,7 +18,7 @@ class PeopleGarden extends Garden {
         this.gtool.picViewer = pic;
     }
 
-    async loadFromDB() {
+    async xxxloadFromDB() {
         var inst = this;
         var gtool = this.gtool;
         gtool.initFirebase();
@@ -33,7 +33,23 @@ class PeopleGarden extends Garden {
             var jstr = JSON.stringify(obj, null, 3);
             inst.load(obj);
         });
+    }
 
+    async loadFromDB() {
+        var inst = this;
+        var gtool = this.gtool;
+        gtool.initFirebase();
+        var db = gtool.firebaseDB;
+        console.log("db:", db);
+        var dbRef = db.ref('/user/state');
+        console.log("Got dbRef", dbRef);
+        dbRef.on('value', snap => {
+            console.log("Got", snap);
+            var obj = snap.val();
+            console.log("obj", obj);
+            var jstr = JSON.stringify(obj, null, 3);
+            inst.load(obj);
+        });
     }
 
     load(obj) {
@@ -41,7 +57,7 @@ class PeopleGarden extends Garden {
         //this.picViewer = pic;
     }
 
-    updatePeopleFlowers(obj) {
+    async updatePeopleFlowers(obj) {
         console.log("updatePeopleFlowers", obj);
         var people = obj;
         var inst = this;
@@ -54,8 +70,8 @@ class PeopleGarden extends Garden {
             console.log("person", person);
             var row = this.numAdded % ncols;
             var col = Math.floor(this.numAdded / ncols);
-            var name = person.email;
-            var id = "person_" + person.uid;
+            var name = person.login.email;
+            var id = "person_" + uid;
             console.log(row, col, name, "id", id);
             var fOpts = person.flower;
             var f = inst.gtool.getFlower(id);
@@ -77,9 +93,9 @@ class PeopleGarden extends Garden {
                 //    opts.imageURL = proj.imageURL;
                 // }
                 opts.project = person;
-                var f = inst.gtool.addFlower(opts);
+                var f = await inst.gtool.addFlower(opts);
                 if (fOpts)
-                    f.setProps(opts);
+                    f.setProps(fOpts);
                 this.numAdded++;
             }
             console.log(" ");

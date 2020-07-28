@@ -349,13 +349,40 @@ class GardenTool extends CanvasTool {
     var t = getClockTime();
     console.log("heartbeat tick...", uid, email, t);
     var userState = {
-      email, uid, energy: 3, affect: 5, lastUpdate: t
+      email, uid, lastUpdate: t
     }
     //console.log("userState", userState);
     var dbRef = this.firebaseDB.ref();
-    await dbRef.child("/userState/" + uid).set(userState);
+    //await dbRef.child("/userState/" + uid).set(userState);
+    await dbRef.child("/user/state/" + uid + "/login").set(userState);
     //console.log("Successfully updated");
   }
+
+  async getObjFromDB(path, db) {
+    console.log("getObjFromDB", path);
+    var inst = this;
+    await this.initFirebase();
+    db = db || this.firebaseDB;
+    console.log("db:", db);
+    var dbRef = db.ref(path);
+    console.log("Got dbRef", dbRef);
+    return new Promise((res, rej) => {
+      try {
+        dbRef.once('value').then(snap => {
+          console.log("Got", snap);
+          var obj = snap.val();
+          console.log("obj", obj);
+          var jstr = JSON.stringify(obj, null, 3);
+          res(obj);
+        });
+      }
+      catch (e) {
+        console.log("Error tring to get path", path);
+        rej(e);
+      }
+    });
+  }
+
 
   async addURL(url) {
     var obj = { 'type': 'URL', url };

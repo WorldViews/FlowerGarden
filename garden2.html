@@ -4,91 +4,108 @@
 This code was taken from
 https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effect/
 -->
+
 <head>
-<meta charset="UTF-8">
-<title>WorldViews Flower Garden</title>
-<style type="text/css">
-body {
-  margin: 0;
-  overflow: hidden;
-  height: 100vh;
-  xbackground: -webkit-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  xbackground: -moz-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  xbackground: -ms-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  xbackground: -o-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  xbackground: radial-gradient( farthest-corner circle at left bottom, #e1fd3e, #174709);
-}
+    <meta charset="UTF-8">
+    <title>WorldViews Flower Garden</title>
+    <link rel="stylesheet" type="text/css" href="css/garden.css">
+    <style>
+        #mainScreen {
+            xxwidth: 80%;
+            height: 200px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: brown;
+            xxdisplay: block;
+            display: flex;
+            justify-content: center;
+            xxdisplay: table-cell;
+            position: absolute;
+            xxxpadding: 10px;
+            top: 20px;
+            left: 15%;
+            right: 15%;
+            color: white;
+            max-height: 80%;
+            background-color: brown;
+            xbackground-color: sandybrown;
+            xxxoverflow-y: auto;
+            vertical-align: middle;
+        }
 
-.buttons {
-  padding: 10px 10px;
-}
-
-.stats {
-  height: 30px;
-}
-
-.webView {
-  width: 100%;
-  height: 500px;
-}
-
-.imageView {
-  width: 240px;
-  height: 240px;
-}
-
-#flowerCanvas {
-  width: 80%; height: 50%;
-  background: -webkit-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: -moz-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: -ms-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: -o-radial-gradient( left bottom, circle farthest-corner, #e1fd3e, #174709);
-  background: radial-gradient( farthest-corner circle at left bottom, #e1fd3e, #174709);
-}
-</style>
-
+        #imageView {
+            max-width:100%;
+            max-height:100%;
+            display: block;
+            width: auto;
+            height: auto;
+            xxmargin-top: auto;
+            xxmargin-bottom: auto;
+            margin-left: auto;
+            margin-right: auto;
+            vertical-align: middle;
+        }
+    </style>
+</head>
 <body>
-<!--
-<canvas id="flowerCanvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
-<canvas id="canvas" width=300 height=300 style="border-style: solid; border-width: 2px"></canvas>
--->
-<canvas id="flowerCanvas"></canvas><img id="imageView" class ="imageView" src="images/worldviews.jpg">
-<div id="controls">
-  <span id="buttons" class="buttons">
-    <button id="save">save</button>
-  </span>
-  <span id="canvasStat" class = "stats">stats</span>  
-</div>
-<div>
-  <iframe id="webView" src="https://worldviews.org" class="webView"></iframe>
-</div>
+    <div id="gardenDiv" style="width: 100%; height: 100%">
+        <div style="width: 50%; height: 100%; float: left; background: green; position: relative">
+            <canvas id="flowerCanvas"></canvas>
+            <div id="controls">
+                <span id="buttons" class="buttons">
+                    <button id="login">login</button>
+                    <button id="save">save</button>
+                    <span id="userInfo">null</span>
+                </span>
+                <span id="canvasStat" class="stats">stats</span>
+            </div>
+            <div id="mainScreen">
+                <!-- <iframe id="imageView"></iframe> -->
+                <img id="imageView" src="">
+            </div>
+        </div>
+        <div style="margin-left: 50%; xheight: 100%; " class="rightPanel">
+            <div id="projectView" class="projectView" style="width: 100%; xheight: 100%">
+            </div>
+            <div id="instagramView" class="instagramView" style="width: 100%; height: 100%">
+            </div>
+        </div>
+    </div>
 
+    <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <script src="js/libs/sprintf.js"></script>
+    <script src="js/CanvasTool.js"></script>
+    <script src="js/GardenTool.js"></script>
+    <script src="js/Garden.js">d</script>
+    <script src="js/Flower.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/QuireClient.js"></script>
+    <script src="js/libs/jquery.instagramFeed.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script src="js/libs/paho-mqtt.js"></script>
+    <script src="js/GardenMQTT.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script>
+        var gtool;
+        var garden;
 
-<!--
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  
--->
-<script src="js/libs/jquery-3.1.0.min.js"></script>
-<script src="js/libs/sprintf.js"></script>
-<script src="js/CanvasTool.js"></script>
-<script src="js/GardenTool.js"></script>
-<script src="js/Flower.js"></script>
-<script src="js/util.js"></script>
-<script>
-  var garden;
-  var gtool;
- 
-  $(document).ready(function() {
-    //garden = new FlowerGarden();
-    gtool = new GardenTool("flowerCanvas", {numStartupFlowers: 0, maxNumFlowers: 200});
-    //gtool.addFlowers(2);
-    //gtool.startWildFlowers(4);
-    //gtool.loadPics(PICS);
-    gtool.start();
-    gtool.setView(0, 0, 800);
-    //gtool.loadGardenFile();
-    gtool.loadProjectFile();
-});
+        $(document).ready(function () {
+            gtool = new GardenTool("flowerCanvas", { numStartupFlowers: 0, maxNumFlowers: 200 });
+            gtool.initFirebase();
+            gtool.start();
+            gtool.setView(0, 0, 800);
+            var gardenName = getParameterByName("garden");
+            if (gardenName) {
+                var gardenURL = sprintf("gardens/%s.json", gardenName)
+                garden = gtool.loadGardenFile(gardenURL);
+            }
+            else {
+                garden = gtool.loadFromFirebase();
+            }
+        });
 
-</script>
+    </script>
 </body>
-

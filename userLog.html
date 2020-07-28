@@ -70,13 +70,13 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
             var uid = user.uid;
             var flowerOpts = flower.getState();
             flower.affect = affect;
-            var userState = {
-                email: user.email, uid, energy, affect, lastUpdate: t,
-                flower: flowerOpts
-            };
-            console.log("userState", userState);
+            var  mood = {
+                    email: user.email, uid, energy, affect, lastUpdate: t,
+                };
+            console.log("mood", mood);
             var dbRef = gtool.firebaseDB.ref();
-            await dbRef.child("/userState/" + uid).set(userState);
+            await dbRef.child("/user/state/" + uid + "/mood").set(mood);
+            await dbRef.child("/user/state/" + uid + "/flower").set(flowerOpts);
         }
             
         async function showUserUpdate(field, val) {
@@ -91,8 +91,22 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
                 userState[field] = Number(val);
                 console.log("userState", userState);
                 var dbRef = gtool.firebaseDB.ref();
-                await dbRef.child("/userState/" + uid).set(userState);
+                //await dbRef.child("/userState/" + uid).set(userState);
+                await dbRef.child("/user/state/" + uid + "/mood").set(userState);
             }
+        }
+
+        async function getFlowerOpts() {
+            if (!gtool.user) {
+                alert("No user id -- maybe you need to login");
+                return;
+            }
+            var uid = gtool.user.uid;
+            var opts = await gtool.getObjFromDB('/user/state/'+uid);
+            console.log("****** got opts", opts);
+            var fOpts = opts.flower;
+            console.log("**** got fOpts", fOpts);
+            flower.setProps(fOpts);
         }
 
         async function setupEditor() {
@@ -105,6 +119,7 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
             console.log("got it", f);
             flower = f;
             editor = new FlowerEditor(gtool, f);
+            setTimeout(getFlowerOpts, 1000);
         }
 
         $(document).ready(function () {
