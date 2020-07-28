@@ -4,10 +4,10 @@ console.log("Loading MUSEControl.js");
 var CURRENT_CHOICE = null;
 var CURRENT_YAW = 0;
 
-function getParameterByName(name) {
-    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-}
+//function getParameterByName(name) {
+//    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+//    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+//}
 
 if (typeof io == "undefined") {
     var io = require("socket.io-client");
@@ -31,11 +31,18 @@ class MUSEControl
         this.sock.on("MUSE", msg => {
             inst.handleMessage(msg);
         });
+        this.msgHandler = null;
         //setInterval(function() { inst.update(); }, 50);
+    }
+
+    setMessageHandler(handler) {
+        this.msgHandler = handler;
     }
 
     handleMessage(msg) {
         console.log("Got message: ", msg);
+        if (this.msgHandler)
+            this.msgHandler(msg);
     }
 
     sendMessage(msg, channel) {
@@ -96,31 +103,6 @@ class MUSEControl
     }
 }
 
-function getJSON(url, handler, errHandler)
-{
-    console.log("Util.getJSON: "+url);
-    $.ajax({
-        url: url,
-        dataType: 'text',
-        success: function(str) {
-            var data;
-            try {
-                data = JSON.parse(str);
-            }
-            catch (err) {
-                console.log("err: "+err);
-                alert("Error in json for: "+url+"\n"+err);
-                return;
-            }
-            handler(data);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            reportError("Failed to get JSON for "+url);
-            if (errHandler)
-                errHandler();
-        }
-    });
-}
 
 if (typeof exports !== 'undefined') {
     console.log("setting up exports");

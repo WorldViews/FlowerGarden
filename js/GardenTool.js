@@ -93,6 +93,8 @@ class GardenTool extends CanvasTool {
     this.user = null;
     this.plantOnClick = false;
     this.initGUI();
+    if (getBooleanParameterByName("muse"))
+      this.setupMUSE();
   }
 
   xresize() {
@@ -151,11 +153,30 @@ class GardenTool extends CanvasTool {
     }
   }
 
-
   start() {
     var inst = this;
     this.flowers = [];
     super.start();
+  }
+
+  setupMUSE() {
+    if (this.muse)
+      return;
+    this.muse = new MUSEControl();
+    var inst = this;
+    this.muse.setMessageHandler(msg => inst.handleMUSEMessage(msg));
+  }
+
+  handleMUSEMessage(msg) {
+    console.log("msg", msg);
+  }
+
+  mouseMove(e) {
+    if (this.muse) {
+      var cpt = this.getMousePosCanv(e);
+      this.muse.sendMessage({type: 'mousePosition', cpt});
+    }
+    super.mouseMove(e);
   }
 
   loadPics(pics) {

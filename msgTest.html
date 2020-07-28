@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>MUSEControl msgTest</title>
+</head>
+
+<body>
+    Messages<br>
+    <pre id="jsonArea">
+    </pre>
+    <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <script src="js/libs/sprintf.js"></script>
+    <script src="js/libs/socket.io-1.4.5.js"></script>
+    <script src="js/libs/dat.gui.js"></script>
+    <script src="js/CanvasTool.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/MUSEControl.js"></script>
+    <script>
+        var muse = null;
+        $(document).ready(function () {
+            muse = new MUSEControl();
+            muse.sendMessage({type: 'joined'});
+            muse.setMessageHandler(msg => {
+                console.log("show msg", msg);
+                var str = JSON.stringify(msg, null, 3);
+                console.log("json str", str);
+                $("#jsonArea").html(str);
+            })
+        });
+
+    </script>
+</body>
