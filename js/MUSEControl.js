@@ -28,7 +28,10 @@ class MUSEControl
             }
         }
         this.url = sioURL;
-        var opts = {path: '/api/socket.io'};
+        var sioPath = getParameterByName("sioPath");
+        sioPath = sioPath || '/api/socket.io';
+
+        var opts = {path: sioPath};
         console.log("getting socket at: "+sioURL, opts);
         this.sock = io(sioURL, opts);
         console.log("Got socket "+this.sock);
