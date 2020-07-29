@@ -1,4 +1,11 @@
-
+/*
+This Node extension adds socket.io based MUSE messaging to a node server.
+Usage:
+   var MUSENode = require(".//js/MUSENode").MUSENode;
+   MUSENode(app,server,serverSSL);
+   
+   The serverSSL is optional
+*/
 function report(str) { console.log(str); }
 function getClockTime() { return new Date() / 1000.0; }
 
