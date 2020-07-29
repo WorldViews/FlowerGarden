@@ -25,8 +25,7 @@ var bodyParser = require('body-parser');
 var exec = require("child_process").exec;
 var cors = require('cors');
 var fileupload = require('express-fileupload');
-var Quire = require("./js/Quire").Quire;
-console.log("./js/Quire");
+
 
 function fixPath(pstr) {
     //console.log("fixPath", pstr)
@@ -306,8 +305,6 @@ app.get('/getYoutubeVid*', function (req, resp) {
 
 
 //Beginning of quire stuff
-Quire(app);
-/*
 var clientId = ":vHCsZnwSWPG-arDM79AqLtvC5HD";
 var clientSecret = "cr7a64fs6amxpjtjfghfzqw6rw91akp6gik5bdje";
 //const redirectURI = 'http://quire/callback';
@@ -444,7 +441,7 @@ app.get('/api/quire/api*', async function (req, res) {
     res.json(obj);
 });
 // End of quire stuff..
-*/
+
 
 /////////////////////////////////////////////////////////////////////
 // Setup Socket.io server listening to our app
