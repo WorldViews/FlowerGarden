@@ -77,7 +77,7 @@ function getAPIData(apiPath, token) {
     });
 }
 
-function setup(app) {
+function setupRoutes(app) {
 
     app.get('/api/quireStart', function (req, res) {
         console.log("/quire " + req.path);
@@ -147,9 +147,9 @@ function setup(app) {
 }
 
 function Quire(app) {
-    console.log("******* Hellow from Quire ******");
+    console.log("******* Setting up Quire ******");
+    setupRoutes(app);
 }
-exports.default = Quire;
 exports.Quire = Quire;
  // End of quire stuff..
 
