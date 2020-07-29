@@ -5,13 +5,6 @@ function getClockTime() { return new Date() / 1000.0; }
 var verbosity = 1;
 var VERSION = "GardenServer 0.0.0";
 
-//var CHANNELS = ["position", "command", "people"];
-var CHANNELS = ["MUSE"];
-
-var CHANNEL_STATS = {};
-
-var activeSockets = [];
-
 var sprintf = require("./js/libs/sprintf").sprintf;
 var http = require('http');
 var https = require('https');
@@ -25,7 +18,7 @@ var exec = require("child_process").exec;
 var cors = require('cors');
 var fileupload = require('express-fileupload');
 var Quire = require("./js/Quire").Quire;
-console.log("./js/Quire");
+var MUSENode = require("./js/MUSENode").MUSENode;
 
 function fixPath(pstr) {
     //console.log("fixPath", pstr)
@@ -94,23 +87,22 @@ function getConfig() {
 // getConfig();
 
 /////////////////////////////////////////////////////////////////////
-//   Setup basic http server using express.  Also handle uploaded
-//   JSON via /update/ urls.
-//
-var serverSSL;
+//   Setup basic http server using express.
 
+var serverSSL;
 var app = express();
 var server = http.createServer(app);
 
+// Try to find certificate and run SSL server
 try {
     var privateKey = fs.readFileSync('ssl/server.key', 'utf8');
     var certificate = fs.readFileSync('ssl/server.crt', 'utf8');
     var credentials = { key: privateKey, cert: certificate };
     serverSSL = https.createServer(credentials, app);
 } catch (e) {
-    console.log(e);
+    //console.log(e);
     //process.exit();
-    console.log("Running with no https server");
+    console.log("*** Running with no https server");
 }
 
 
@@ -132,45 +124,6 @@ app.get('/api/version', function (req, res) {
     res.send('Version ' + VERSION)
 });
 
-
-app.get('/api/stats', function (req, resp) {
-    resp.writeHead(200, { 'Content-Type': 'text/html' });
-    var t = getClockTime();
-    var str = "Active Clients:\n";
-    str += "<pre>\n";
-    activeSockets.forEach(sock => {
-        var info = sock._info;
-        str += "client: " + sock.client.conn.remoteAddress + "\n";
-        str += "Num from: " + info.numFrom;
-        str += " num to: " + info.numTo + "\n";
-        if (info.lastMsgTo) {
-            var msg = info.lastMsgTo;
-            var dt = t - msg._sys.time;
-            str += sprintf("Last msg to (%.2f sec ago)\n", dt);
-            str += JSON.stringify(msg, null, 3);
-        }
-        str += "\n";
-    });
-    str += "</pre>";
-    str += "<hr>";
-    str += "Channels:<br>\n";
-    str += "<pre>\n";
-    for (var channel in CHANNEL_STATS) {
-        var stats = CHANNEL_STATS[channel];
-        str += channel + "\n";
-        str += "Num from: " + stats.numFrom + " num to: " + stats.numTo + "\n";
-        if (stats.lastMsgTo) {
-            var msg = stats.lastMsgTo;
-            var dt = t - stats.lastTime;
-            str += sprintf("Last msg to %.2f sec ago from %s:\n", dt, msg._sys.addr)
-            str += JSON.stringify(msg, null, 3) + "\n";
-        }
-        str += "\n";
-    }
-    str += "</pre>";
-    str += "<hr>";
-    resp.end(str);
-});
 
 app.post('/update/*', function (request, response) {
     var obj = request.body;
@@ -265,16 +218,6 @@ app.get('/dir/*', function (req, resp) {
     });
 });
 
-app.get('/sendMessage*', function (req, resp) {
-    console.log("/sendMessage path: " + req.path);
-    var query = req.query;
-    console.log("query: " + JSON.stringify(query));
-    var channel = query.channel || "MUSE";
-    var msg = query;
-    console.log("channel: " + channel + " msg: " + JSON.stringify(msg));
-    handleChannel(channel, msg, null);
-    resp.end("sendMessage OK");
-});
 
 app.get('/getYoutubeVid*', function (req, resp) {
     console.log("/getYoutubeVid path: " + req.path);
@@ -288,226 +231,7 @@ app.get('/getYoutubeVid*', function (req, resp) {
 
 //Beginning of quire stuff
 Quire(app);
-/*
-var clientId = ":vHCsZnwSWPG-arDM79AqLtvC5HD";
-var clientSecret = "cr7a64fs6amxpjtjfghfzqw6rw91akp6gik5bdje";
-//const redirectURI = 'http://quire/callback';
-//const redirectURI = 'http://localhost/api/quire/callback';
-const redirectURI = 'http://worldviews.org/FlowerGarden/api/quire/callback';
-
-const authorizationUrl = 'https://quire.io/oauth';
-const tokenUrl = 'https://quire.io/oauth/token';
-const apiUrlBase = 'https://quire.io/api';
-var quireCode = null;
-var quireTokenData = null;
-var quireToken = null;
-var quireTokenTime = 0;
-var request = require('request');
-
-async function exchangeAccessToken(code) {
-    return new Promise(function (resolve, reject) {
-        request.post({
-            url: tokenUrl,
-            form: {
-                grant_type: 'authorization_code',
-                code: code,
-                client_id: clientId,
-                client_secret: clientSecret
-            }
-        },
-            function (error, httpResponse, body) {
-                if (error) {
-                    return reject(error);
-                }
-                console.log("body: " + body);
-                resolve(JSON.parse(body))
-            });
-    });
-}
-
-function getAPIData(apiPath, token) {
-    return new Promise(function (resolve, reject) {
-        var url = apiUrlBase + apiPath;
-        //var url = 'http://quire.io/api/organization/list';
-        console.log("getAPIData ", token, url);
-        request.get({
-            url: url,
-            headers: {
-                //"Authorization": "Bearer " + quireToken
-                "Authorization": "Bearer " + token
-            }
-        },
-            function (error, httpResponse, body) {
-                if (error) {
-                    return reject(error);
-                }
-                console.log("got response....", body);
-                var obj;
-                try {
-                    obj = JSON.parse(body);
-                    console.log("obj", obj, JSON.stringify(obj, null, 3));
-                }
-                catch (e) {
-                    obj = {
-                        'error': 'JSON parse error',
-                        'url': url,
-                        'string': body
-                    }
-                }
-                resolve(obj);
-            });
-    });
-}
-
-app.get('/api/quireStart', function (req, res) {
-    console.log("/quire " + req.path);
-    var query = req.query;
-    console.log("query: " + JSON.stringify(query));
-    var authUrl = authorizationUrl
-        + '?client_id=' + clientId
-        //+ '&redirect_uri=' + encodeURIComponent(redirectURI);
-        + '&redirect_uri=' + redirectURI;
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.write(
-        '<html><body>'
-        + '<a href="' + authUrl + '">Connect Quire</a>'
-        + '</body></html>');
-    res.end();
-});
-
-app.get('/api/quire/getState', function (req, res) {
-    var obj = {
-        'type': 'quireState',
-        'token': quireToken,
-        'tokenTime': quireTokenTime,
-        'tokenData': quireTokenData, 'code': quireCode
-    };
-    res.json(obj);
-});
-
-app.get('/api/quire/callback', async function (req, resp) {
-    console.log("/quire " + req.path);
-    var query = req.query;
-    console.log("query: " + JSON.stringify(query));
-    quireCode = query['code'];
-    quireTokenData = await exchangeAccessToken(quireCode);
-    quireToken = quireTokenData['access_token'];
-    quireTokenTime = getClockTime();
-    var request = require('request');
-    resp.end("callback ok code " + quireCode + " token " + quireToken);
-});
-
-app.get('/api/quire/getUser', async function (req, res) {
-    var obj = await getAPIData('/user/id/me', quireToken);
-    var jstr = JSON.stringify(obj, null, 3);
-    console.log("jstr", jstr);
-    //res.end(jstr);
-    res.json(obj);
-});
-
-app.get('/api/quire/getOrganizations', async function (req, res) {
-    var obj = await getAPIData('/organization/list', quireToken);
-    var jstr = JSON.stringify(obj, null, 3);
-    console.log("jstr", jstr);
-    //res.end(jstr);
-    res.json(obj);
-});
-
-app.get('/api/quire/api*', async function (req, res) {
-    var path = req.path;
-    console.log("path", path);
-    var apiPath = path.slice("/api/quire/api".length);
-    console.log("apiPath", apiPath);
-    var obj = await getAPIData(apiPath, quireToken);
-    var jstr = JSON.stringify(obj, null, 3);
-    console.log("jstr", jstr);
-    //res.end(jstr);
-    res.json(obj);
-});
-// End of quire stuff..
-*/
-
-/////////////////////////////////////////////////////////////////////
-// Setup Socket.io server listening to our app
-//var io = require('socket.io').listen(app);
-//var io = require('socket.io').listen(server).listen(serverSSL);
-//var io = require('socket.io').listen(server);
-var io = require('socket.io')({path: '/api/socket.io'}).listen(server);
-if (serverSSL) {
-    console.log("Listening to SSL server");
-    io = io.listen(serverSSL);
-}
-else {
-    console.log("No SSL server being used");
-}
-
-function handleDisconnect(socket) {
-    report("disconnected " + socket);
-    var index = activeSockets.indexOf(socket);
-    if (index >= 0) {
-        activeSockets.splice(index, 1);
-    }
-}
-
-function getChannelStats(channel) {
-    var stats = CHANNEL_STATS[channel];
-    if (!stats) {
-        stats = { numTo: 0, numFrom: 0 };
-        CHANNEL_STATS[channel] = stats;
-    }
-    return stats;
-}
-
-function handleChannel(channel, msg, sock) {
-    //report("got msg on channel "+channel+": "+JSON.stringify(msg));
-    var t = getClockTime();
-    var stats = getChannelStats(channel);
-    stats.numTo += 1;
-    stats.lastMsgTo = msg;
-    stats.lastTime = t;
-    activeSockets.forEach(s => {
-        if (s == sock) {
-            return;
-        }
-        try {
-            s.emit(channel, msg);
-            s._info.lastMsgTo = msg;
-            s._info.numTo++;
-        }
-        catch (e) {
-            report("failed to send to socket " + s);
-        }
-    });
-    var _sys = { time: getClockTime(), addr: 'self' };
-    if (sock) {
-        sock._info.numFrom++;
-        sock._info.lastMsgFrom = msg;
-        _sys.addr = sock.client.conn.remoteAddress;
-    }
-    msg._sys = _sys;
-}
-
-// Emit welcome message on connection
-io.on('connection', function (socket) {
-    // Use socket to communicate with this particular client only, sending it it's own id
-    report("got connection " + socket);
-    socket._info = { numFrom: 0, numTo: 0, lastMsg: null };
-    activeSockets.push(socket);
-    CHANNELS.forEach(channel => {
-        var stats = getChannelStats(channel);
-        report("setting up events on channel " + channel);
-        //socket.on(channel, msg => handleChannel(channel, msg));
-        socket.on(channel, msg => {
-            stats.numFrom += 1;
-            if (typeof msg == 'string') {
-                //report("warning ... converting string to obj");
-                msg = JSON.parse(msg);
-            }
-            handleChannel(channel, msg, socket)
-        });
-    });
-    socket.on('disconnect', obj => handleDisconnect(socket, obj));
-});
+MUSENode(app, server, serverSSL);
 
 var port = 4000;
 var portSSL = 4433;
@@ -524,6 +248,7 @@ if (serverSSL) {
     serverSSL.listen(portSSL, addr);
 }
 
+/*
 var localAddress = null;
 if (process.argv[2]) {
     localAddress = process.argv[2];
@@ -534,3 +259,4 @@ if (process.argv[2]) {
         console.log("Got local address " + localAddress);
     })
 }
+*/
