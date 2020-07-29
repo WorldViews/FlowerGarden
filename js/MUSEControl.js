@@ -13,6 +13,14 @@ if (typeof io == "undefined") {
     var io = require("socket.io-client");
 }
 
+/*
+This class uses socket.io to disribute messages.
+If the server is running on worldviews the nginx config routes
+paths starting with /FlowerGarden/api to the node server and
+all other urls are handled statically by nginx.   So to
+get through our node server, the URL used by the socket.io
+client must connect using /FlowerGarden/api/socket.io.
+*/
 class MUSEControl
 {
     constructor(sioURL, sioPath) {
@@ -111,7 +119,6 @@ class MUSEControl
         this.sendMessage(msg);
     }
 }
-
 
 if (typeof exports !== 'undefined') {
     console.log("setting up exports");
