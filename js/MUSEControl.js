@@ -15,22 +15,24 @@ if (typeof io == "undefined") {
 
 class MUSEControl
 {
-    constructor(sioURL) {
+    constructor(sioURL, sioPath) {
         var inst = this;
         if (!sioURL) {
             sioURL = getParameterByName("sioURL");
         }
         if (!sioURL) {
             sioURL = document.location.host;
-            var serverName = getParameterByName("server");
-            if (serverName) {
-                sioURL = "http://"+serverName+":4000";
-            }
         }
         this.url = sioURL;
-        var sioPath = getParameterByName("sioPath");
-        sioPath = sioPath || '/api/socket.io';
-
+        if (!sioPath) {
+             sioPath = getParameterByName("sioPath");
+        }
+        if (!sioPath) {
+            if (document.location.host == "worldviews.org")
+                sioPath = "/FlowerGarden/api/socket.io";
+            else    
+                sioPath = "/api/socket.io";
+        }
         var opts = {path: sioPath};
         console.log("getting socket at: "+sioURL, opts);
         this.sock = io(sioURL, opts);

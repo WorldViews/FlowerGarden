@@ -1,0 +1,32 @@
+{
+    "items": [
+     {
+         "type": "SvetlanaFlower",
+         "name": "f1",
+         "w": 0.6,
+         "x": 0, "y": 0
+      },
+      {
+         "type": "SvetlanaFlower",
+         "name": "f2",
+         "w": 0.6,
+         "x": 0, "y": 100
+      },
+      {
+       "type": "SvetlanaFlower",
+       "name": "myfirst something",
+       "w": 1,
+       "x": 0, "y": 200
+    }
+  ]
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
