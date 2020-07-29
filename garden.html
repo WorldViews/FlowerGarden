@@ -1,65 +1,16 @@
 <!DOCTYPE HTML>
 <html>
-<!--
-This code was taken from
-https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effect/
--->
 
 <head>
     <meta charset="UTF-8">
     <title>WorldViews Flower Garden</title>
-    <style type="text/css">
-        body {
-            margin: 0;
-            overflow: hidden;
-            height: 100vh;
-            background-color: rgb(241, 239, 230);
-        }
-
-        .buttons {
-            padding: 10px 10px;
-        }
-
-        .stats {
-            height: 30px;
-        }
-
-        .webView {
-            width: 100%;
-            height: 500px;
-        }
-
-        .projectView {
-            padding: 10px;
-            width: 100%;
-            xheight: 500px;
-        }
-
-        .instagramView {
-            width: 240px;
-            height: 240px;
-        }
-
-        .rightPanel {
-            height: 640px;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        #flowerCanvas {
-            width: 100%;
-            height: 93%;
-            background: -webkit-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
-            background: -moz-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
-            background: -ms-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
-            background: -o-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
-            background: radial-gradient(farthest-corner circle at left bottom, #e1fd3e, #174709);
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/garden.css">
+</head>
 
 <body>
     <div id="gardenDiv" style="width: 100%; height: 100%">
-        <div style="width: 50%; height: 100%; float: left; background: green;">
+        <div id="gardenPanel"
+             style="width: 50%; height: 100%; float: left; background: green; position: relative">
             <canvas id="flowerCanvas"></canvas>
             <div id="controls">
                 <span id="buttons" class="buttons">
@@ -71,7 +22,7 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
             </div>
         </div>
         <div style="margin-left: 50%; xheight: 100%; " class="rightPanel">
-            <div id="projectView" class="projectView" style="width: 100%; xheight: 100%">
+            <div id="projectView" class="projectView" style="width: 100%;">
             </div>
             <div id="instagramView" class="instagramView" style="width: 100%; height: 100%">
             </div>
@@ -94,22 +45,19 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
     <script src="js/libs/paho-mqtt.js"></script>
     <script src="js/GardenMQTT.js"></script>
     <script src="js/MUSEControl.js"></script>
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="js/Display.js"></script>
     <script>
+
         var gtool;
         var garden;
 
         $(document).ready(function () {
-            //garden = new FlowerGarden();
             gtool = new GardenTool("flowerCanvas", { numStartupFlowers: 0, maxNumFlowers: 200 });
             gtool.initFirebase();
-            //gtool.addFlowers(2);
-            //gtool.startWildFlowers(4);
             gtool.start();
-            //gtool.setupMUSE();
             gtool.setView(0, 0, 800);
-            //gtool.loadGardenFile();
+            if (getBooleanParameterByName("hud"))
+                gtool.display1 = new Display(gtool, 'gardenPanel');
             var gardenName = getParameterByName("garden");
             if (gardenName) {
                 var gardenURL = sprintf("gardens/%s.json", gardenName)
@@ -122,3 +70,5 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
 
     </script>
 </body>
+
+</html>
