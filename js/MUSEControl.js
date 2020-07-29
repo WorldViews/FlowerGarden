@@ -18,6 +18,9 @@ class MUSEControl
     constructor(sioURL) {
         var inst = this;
         if (!sioURL) {
+            sioURL = getParameterByName("sioURL");
+        }
+        if (!sioURL) {
             sioURL = document.location.host;
             var serverName = getParameterByName("server");
             if (serverName) {
