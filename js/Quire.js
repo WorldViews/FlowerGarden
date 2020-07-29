@@ -1,5 +1,9 @@
 
-function report(str) { console.log(str); }
+// Module to add to node server to handle Quire API
+// Usage:
+// Quire = require("./js/Quire").Quire;
+// Quire(app);
+
 function getClockTime() { return new Date() / 1000.0; }
 
 var verbosity = 1;
@@ -150,6 +154,7 @@ function Quire(app) {
     console.log("******* Setting up Quire ******");
     setupRoutes(app);
 }
+
 exports.Quire = Quire;
  // End of quire stuff..
 

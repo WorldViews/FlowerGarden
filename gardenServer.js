@@ -12,7 +12,6 @@ var CHANNEL_STATS = {};
 
 var activeSockets = [];
 
-var MongoClient = require('mongodb').MongoClient;
 var sprintf = require("./js/libs/sprintf").sprintf;
 var http = require('http');
 var https = require('https');
@@ -71,24 +70,6 @@ function makePathIfNeeded(dirpath) {
 
 function verifyDir(dir) {
     return makePathIfNeeded(dir);
-}
-
-async function getFlowersFromDB(url) {
-    var url = url || "mongodb://localhost:27017/";
-    var db = await MongoClient.connect(url);
-    var dbo = db.db("db1");
-    console.log("dbo: " + dbo);
-    var recs = await dbo.collection("flowers").find().toArray();
-    recs.forEach(rec => {
-        rec._id = rec._id.toString();
-    });
-    console.log("recs", recs);
-    return recs;
-}
-
-async function dumpFlowersFromDB() {
-    var recs = await getFlowers(url);
-    console.log("recs", recs);
 }
 
 function getConfig() {
