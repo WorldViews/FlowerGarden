@@ -446,7 +446,8 @@ app.get('/api/quire/api*', async function (req, res) {
 // Setup Socket.io server listening to our app
 //var io = require('socket.io').listen(app);
 //var io = require('socket.io').listen(server).listen(serverSSL);
-var io = require('socket.io').listen(server);
+//var io = require('socket.io').listen(server);
+var io = require('socket.io')({path: '/api/socket.io'}).listen(server);
 if (serverSSL) {
     console.log("Listening to SSL server");
     io = io.listen(serverSSL);

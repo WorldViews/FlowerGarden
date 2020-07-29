@@ -25,8 +25,9 @@ class MUSEControl
             }
         }
         this.url = sioURL;
-        console.log("getting socket at: "+sioURL);
-        this.sock = io(sioURL);
+        var opts = {path: '/api/socket.io'};
+        console.log("getting socket at: "+sioURL, opts);
+        this.sock = io(sioURL, opts);
         console.log("Got socket "+this.sock);
         this.sock.on("MUSE", msg => {
             inst.handleMessage(msg);
