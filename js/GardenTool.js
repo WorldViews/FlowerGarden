@@ -95,6 +95,14 @@ class GardenTool extends CanvasTool {
     this.initGUI();
     if (getBooleanParameterByName("muse"))
       this.setupMUSE();
+    if (getBooleanParameterByName("hud"))
+      this.addHUD();
+  }
+
+  addHUD() {
+    if (this.hudDisplay)
+      return;
+     this.hudDisplay = new Display(this);
   }
 
   xresize() {
@@ -516,10 +524,18 @@ class GardenTool extends CanvasTool {
 
   showImage(url) {
     console.log("showImage ", url);
-    $("#imageView").attr('src', url);
-    if (this.picViewer) {
+    if (this.hudDisplay)
+      this.hudDisplay.showImage(url);
+   if (this.picViewer) {
       this.picViewer.setImageURL(url);
     }
+  }
+
+  showVideo(idOrURL) {
+    console.log("GardenTool.showVideo ", idOrURL);
+    this.addHUD();
+    if (this.hudDisplay)
+      this.hudDisplay.playVideo(idOrURL);
   }
 
 }

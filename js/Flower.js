@@ -34,6 +34,7 @@ class Flower0 extends CanvasTool.Graphic {
     //this.ctx = garden.ctx;
     var f = this;
     f.imageURL = opts.imageURL;
+    f.videoURL = opts.videoURL;
     f.cx = getVal(opts.x, uniform(0, garden.canvWidth));
     f.cy = getVal(opts.y, uniform(0, garden.canvHeight));
     f.centerRadMax = opts.centerRadMax || uniform(0.7, 1.5);
@@ -87,6 +88,9 @@ class Flower0 extends CanvasTool.Graphic {
       this.tool.showPage(this.targetURL);
     //$("#webView").src = this.targetURL;
     //window.open(this.targetURL, "gardenInfo");
+    if (this.videoURL) {
+      this.tool.showVideo(this.videoURL);
+    }
     return true;
   }
 

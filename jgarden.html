@@ -8,21 +8,8 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
 <head>
     <meta charset="UTF-8">
     <title>WorldViews Flower Garden</title>
+    <link rel="stylesheet" type="text/css" href="css/garden.css">
     <style type="text/css">
-        body {
-            margin: 0;
-            overflow: hidden;
-            height: 100vh;
-            background-color: rgb(241, 239, 230);
-        }
-
-        .buttons {
-            padding: 10px 10px;
-        }
-
-        .stats {
-            height: 30px;
-        }
 
         .webView {
             width: 100%;
@@ -46,20 +33,12 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
             overflow-x: hidden;
         }
 
-        #flowerCanvas {
-            width: 100%;
-            height: 93%;
-            background: -webkit-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
-            background: -moz-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
-            background: -ms-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
-            background: -o-radial-gradient(left bottom, circle farthest-corner, #e1fd3e, #174709);
-            background: radial-gradient(farthest-corner circle at left bottom, #e1fd3e, #174709);
-        }
     </style>
 
 <body>
     <div id="gardenDiv" style="width: 100%; height: 100%">
-        <div style="width: 50%; height: 100%; float: left; background: green;">
+        <div id="gardenPanel"
+             style="width: 50%; height: 100%; float: left; background: green; position: relative;">
             <canvas id="flowerCanvas"></canvas>
             <div id="controls">
                 <span id="buttons" class="buttons">
@@ -75,6 +54,7 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
     </div>
 
     <script src="js/libs/jquery-3.1.0.min.js"></script>
+    <script src="js/libs/socket.io-1.4.5.js"></script>
     <script src="js/libs/sprintf.js"></script>
     <script src="js/CanvasTool.js"></script>
     <script src="js/GardenTool.js"></script>
@@ -90,6 +70,8 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
     <script src="js/GardenMQTT.js"></script>
     <script src='https://meet.jit.si/external_api.js'></script>
     <script src="js/GardenJitsi.js"></script>
+    <script src="js/MUSEControl.js"></script>
+    <script src="js/Display.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script>
@@ -98,14 +80,10 @@ https://www.html5canvastutorials.com/advanced/html5-canvas-blooming-flowers-effe
         var gjitsi;
 
         $(document).ready(function () {
-            //garden = new FlowerGarden();
             gtool = new GardenTool("flowerCanvas", { numStartupFlowers: 0, maxNumFlowers: 200 });
             gtool.initFirebase();
-            //gtool.addFlowers(2);
-            //gtool.startWildFlowers(4);
             gtool.start();
             gtool.setView(0, 0, 800);
-            //gtool.loadGardenFile();
             var gardenName = getParameterByName("garden");
             if (gardenName) {
                 var gardenURL = sprintf("gardens/%s.json", gardenName)

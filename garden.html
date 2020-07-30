@@ -44,6 +44,8 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
     <script src="js/libs/paho-mqtt.js"></script>
     <script src="js/GardenMQTT.js"></script>
+    <script src='https://meet.jit.si/external_api.js'></script>
+    <script src="js/GardenJitsi.js"></script>
     <script src="js/MUSEControl.js"></script>
     <script src="js/Display.js"></script>
     <script>
@@ -56,8 +58,6 @@
             gtool.initFirebase();
             gtool.start();
             gtool.setView(0, 0, 800);
-            if (getBooleanParameterByName("hud"))
-                gtool.display1 = new Display(gtool, 'gardenPanel');
             var gardenName = getParameterByName("garden");
             if (gardenName) {
                 var gardenURL = sprintf("gardens/%s.json", gardenName)
