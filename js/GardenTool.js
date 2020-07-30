@@ -97,6 +97,16 @@ class GardenTool extends CanvasTool {
       this.setupMUSE();
     if (getBooleanParameterByName("hud"))
       this.addHUD();
+    if (getBooleanParameterByName("jitsi"))
+      this.addJitsi();
+  }
+
+  addJitsi(parentId) {
+    if (this.jitsi) {
+      console.log("Already have jitsi");
+      return;
+    }
+    this.jitsi = new GardenJitsi(this, {parentId});;
   }
 
   addHUD() {
@@ -133,6 +143,7 @@ class GardenTool extends CanvasTool {
 
   initGUI() {
     var inst = this;
+    $("#jitsi").click(e => inst.addJitsi());
     $("#save").click(e => inst.downloadGardenObj());
     var dropzone = "#" + this.canvasName;
     $(dropzone).on('dragover', (e) => {
