@@ -1,0 +1,11 @@
+{
+   "items": [
+      {
+         "type": "WildFlowers",
+         "x": 0,
+         "y": 0,
+         "xMin": -200, "xMax": 200, "yMin": -100, "yMax": 200,
+         "maxNumWildFlowers": 10
+      }
+   ]
+}

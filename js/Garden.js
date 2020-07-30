@@ -66,13 +66,13 @@ class WildFlowers {
         this.timer = setInterval(() => inst.addFlower(), 500);
     }
 
-    addFlower() {
+    async addFlower() {
         if (this.numFlowers() < this.maxNumWildFlowers) {
             var x = uniform(this.xMin, this.xMax);
             var y = uniform(this.yMin, this.yMax);
             var opts = { x, y };
             console.log("adding flower ", opts);
-            var f = this.gtool.addFlower(opts);
+            var f = await this.gtool.addFlower(opts);
             this.flowers.push(f);
         }
         if (this.numFlowers() == this.maxNumWildFlowers) {

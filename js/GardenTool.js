@@ -294,7 +294,14 @@ class GardenTool extends CanvasTool {
     }
     url = url || "garden.json";
     console.log("Reading garden file " + url);
-    var obj = await loadJSON(url);
+    try {
+      var obj = await loadJSON(url);
+    }
+    catch (e) {
+      var errStr = "Failed to load garden "+url;
+      console.log(errStr);
+      alert(errStr);
+    }
     console.log("got garden data: " + JSON.stringify(obj));
     return await this.loadGarden(obj);
     return garden;

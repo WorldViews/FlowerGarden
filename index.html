@@ -8,17 +8,35 @@
 <p>
     Welcome to the flower garden.
 
-    Here are some links you might try:
+    Here are some links you might try that show different kinds of garden:
     <ul>
         <li><a href="garden.html">Default Garden</a></li>
-        <li><a href="garden.html?garden=garden1">Garden with lots of goodies</a></li>
+        <li><a href="garden.html?garden=gardenmedley">Garden with lots of goodies</a></li>
+        <li><a href="garden.html?garden=wildflowers">Wildflowers</a></li>
         <li><a href="garden.html?garden=peacetree">Peace Tree</a></li>
         <li><a href="garden.html?garden=mandala">Mandala Garden</a></li>
         <li><a href="garden.html?garden=peoplegarden">People Garden</a></li>
+        <li><a href="garden.html?garden=videogarden">Video Garden</a></li>
+        <li><a href="garden.html?garden=githubgarden">Github Garden</a></li>
         <li><a href="garden.html?garden=quiregarden">Quire project Garden</a>
             (may require granting quire permissions 
         <a href="play/quire.html">here</a>)
     </li>
+    </ul>
+    Options that can be added to query string for garden.html.  Later these will be
+    added to some options widget, but for now, they can be specified this way.
+    Boolean values can be given as 0|1|true|false.
+    <ul>
+    <dl>
+        <dt>muse=<i>bool</i></dt>
+        <dd>Run MUSE message server (using socket.io)</dd>
+        <dt>faces=<i>bool</i></dt>
+        <dd>Show faces on flowers</dd>
+        <dt>lookAtH=<i>height</i></dt>
+        <dd>Make faces look towards point given height above mouse. height=200 is good value</dd>
+        <dt>hud=<i>bool</i></dt>
+        <dd>Make a display window that hovers over garden and doesn't move as garden is panned</dd>
+    </dl>
     </ul>
     Other playthings
     <ul>
