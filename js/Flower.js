@@ -29,7 +29,7 @@ class Flower0 extends CanvasTool.Graphic {
   constructor(opts) {
     opts = opts || {};
     super(opts);
-    console.log("Flower ", opts);
+    //console.log("Flower ", opts);
     var garden = GARDEN;
     //this.ctx = garden.ctx;
     var f = this;
@@ -54,7 +54,7 @@ class Flower0 extends CanvasTool.Graphic {
     this.radius = f.flowerRad;
     this.targetURL = opts.targetURL;
     this.project = opts.project;
-    console.log("targetURL", this.targetURL);
+    //console.log("targetURL", this.targetURL);
   }
 
   getState() {
@@ -293,6 +293,8 @@ class Flower extends Flower0 {
   constructor(opts) {
     super(opts);
     this.leafDy = 10;
+    this.stemHeight = 50;
+    this.cy = this.y - this.stemHeight;
     this.waveSpeed = getFloatParameterByName("wave", 0);
     this.lookAtH = getFloatParameterByName("lookAtH", 0);
     this.showFace = getBooleanParameterByName("faces", false);
@@ -321,7 +323,7 @@ class Flower extends Flower0 {
   drawStem(canvas, ctx) {
     this.strokeStyle = 'green';
     this.lineWidth = 2.0;
-    var h = 50;
+    var h = this.stemHeight;
     var gpt = { x: this.cx, y: this.cy + h };
     var cpt = { x: this.cx, y: this.cy };
     var pts = [gpt, cpt];

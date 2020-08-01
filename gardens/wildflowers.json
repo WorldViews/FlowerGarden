@@ -1,10 +1,15 @@
 {
    "items": [
       {
-         "type": "WildFlowers",
+         "type": "Butterfly", "id": "bfly1",
+         "x": 0, "y": -20
+      },
+      {
+         "type": "WildFlowers", "id": "wf1", "name": "Wildflower Garden",
+         "width": 400,
+         "height": 300,
          "x": 0,
          "y": 0,
-         "xMin": -200, "xMax": 200, "yMin": -100, "yMax": 200,
          "maxNumWildFlowers": 10
       }
    ]

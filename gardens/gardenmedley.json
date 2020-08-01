@@ -32,9 +32,10 @@
       },
       {
          "type": "WildFlowers",
-         "x": 20,
-         "y": 30,
-         "xMin": -550, "xMax": -320, "yMin": 0, "yMax": 500,
+         "x": -400,
+         "y": 250,
+         "width": 200,
+         "height": 500,
          "maxNumWildFlowers": 30
       },
       {

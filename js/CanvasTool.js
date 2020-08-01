@@ -354,7 +354,7 @@ class CanvasTool {
     removeGraphic(id) {
         if (id instanceof CanvasTool.Graphic)
             id = id.id;
-        console.log('removing graphic with id ' + id);
+        //console.log('removing graphic with id ' + id);
         delete this.graphics[id];
         this.draw();
     }
@@ -474,7 +474,8 @@ CanvasTool.Graphic = class {
     }
 
     contains(pt) {
-        var d = this.tool.dist(this, pt);
+        var fpt = {x: this.cx, y: this.cy};
+        var d = this.tool.dist(fpt, pt);
         //console.log("contains", this.id, d, this.x, this.y, pt, this.radius);
         var v = d <= this.radius;
         //console.log("v", v);

@@ -2,11 +2,20 @@
 
 console.log("in PeaceTree.js");
 
-class Garden {
+class Garden extends CanvasTool.RectGraphic {
     constructor(opts) {
-        //super(opts);
+        super(opts);
         this.name = opts.name;
         this.gtool = gtool;
+        this.font = "100px Arial";
+        this.textStyle = "white";
+        this.textAlign = "center";
+    }
+
+    draw(canvas, ctx) {
+        super.draw(canvas, ctx);
+        if (this.name)
+            this.drawText(canvas, ctx, this.x, this.y, this.name, this.font);
     }
 
     // load flowers from a JSON object
@@ -32,6 +41,7 @@ class Garden {
         }
     }
 
+    /*
     async loadGardenerSpec(spec) {
         console.log("loadGardnerSpec", spec);
         var otype = spec.type;
@@ -40,22 +50,43 @@ class Garden {
         console.log("addItem got", obj);
         // this.gtool.addGraphic(obj);
     }
+    */
 }
 
-class WildFlowers {
+class WildFlowers extends Garden {
     constructor(opts) {
         console.log("******* Bingo bingo .... WildFlowers...", opts);
+        super(opts);
         this.gtool = opts.gtool;
+        this.plantOnClick = opts.plantOnClick;
+        if (this.plantOnClick == null)
+            this.plantOnClick = true;
         var num = opts.maxNumWildFlowers || 10;
-        this.xMin = opts.xMin || -100;
-        this.xMax = opts.xMax || 100;
-        this.yMin = opts.yMin || -100;
-        this.yMax = opts.yMax || 100;
+        this.xMin = this.x - this.width / 2;
+        this.xMax = this.x + this.width / 2;
+        this.yMin = this.y - this.height / 2;
+        this.yMax = this.y + this.height / 2;
         this.timer = null;
         this.flowers = [];
         this.startWildFlowers(num);
         window.WF = this;
         console.log("xLow xHigh", this.xLow, this.xHigh);
+    }
+
+    onClick(e) {
+        console.log("WildFlowers.onClick", this.id, e);
+        if (e.which != 1)
+            return;
+        var x = e.clientX;
+        var y = e.clientY;
+        var pt = this.gtool.getMousePos(e);
+        if (!this.plantOnClick)
+            return;
+        console.log("new flower ", pt);
+        var f = new Flower(pt);
+        this.gtool.addGraphic(f);
+        this.flowers.push(f);
+
     }
 
     numFlowers() { return this.flowers.length; }
@@ -71,7 +102,7 @@ class WildFlowers {
             var x = uniform(this.xMin, this.xMax);
             var y = uniform(this.yMin, this.yMax);
             var opts = { x, y };
-            console.log("adding flower ", opts);
+            //console.log("adding flower ", opts);
             var f = await this.gtool.addFlower(opts);
             this.flowers.push(f);
         }

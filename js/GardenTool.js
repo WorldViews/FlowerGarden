@@ -218,7 +218,10 @@ class GardenTool extends CanvasTool {
     var f;
     if (opts.type) {
       f = await createObject(opts);
-      if (!f) {
+      if (f) {
+        console.log("Created object", f, opts);
+      }
+      else {
         alert("Couldn't create flower");
         console.log("couldn't create flower for", opts);
       }
@@ -259,8 +262,10 @@ class GardenTool extends CanvasTool {
       console.log("Couldn't create", item);
       return;
     }
-    if (obj instanceof CanvasTool.Graphic)
+    if (obj instanceof CanvasTool.Graphic) {
+      console.log("obj is graphic");
       this.addGraphic(obj);
+    }
   }
 
   handleMouseDown(e) {
