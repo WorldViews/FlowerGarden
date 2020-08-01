@@ -151,7 +151,7 @@ function setupRoutes(app) {
 }
 
 function Quire(app) {
-    console.log("******* Setting up Quire ******");
+    console.log("*** Setting up Quire");
     setupRoutes(app);
 }
 

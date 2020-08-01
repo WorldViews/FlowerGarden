@@ -137,6 +137,8 @@ function downloadFromBrowser(filename, text) {
 }
 
 async function createObject(spec) {
+    console.log("createObject", spec);
+    //alert("createObject");
     var className = spec.type;
     var cls;
     try {

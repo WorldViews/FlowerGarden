@@ -67,6 +67,7 @@ function handleChannel(channel, msg, sock) {
 }
 
 function setupMUSE(app, server, serverSSL) {
+    console.log("*** setting up MUSE socket.io serverds")
     app.get('/api/stats', function (req, resp) {
         resp.writeHead(200, { 'Content-Type': 'text/html' });
         var t = getClockTime();
