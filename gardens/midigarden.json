@@ -1,0 +1,18 @@
+{
+   "items": [
+      {
+         "type": "Butterfly", "id": "bfly1",
+         "x": 0, "y": -20
+      },
+      {
+         "type": "MidiGarden", "id": "wf1", "name": "Midi Garden",
+         "lineWidth": 4,
+         "fillStyle": "brown",
+         "width": 400,
+         "height": 300,
+         "x": 0,
+         "y": 0,
+         "maxNumWildFlowers": 10
+      }
+   ]
+}
