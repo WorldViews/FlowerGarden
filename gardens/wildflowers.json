@@ -6,11 +6,17 @@
       },
       {
          "type": "WildFlowers", "id": "wf1", "name": "Wildflower Garden",
+         "lineWidth": 4,
+         "fillStyle": "brown",
          "width": 400,
          "height": 300,
          "x": 0,
          "y": 0,
          "maxNumWildFlowers": 10
+      },
+      { "type": "CanvasTool.RectGraphic", "id": "r1",  "x": 200, "y": 0,
+         "width": 900, "height": 50,
+         "fillStyle": null
       }
    ]
 }

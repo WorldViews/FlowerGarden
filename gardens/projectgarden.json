@@ -1,0 +1,10 @@
+{
+   "items": [
+      {
+         "type": "ProjectGarden",
+         "x": 20,
+         "y": 30,
+         "dbName": "foo"
+      }
+   ]
+}

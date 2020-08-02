@@ -41,6 +41,10 @@ class Garden extends CanvasTool.RectGraphic {
         }
     }
 
+    onClick(e) {
+        return false;
+    }
+
     /*
     async loadGardenerSpec(spec) {
         console.log("loadGardnerSpec", spec);
@@ -67,7 +71,7 @@ class WildFlowers extends Garden {
         this.yMin = this.y - this.height / 2;
         this.yMax = this.y + this.height / 2;
         this.timer = null;
-        this.flowers = [];
+        this.plants = [];
         this.startWildFlowers(num);
         window.WF = this;
         console.log("xLow xHigh", this.xLow, this.xHigh);
@@ -85,41 +89,48 @@ class WildFlowers extends Garden {
         console.log("new flower ", pt);
         var f = new Flower(pt);
         this.gtool.addGraphic(f);
-        this.flowers.push(f);
+        this.plants.push(f);
 
     }
 
-    numFlowers() { return this.flowers.length; }
+    numPlants() { return this.plants.length; }
 
     startWildFlowers(maxNumWildFlowers) {
         var inst = this;
         inst.maxNumWildFlowers = maxNumWildFlowers;
-        this.timer = setInterval(() => inst.addFlower(), 500);
+        this.timer = setInterval(() => inst.addPlant(), 500);
     }
 
-    async addFlower() {
-        if (this.numFlowers() < this.maxNumWildFlowers) {
+    async addPlant() {
+        var inst = this;
+        if (this.numPlants() < this.maxNumWildFlowers) {
             var x = uniform(this.xMin, this.xMax);
             var y = uniform(this.yMin, this.yMax);
             var opts = { x, y };
             //console.log("adding flower ", opts);
             var f = await this.gtool.addFlower(opts);
-            this.flowers.push(f);
+            this.plants.push(f);
         }
-        if (this.numFlowers() == this.maxNumWildFlowers) {
-            this.removeFlower(this.flowers[0]);
+        if (this.numPlants() >= this.maxNumWildFlowers) {
+            var f = this.plants[0];
+            f.die(() => inst.removePlant(f));
+            //this.removeFlower(this.flowers[0]);
         }
     }
 
-    removeFlower(f) {
+    removePlant(f) {
         this.gtool.removeFlower(f);
-        arrayRemove(this.flowers, f);
+        arrayRemove(this.plants, f);
     }
 }
 
 class ProjectGarden extends Garden {
     constructor(opts) {
         super(opts);
+        this.x0 = opts.x0 || 0;
+        this.y0 = opts.y0 || 0;
+        this.spacing = opts.spacing || 100;
+        this.ncols = opts.ncols || 5;
         if (opts.dbName) {
             this.loadFromDB(opts.dbName);
         }
@@ -171,18 +182,22 @@ class ProjectGarden extends Garden {
         console.log("addProjectFlowers", obj);
         var inst = this;
         var i = 0;
-        var ncols = 5;
-        var spacing = 100;
-        var x0 = -200;
-        var y0 = 0;
+        var ncols = this.ncols;
+        var spacing = this.spacing;
+        var xLeft = this.x0 - (ncols-1)*spacing/2.0;
+        var y0 = this.y0;
+        var col, row;
+
+
+        var row, col;
         obj.projects.forEach(proj => {
-            var row = i % ncols;
-            var col = Math.floor(i / ncols);
+            col = i % ncols;
+            row = Math.floor(i / ncols);
             console.log("project", proj);
             var name = proj.name;
             var desc = proj.description;
             console.log(row, col, "name:", name);
-            var opts = { x: x0 + row * spacing, y: y0 + col * spacing };
+            var opts = { x: xLeft + col * spacing, y: y0 + row * spacing };
             opts.id = proj.id;
             opts.targetURL = proj.infoURL || "https://worldviews.org";
             if (proj.imageURL) {
@@ -191,7 +206,11 @@ class ProjectGarden extends Garden {
             opts.project = proj;
             inst.gtool.addFlower(opts);
             i++;
-        })
+        });
+        this.width = spacing * (ncols + 1) - spacing;
+        this.height = spacing * (row + 1);
+        this.x = this.x0;
+        this.y = y0 + this.height / 2.0 - spacing + spacing/4;
     }
 
 }

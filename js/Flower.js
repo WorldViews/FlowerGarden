@@ -49,6 +49,7 @@ class Flower0 extends CanvasTool.Graphic {
     f.numPetals = opts.numPetals || randomIntFromInterval(4, 10);
     f.spacing = opts.spacing || randomIntFromInterval(4, 10);
     f.showFace = false;
+    this.state = "seedling";
     this.rot = 0;
     this.yscale = 1.0;
     this.radius = f.flowerRad;
@@ -101,14 +102,41 @@ class Flower0 extends CanvasTool.Graphic {
     }
   }
 
-  draw(canvas, ctx) {
-    //super.draw(canvas, ctx);
-    this.ctx = ctx;
+  tick() {
     var f = this;
+    if (this.state == "dying") {
+      f.flowerRad -= f.growthRate;
+      f.centerRad -= f.centerGrowthInc;
+      if (f.flowerRad <= 0 || f.centerRad <= 0) {
+        this.destroy();
+      }
+      return;
+    }
     if (f.centerRad < f.centerRadMax) {
       f.flowerRad += f.growthRate;
       f.centerRad += f.centerGrowthInc;
     }
+  }
+
+  die(removeFun) {
+    this.state = "dying";
+    this.removeFun = removeFun;
+  }
+
+  destroy() {
+    this.state = "dead";
+    this.removeFun(this);
+  }
+
+  draw(canvas, ctx) {
+    //super.draw(canvas, ctx);
+    if (this.state == "dead") {
+      console.log("Need to prune dead flowers");
+      return;
+    }
+    this.ctx = ctx;
+    /*
+    */
     this.drawFlower(ctx);
   }
 
@@ -117,11 +145,11 @@ class Flower0 extends CanvasTool.Graphic {
       h = 500.0;
     var dx = this.cx - x;
     var dy = this.cy - y;
-    var d = Math.sqrt(dx*dx + dy*dy);
+    var d = Math.sqrt(dx * dx + dy * dy);
     var a = Math.atan2(dy, dx);
     var phi = Math.atan2(d, h);
     this.yscale = Math.cos(phi);
-    this.rot = a - Math.PI/2;
+    this.rot = a - Math.PI / 2;
   }
 
   drawFlower(ctx) {
@@ -155,23 +183,23 @@ class Flower0 extends CanvasTool.Graphic {
     ctx.fillStyle = 'black';
     ctx.strokeStyle = 'black';
     ctx.lineWidth = .7;
-    r = r*10;
-    var d = .3*r;
+    r = r * 10;
+    var d = .3 * r;
     var leyex = cx - d;
     var leyey = cy - d;
     var reyex = cx + d;
     var reyey = cx - d;
-    var er = 0.1*r;
+    var er = 0.1 * r;
     ctx.beginPath();
-    ctx.arc(leyex, leyey, er, 0, 2*Math.PI);
+    ctx.arc(leyex, leyey, er, 0, 2 * Math.PI);
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(reyex, reyey, er, 0, 2*Math.PI);
+    ctx.arc(reyex, reyey, er, 0, 2 * Math.PI);
     ctx.fill();
     ctx.beginPath();
-    var a0 = Math.PI/2 - 0.7;
-    var a1 = Math.PI/2 + 0.7;
-    ctx.arc(cx, cy, 0.5*r, a0, a1);
+    var a0 = Math.PI / 2 - 0.7;
+    var a1 = Math.PI / 2 + 0.7;
+    ctx.arc(cx, cy, 0.5 * r, a0, a1);
     ctx.stroke();
   }
 
@@ -300,6 +328,18 @@ class Flower extends Flower0 {
     this.showFace = getBooleanParameterByName("faces", false);
   }
 
+  //onClick(e) {
+  //}
+
+  contains(pt) {
+    //var d = this.tool.dist(this, pt);
+    var d = this.tool.dist({x: this.cx, y: this.cy}, pt);
+    //console.log("contains", this.id, d, this.x, this.y, pt, this.radius);
+    var v = d <= this.radius;
+    //console.log("v", v);
+    return v;
+  }
+
   draw(canvas, ctx) {
     this.drawLeaves(canvas, ctx);
     this.drawStem(canvas, ctx);
@@ -308,9 +348,10 @@ class Flower extends Flower0 {
 
 
   tick() {
+    super.tick();
     var tool = window.gtool;
     if (tool.lastMousePos && this.lookAtH) {
-        this.lookAt(tool.lastMousePos.x, tool.lastMousePos.y, this.lookAtH)
+      this.lookAt(tool.lastMousePos.x, tool.lastMousePos.y, this.lookAtH)
     }
     if (this.waveSpeed == 0)
       return;

@@ -12,6 +12,8 @@ class GitGarden extends Garden {
         this.targetURL = opts.targetURL;
         this.x0 = opts.x0 || 0;
         this.y0 = opts.y0 || 0;
+        this.spacing = opts.spacing || 100;
+        this.ncols = opts.ncols || 5;
         this.getData();
     }
 
@@ -29,13 +31,14 @@ class GitGarden extends Garden {
         var inst = this;
         var nrepos = repos.length;
         var i = 0;
-        var ncols = 5;
-        var spacing = 100;
-        var x0 = this.x0 - ncols*spacing/2.0;
+        var ncols = this.ncols;
+        var spacing = this.spacing;
+        var xLeft = this.x0 - (ncols-1)*spacing/2.0;
         var y0 = this.y0;
+        var col, row;
         repos.forEach(repo => {
-            var row = i % ncols;
-            var col = Math.floor(i / ncols);
+            col = i % ncols;
+            row = Math.floor(i / ncols);
             console.log("repo", repo);
             var name = repo.name;
             var desc = repo.description || "";
@@ -50,13 +53,17 @@ class GitGarden extends Garden {
                 repo.description = desc;
             }
             console.log(row, col, "name:", name);
-            var opts = { x: x0 + row * spacing, y: y0 + col * spacing };
+            var opts = { x: xLeft + col * spacing, y: y0 + row * spacing };
             opts.id = sprintf("gitrepo%s", repo.id);
             opts.targetURL = repo.url || "https://worldviews.org";
             opts.project = repo;
             inst.gtool.addFlower(opts);
             i++;
-        })
+        });
+        this.width = spacing * (ncols + 1) - spacing;
+        this.height = spacing * (row + 1);
+        this.x = this.x0;
+        this.y = y0 + this.height / 2.0 - spacing + spacing/4;
     }
 }
 

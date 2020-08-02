@@ -12,17 +12,17 @@
       },
       {
          "type": "Taiko",
-         "name": "Taiko1", 
+         "id": "taiko1", 
          "x": 200, "y": -200
       },
       {
          "type": "Penguin",
-         "name": "penguin1", 
+         "id": "penguin1", 
          "x": 280, "y": -200, "targetURL": "https://xerox.com"
       },
       {
          "type": "Pic",
-         "name": "unicorn1",
+         "id": "unicorn1",
          "width": 100, "height": 80,
          "x": 300, "y": -20, "url": "images/unicorn2.png"
       },
@@ -48,6 +48,7 @@
          "type": "GitGarden",
          "x0": 700,
          "y0": 0,
+         "ncols": 4,
          "organization": "WorldViews"
       }
    ]

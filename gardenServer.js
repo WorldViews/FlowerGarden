@@ -108,6 +108,7 @@ try {
 
 //app.use(express.static("./static"));
 app.use(express.static("."));
+app.use("/rhythm", express.static("../RhythmTools/public"))
 app.use(bodyParser.json());
 
 app.use(fileupload());

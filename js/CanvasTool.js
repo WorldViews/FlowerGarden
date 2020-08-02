@@ -45,6 +45,7 @@ class CanvasTool {
             return false;
         });
 
+        /*
         this.canvas.addEventListener("mousedown", e => {
             var hit = this.getHit(e);
             if (hit) {
@@ -57,6 +58,24 @@ class CanvasTool {
             inst.handleMouseDown(e);
             //console.log("down", e, this.mouseDownPt);
         });
+        */
+
+        this.canvas.addEventListener("mousedown", e => {
+            var hits = this.getHits(e);
+            if (hits.length > 1)
+                console.log("hits", hits);
+            for (var i=0; i<hits.length; i++) {
+                var hit = hits[i];
+                var v = hit.onClick(e);
+                //if (v)
+                //    return;
+            }
+            inst.mouseDownPt = { x: e.clientX, y: e.clientY };
+            inst.mouseDownTrans = { tx: inst.tx, ty: inst.ty };
+            inst.handleMouseDown(e);
+            //console.log("down", e, this.mouseDownPt);
+        });
+
         this.canvas.addEventListener("mousemove", e => {
             inst.mouseMove(e);
             if (inst.mouseDownPt == null) {
@@ -160,9 +179,24 @@ class CanvasTool {
         }
     }
 
+    getHits(e) {
+        var pt = this.getMousePos(e);
+        //console.log("mouseOver", pt);
+        var hits = [];
+        for (var id in this.graphics) {
+            var g = this.graphics[id];
+            if (g.contains(pt)) {
+                console.log("hits Over id", id);
+                hits.push(g);
+            }
+        }
+        return hits;
+    }
+
     getHit(e) {
         var pt = this.getMousePos(e);
         //console.log("mouseOver", pt);
+        var hits = [];
         for (var id in this.graphics) {
             var g = this.graphics[id];
             if (g.contains(pt))
@@ -407,7 +441,11 @@ CanvasTool.Graphic = class {
         this.textAlign = opts.textAlign || "right";
         this.lineWidth = getNumVal(opts.lineWidth, 0.01);
         this.strokeStyle = '#000';
-        this.fillStyle = '#900';
+        if (opts.strokeStyle !== undefined)
+            this.strokeStyle = opts.strokeStyle;
+        this.fillStyle = '#800';
+        if (opts.fillStyle !== undefined)
+            this.fillStyle = opts.fillStyle;
         this.radius = opts.radius || .1;
         this.alpha = 0.333;
         this.clickable = false;
@@ -427,7 +465,8 @@ CanvasTool.Graphic = class {
         ctx.beginPath();
         if (this.fillStyle)
             ctx.fillRect(x - w / 2, y - h / 2, w, h);
-        ctx.rect(x - w / 2, y - h / 2, w, h);
+        if (this.strokeStyle)
+            ctx.strokeRect(x - w / 2, y - h / 2, w, h);
         ctx.stroke();
     }
 
