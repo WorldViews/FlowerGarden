@@ -1,11 +1,7 @@
 {
    "items": [
       {
-         "type": "Butterfly", "id": "bfly1",
-         "x": 0, "y": -20
-      },
-      {
-         "type": "MidiGarden", "id": "wf1", "name": "Midi Garden",
+         "type": "MidiBox", "id": "midi1", "name": "Midi Box",
          "lineWidth": 4,
          "fillStyle": "brown",
          "width": 400,

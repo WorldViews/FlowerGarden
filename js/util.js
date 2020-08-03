@@ -191,3 +191,22 @@ function genUniqueId(idtype) {
     id = id.replace(/\./g, "_");
     return id;
 }
+
+async function requirePackage(className) {
+    var cls;
+    try {
+        cls = eval(className);
+    }
+    catch (e) {
+        console.log("no class "+ className);
+    };
+    if (!cls) {
+        try {
+            cls = await loadPackage(className);
+        }
+        catch (e) {
+            alert("Can't load class "+className);
+            return null;
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "items": [
+        {
+            "type": "PianoBox",
+            "id": "piano1",
+            "name": "Piano Box",
+            "lineWidth": 4,
+            "fillStyle": "brown",
+            "width": 300,
+            "height": 300,
+            "x": 0,
+            "y": 0
+        }
+    ]
+}
