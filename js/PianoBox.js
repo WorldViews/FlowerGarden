@@ -19,16 +19,43 @@ class PianoBox extends MidiBox {
         this.fillStyle = "salmon";
         var inst = this;
         PLAYER.midiPrefix = "/rhythm/midi/";
+        PLAYER.scene = this;
+        this.notes = [];
         PLAYER.setupTrackInfo();
         PLAYER.loadInstrument("acoustic_grand_piano");
         PLAYER.startUpdates();
-        this.startSong();
         PLAYER.noteObserver = (ch, pitch, v, dur, t) => this.observeNote(ch,pitch, v, dur, t);
     }
 
-    onClick() {};
+    clearNotes() {
+        console.log("clear notes");
+    }
+
+    addNote(t, dur, pitch) {
+        var i = pitch - 40;
+        let key = this.keys[i];
+        if (!key) {
+            console.log("no key", i);
+            return;
+        }
+        var heightPerSec = 50;
+        var dx = 10;
+        console.log("addNote", t, dur, pitch);
+        var x = key.x;
+        var y = this.y + 20 + t*heightPerSec;
+        var height = dur*heightPerSec;
+        var note = new CanvasTool.RectGraphic({x, y, height, width: 6})
+        this.notes.push(note);
+        this.gtool.addGraphic(note);
+    }
+
+    onClick() {
+        if (!this.started)
+            this.startSong();
+    };
 
     startSong() {
+        this.started = true;
         PLAYER.playMelody("Bach/wtc0")
     }
 
@@ -61,6 +88,7 @@ class PianoBox extends MidiBox {
         var blackKeyWidth = 12;
         var spacing = 20;
         var x0 = this.x - numKeys * spacing / 3.3;
+        this.xkey0 = x0;
         var pattern = ["white", "black", "white", "black", "white", "black", "white",
             "white", "black", "white", "black", "white"]
         var x = x0;
@@ -114,4 +142,4 @@ class PianoBox extends MidiBox {
 }
 
 
-//# sourceURL=js/TaikoBox.js
+//# sourceURL=js/PianoBox.js
