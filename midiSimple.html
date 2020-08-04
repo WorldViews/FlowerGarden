@@ -1,17 +1,7 @@
 <html>
 
 <head>
-    <title>Variations on a barber pole</title>
-    <style>
-        body {
-            margin: 0;
-        }
-
-        canvas {
-            width: 100%;
-            height: 100%
-        }
-    </style>
+    <title>Midi example</title>
 </head>
 
 <body>
@@ -19,27 +9,27 @@
 
     <script src="js/libs/stats.min.js"></script>
 
-<!-- Beginning of midi scripts -->
-	<!-- shims -->
-	<script src="/rhythm/wmb/Base64.js"></script>
-	<script src="/rhythm/wmb/Base64binary.js"></script>
-	<script src="/rhythm/wmb/WebAudioAPI.js"></script>
-	<!-- midi.js package -->
-	<script src="/rhythm/wmb/audioDetect.js"></script>
-	<script src="/rhythm/wmb/gm.js"></script>
-	<script src="/rhythm/wmb/loader.js"></script>
-	<script src="/rhythm/wmb/plugin.audiotag.js"></script>
-	<script src="/rhythm/wmb/plugin.webaudio.js"></script>
-	<script src="/rhythm/wmb/plugin.webmidi.js"></script>
-	<script src="/rhythm/wmb/player.js"></script>
-	<!-- utils -->
-	<script src="/rhythm/wmb/dom_request_xhr.js"></script>
-	<script src="/rhythm/wmb/dom_request_script.js"></script>
-	<!-- includes -->
-	<script src="/rhythm/wmb/timer.js"></script>
+    <!-- Beginning of midi scripts -->
+    <!-- shims -->
+    <script src="/rhythm/wmb/Base64.js"></script>
+    <script src="/rhythm/wmb/Base64binary.js"></script>
+    <script src="/rhythm/wmb/WebAudioAPI.js"></script>
+    <!-- midi.js package -->
+    <script src="/rhythm/wmb/audioDetect.js"></script>
+    <script src="/rhythm/wmb/gm.js"></script>
+    <script src="/rhythm/wmb/loader.js"></script>
+    <script src="/rhythm/wmb/plugin.audiotag.js"></script>
+    <script src="/rhythm/wmb/plugin.webaudio.js"></script>
+    <script src="/rhythm/wmb/plugin.webmidi.js"></script>
+    <script src="/rhythm/wmb/player.js"></script>
+    <!-- utils -->
+    <script src="/rhythm/wmb/dom_request_xhr.js"></script>
+    <script src="/rhythm/wmb/dom_request_script.js"></script>
+    <!-- includes -->
+    <script src="/rhythm/wmb/timer.js"></script>
     <!-- End of midi scripts -->
 
-      <script src="/rhythm/js/DynObj/DynamicObject.js"></script>
+    <script src="/rhythm/js/DynObj/DynamicObject.js"></script>
     <script src="/rhythm/js/DynObj/DynamicObjectDB.js"></script>
     <script src="/rhythm/js/MidiTool.js"></script>
     <script src="/rhythm/js/SoundPlayer.js"></script>
@@ -55,74 +45,25 @@
         playMelody = PLAYER.playMelody;
     </script>
     <div id="controls">
-        <div id="params" >
-            <div id="midiControl" style="border-style: solid; border-width: 2px;">
-            </div id="midiControl">
-            <p>
-                <button onclick='playMelody("Classical/chopin69")'>Chopin69</button>
-                <button onclick='playMelody("Bach/wtc0")'>WTC0</button>
-                <button onclick='playMelody("Classical/beethovenSym5m1")'>BeethSym5m1</button>
-                <button onclick='playMelody("shepard")'>Shepard</button>
-                <button onclick='playMelody("BluesRhythm1")'>Rhythm1</button>
-                <button onclick='playMelody("Classical/minute_waltz")'>Minute Waltz</button>
-                <button onclick='playMelody("jukebox")'>Jukebox</button>
-                <button onclick='playMelody("risset0")'>Accelerando</button>
-                <button onclick='playMelody("ris1")'>Ris1</button>
-        </div>
+        <div id="midiControl" style="border-style: solid; border-width: 2px;">
+        </div id="midiControl">
+        <p>
+            <button onclick='playMelody("Classical/chopin69")'>Chopin69</button>
+            <button onclick='playMelody("Bach/wtc0")'>WTC0</button>
+            <button onclick='playMelody("Classical/beethovenSym5m1")'>BeethSym5m1</button>
+            <button onclick='playMelody("BluesRhythm1")'>Rhythm1</button>
+            <button onclick='playMelody("Classical/minute_waltz")'>Minute Waltz</button>
+            <button onclick='playMelody("jukebox")'>Jukebox</button>
+            <button onclick='playMelody("shimauta1")'>Shima Uta</button>
     </div>
     <script>
 
         PLAYER.midiPrefix = "/rhythm/midi/";
 
-        function report(s) {
-            console.log(s);
-        }
-
-
-        function startUpdates() {
-            var render = function () {
-                //report("render n: "+steps);			  
-                requestAnimationFrame(render);
-                if (PLAYER)
-                    PLAYER.update();
-            }
-            render();
-        }
-
-        function loadInstrument(instr, successFn) {
-            instrument = instr;
-            MIDI.loadPlugin({
-                soundfontUrl: "/rhythm/soundfont/",
-                instrument: instrument,
-                onprogress: function (state, progress) {
-                    MIDI.loader.setValue(progress * 100);
-                },
-                onprogress: function (state, progress) {
-                    MIDI.loader.setValue(progress * 100);
-                },
-                onsuccess: function () {
-                    MIDI.programChange(0, instr);
-                    if (successFn)
-                        successFn();
-                }
-            });
-        }
-
-        var initInstrument = function () {
-            report("***** setting up midi ******");
-            var instrument;
-            instrument = "acoustic_grand_piano";
-            //instrument = "choir_aahs";
-            MIDI.loader = new sketch.ui.Timer;
-            loadInstrument("acoustic_grand_piano");
-        }
-
         $(document).ready(function () {
-            startUpdates();
-            //P = {};
-            //setupGUI(["PLAYER.ticksPerBeat"]);
-            //PLAYER.scene = P.scene;
-            initInstrument();
+            PLAYER.setupTrackInfo();
+            PLAYER.loadInstrument("acoustic_grand_piano");
+            PLAYER.startUpdates();
         });
 
     </script>
