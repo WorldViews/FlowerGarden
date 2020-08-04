@@ -35,6 +35,13 @@ class PianoBox extends MidiBox {
             return;
         var pt = PLAYER.getPlayTime();
         var groups = midiTrack.seq;
+        //ctx.strokeStyle = null;
+        this.clipNotes = true;
+        if (this.clipNotes) {
+            ctx.rect(this.x-this.width/2, this.y-this.height/2, this.width, this.height);
+            ctx.stroke();
+            ctx.clip();
+        }
         //console.log("pt", pt);
         for (var i = 0; i < groups.length; i++) {
             //console.log("eventGroup i");
@@ -65,9 +72,16 @@ class PianoBox extends MidiBox {
                 //console.log("addNote", t, dur, pitch);
                 var x = key.x;
                 var y = this.y + 55 + t*heightPerSec;
-                var height = dur*heightPerSec;
-                var nwidth = 6;
-                this.drawRect(canvas, ctx, x, y, nwidth, height);
+                var h = dur*heightPerSec;
+                var w = 6;
+                ctx.lineWidth = 1;
+                ctx.fillStyle = "green";
+                ctx.beginPath();
+                //if (this.fillStyle)
+                //    ctx.fillRect(x - w / 2, y - h / 2, w, h);
+                ctx.fillRect(x - w / 2, y, w, h);
+                ctx.stroke();        
+                //this.drawRect(canvas, ctx, x, y, nwidth, height);
             }
         }   
     }
