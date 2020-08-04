@@ -19,7 +19,7 @@ class PianoBox extends MidiBox {
         this.fillStyle = "salmon";
         var inst = this;
         PLAYER.midiPrefix = "/rhythm/midi/";
-        PLAYER.scene = this;
+        //PLAYER.scene = this;
         this.notes = [];
         PLAYER.setupTrackInfo();
         PLAYER.loadInstrument("acoustic_grand_piano");
@@ -27,11 +27,57 @@ class PianoBox extends MidiBox {
         PLAYER.noteObserver = (ch, pitch, v, dur, t) => this.observeNote(ch,pitch, v, dur, t);
     }
 
+    draw(canvas, ctx) {
+        super.draw(canvas, ctx);
+        //console.log("Adding note graphics...");
+        var midiTrack = PLAYER.midiObj;
+        if (!midiTrack)
+            return;
+        var pt = PLAYER.getPlayTime();
+        var groups = midiTrack.seq;
+        //console.log("pt", pt);
+        for (var i = 0; i < groups.length; i++) {
+            //console.log("eventGroup i");
+            var eventGroup = groups[i];
+            var t0 = eventGroup[0];
+            var events = eventGroup[1];
+            for (var k = 0; k < events.length; k++) {
+                var event = events[k];
+                if (event.type != "note")
+                    continue;
+                var note = event;
+                var pitch = note.pitch;
+                var v = note.v;
+                //var dur = note.dur/PLAYER.ticksPerBeat;
+                var dur = note.dur / PLAYER.ticksPerSec;
+                //var t = t0/PLAYER.ticksPerBeat;
+                var t = (t0 / PLAYER.ticksPerSec) - pt;
+                //console.log(t0+" graphic for note pitch: "+pitch+" v:"+v+" dur: "+dur);
+                //console.log("draw note", t, dur, pitch);
+                var ki = pitch - 40;
+                let key = this.keys[ki];
+                if (!key) {
+                    //console.log("no key", i);
+                    continue;
+                }
+                var heightPerSec = 50;
+                var dx = 10;
+                //console.log("addNote", t, dur, pitch);
+                var x = key.x;
+                var y = this.y + 55 + t*heightPerSec;
+                var height = dur*heightPerSec;
+                var nwidth = 6;
+                this.drawRect(canvas, ctx, x, y, nwidth, height);
+            }
+        }   
+    }
+
     clearNotes() {
         console.log("clear notes");
     }
 
     addNote(t, dur, pitch) {
+        return;
         var i = pitch - 40;
         let key = this.keys[i];
         if (!key) {
@@ -83,7 +129,7 @@ class PianoBox extends MidiBox {
         await requirePackage("Taiko");
         console.log("TaikoBox.addItems");
         var opts = { x: this.x, y: this.y, id: "taikobox1" };
-        var numKeys = 50;
+        var numKeys = 48;
         var whiteKeyWidth = 18;
         var blackKeyWidth = 12;
         var spacing = 20;
