@@ -18,22 +18,26 @@ class PianoBox extends MidiBox {
         super(opts);
         this.fillStyle = "salmon";
         var inst = this;
-        PLAYER.midiPrefix = "/rhythm/midi/";
-        //PLAYER.scene = this;
+        //this.player = PLAYER;
+        this.player = new MidiPlayTool();;
+        var player = this.player;
+        player.midiPrefix = "/rhythm/midi/";
+        //player.scene = this;
         this.notes = [];
-        PLAYER.setupTrackInfo();
-        PLAYER.loadInstrument("acoustic_grand_piano");
-        PLAYER.startUpdates();
-        PLAYER.noteObserver = (ch, pitch, v, dur, t) => this.observeNote(ch,pitch, v, dur, t);
+        player.setupTrackInfo();
+        player.loadInstrument("acoustic_grand_piano");
+        player.startUpdates();
+        player.noteObserver = (ch, pitch, v, dur, t) => this.observeNote(ch,pitch, v, dur, t);
     }
 
     draw(canvas, ctx) {
         super.draw(canvas, ctx);
         //console.log("Adding note graphics...");
-        var midiTrack = PLAYER.midiObj;
+        var player = this.player;
+        var midiTrack = player.midiObj;
         if (!midiTrack)
             return;
-        var pt = PLAYER.getPlayTime();
+        var pt = this.player.getPlayTime();
         var groups = midiTrack.seq;
         //ctx.strokeStyle = null;
         this.clipNotes = true;
@@ -55,10 +59,9 @@ class PianoBox extends MidiBox {
                 var note = event;
                 var pitch = note.pitch;
                 var v = note.v;
-                //var dur = note.dur/PLAYER.ticksPerBeat;
-                var dur = note.dur / PLAYER.ticksPerSec;
-                //var t = t0/PLAYER.ticksPerBeat;
-                var t = (t0 / PLAYER.ticksPerSec) - pt;
+                //var dur = note.dur/player.ticksPerBeat;
+                var dur = note.dur / player.ticksPerSec;
+                var t = (t0 / player.ticksPerSec) - pt;
                 //console.log(t0+" graphic for note pitch: "+pitch+" v:"+v+" dur: "+dur);
                 //console.log("draw note", t, dur, pitch);
                 var ki = pitch - 40;
@@ -116,7 +119,7 @@ class PianoBox extends MidiBox {
 
     startSong() {
         this.started = true;
-        PLAYER.playMelody("Bach/wtc0")
+        this.player.playMelody("Bach/wtc0")
     }
 
     observeNote(channel, pitch, vel, t, dur) {
