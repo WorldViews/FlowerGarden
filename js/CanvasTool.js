@@ -1,5 +1,5 @@
 // Class for 2D visualization for Kinect skeletons
-
+"use strict"
 
 class CanvasTool {
     constructor(canvasName, opts) {
@@ -173,7 +173,7 @@ class CanvasTool {
         for (var id in this.graphics) {
             var g = this.graphics[id];
             if (g.contains(pt)) {
-                console.log("Over id", id);
+               // console.log("Over id", id);
                 g.onOver(e);
             }
         }
@@ -522,7 +522,7 @@ CanvasTool.Graphic = class {
     }
 
     onOver(e) {
-        console.log("Graphic.onOver", this.id, e);
+        //console.log("Graphic.onOver", this.id, e);
     }
 
     onClick(e) {

@@ -19,7 +19,8 @@ class PianoBox extends MidiBox {
         this.fillStyle = "salmon";
         var inst = this;
         //this.player = PLAYER;
-        this.player = new MidiPlayTool();;
+        this.player = new MidiPlayTool();
+        window.MPLAYER = this.player;
         var player = this.player;
         player.midiPrefix = "/rhythm/midi/";
         //player.scene = this;
