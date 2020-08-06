@@ -37,7 +37,7 @@
                             "pitch": 67,
                             "t0": 245,
                             "v": 57,
-                            "dur": 297,
+                            "dur": 80,
                             "type": "note",
                             "channel": 0
                         }
@@ -50,7 +50,7 @@
                             "pitch": 50,
                             "t0": 500,
                             "v": 62,
-                            "dur": 278,
+                            "dur": 80,
                             "type": "note",
                             "channel": 0
                         }
@@ -63,7 +63,7 @@
                             "pitch": 70,
                             "t0": 782,
                             "v": 40,
-                            "dur": 262,
+                            "dur": 80,
                             "type": "note",
                             "channel": 0
                         }
@@ -76,7 +76,7 @@
                             "pitch": 70,
                             "t0": 1000,
                             "v": 40,
-                            "dur": 50,
+                            "dur": 80,
                             "type": "note",
                             "channel": 0
                         }
@@ -89,7 +89,7 @@
                             "pitch": 70,
                             "t0": 1100,
                             "v": 40,
-                            "dur": 50,
+                            "dur": 80,
                             "type": "note",
                             "channel": 0
                         }
@@ -102,7 +102,7 @@
                             "pitch": 70,
                             "t0": 2000,
                             "v": 40,
-                            "dur": 50,
+                            "dur": 80,
                             "type": "note",
                             "channel": 0
                         }
@@ -115,7 +115,7 @@
                             "pitch": 70,
                             "t0": 3000,
                             "v": 40,
-                            "dur": 50,
+                            "dur": 80,
                             "type": "note",
                             "channel": 0
                         }
@@ -128,7 +128,7 @@
                             "pitch": 50,
                             "t0": 4000,
                             "v": 70,
-                            "dur": 50,
+                            "dur": 80,
                             "type": "note",
                             "channel": 0
                         }
