@@ -116,14 +116,17 @@ class PianoBox extends MidiBox {
     }
 
     onClick() {
-        if (!this.started)
+        if (!this.started) {
             this.startSong();
+        }
     };
 
-    startSong() {
+    async startSong() {
         this.started = true;
-        this.player.playMelody("Bach/wtc0")
+        this.player.playMelody("Bach/wtc0");
     }
+
+
 
     observeNote(channel, pitch, vel, t, dur) {
         var inst = this;
@@ -142,7 +145,6 @@ class PianoBox extends MidiBox {
     }
 
     highlightKey() {
-
     }
 
     async addItems() {

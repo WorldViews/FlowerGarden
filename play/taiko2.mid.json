@@ -1,0 +1,116 @@
+{
+    "format": 0,
+    "instruments": [
+        114,
+        116
+    ],
+    "resolution": 384,
+    "type": "MidiObj",
+    "channels": [
+        0,
+        1
+    ],
+    "loop": true,
+    "tracks": [
+        {
+            "name": "Part1",
+            "channels": [0],
+            "seq": [
+                [
+                    0,
+                    [
+                        {
+                            "instrument": 116,
+                            "type": "programChange",
+                            "t0": 0,
+                            "channel": 0
+                        },
+                        {
+                            "bpm": 117.000117000117,
+                            "type": "tempo",
+                            "mpqn": 512820,
+                            "t0": 0
+                        },
+                        {
+                            "pitch": 65,
+                            "t0": 0,
+                            "v": 36,
+                            "dur": 50,
+                            "type": "note",
+                            "channel": 0
+                        }
+                    ]
+                ],
+                [
+                    1245,
+                    [
+                        {
+                            "pitch": 67,
+                            "t0": 1245,
+                            "v": 57,
+                            "dur": 50,
+                            "type": "note",
+                            "channel": 0
+                        }
+                    ]
+                ],
+                [
+                    1945,
+                    [
+                        {
+                            "pitch": 67,
+                            "t0": 1945,
+                            "v": 57,
+                            "dur": 50,
+                            "type": "note",
+                            "channel": 0
+                        }
+                    ]
+                ]
+            ]
+        },
+        {
+            "name": "Part2",
+            "channels": [1],
+            "seq": [
+                [
+                    0,
+                    [
+                        {
+                            "instrument": 114,
+                            "type": "programChange",
+                            "t0": 0,
+                            "channel": 1
+                        }
+                    ]
+                ],
+                [
+                    1515,
+                    [
+                        {
+                            "pitch": 65,
+                            "t0": 1515,
+                            "v": 62,
+                            "dur": 50,
+                            "type": "note",
+                            "channel": 1
+                        }
+                    ]
+                ],
+                [
+                    1782,
+                    [
+                        {
+                            "pitch": 70,
+                            "t0": 1782,
+                            "v": 40,
+                            "dur": 50,
+                            "type": "note",
+                            "channel": 1
+                        }
+                    ]
+                ]
+            ]
+        }
+    ]
+}

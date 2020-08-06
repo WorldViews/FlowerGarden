@@ -1,0 +1,115 @@
+{
+    "format": 0,
+    "instruments": [
+        116
+    ],
+    "resolution": 384,
+    "type": "MidiObj",
+    "channels": [
+        0,
+        1
+    ],
+    "tracks": [
+        {
+            "channels": [0, 1],
+            "seq": [
+                [
+                    0,
+                    [
+                        {
+                            "instrument": 116,
+                            "type": "programChange",
+                            "t0": 0,
+                            "channel": 0
+                        },
+                        {
+                            "instrument": 114,
+                            "type": "programChange",
+                            "t0": 0,
+                            "channel": 1
+                        },
+                        {
+                            "bpm": 117.000117000117,
+                            "type": "tempo",
+                            "mpqn": 512820,
+                            "t0": 0
+                        }
+                    ]
+                ],
+                [
+                    245,
+                    [
+                        {
+                            "pitch": 67,
+                            "t0": 245,
+                            "v": 57,
+                            "dur": 297,
+                            "type": "note",
+                            "channel": 0
+                        }
+                    ]
+                ],
+                [
+                    500,
+                    [
+                        {
+                            "pitch": 50,
+                            "t0": 500,
+                            "v": 62,
+                            "dur": 278,
+                            "type": "note",
+                            "channel": 0
+                        },
+                        {
+                            "pitch": 65,
+                            "t0": 500,
+                            "v": 62,
+                            "dur": 278,
+                            "type": "note",
+                            "channel": 1
+                        }
+                    ]
+                ],
+                [
+                    782,
+                    [
+                        {
+                            "pitch": 70,
+                            "t0": 782,
+                            "v": 40,
+                            "dur": 262,
+                            "type": "note",
+                            "channel": 1
+                        }
+                    ]
+                ],
+                [
+                    1000,
+                    [
+                        {
+                            "pitch": 70,
+                            "t0": 1000,
+                            "v": 40,
+                            "dur": 50,
+                            "type": "note",
+                            "channel": 0
+                        }
+                    ]
+                ],
+                [
+                    1100,
+                    [
+                        {
+                            "pitch": 70,
+                            "t0": 1100,
+                            "v": 40,
+                            "dur": 50,
+                            "type": "note",
+                            "channel": 0
+                        }
+                    ]
+                ]
+            ]
+        }
+    ]
+}
