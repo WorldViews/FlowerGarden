@@ -42,6 +42,7 @@ class PianoBox extends MidiBox {
         var groups = midiTrack.seq;
         //ctx.strokeStyle = null;
         this.clipNotes = true;
+        ctx.save();
         if (this.clipNotes) {
             ctx.rect(this.x-this.width/2, this.y-this.height/2, this.width, this.height);
             ctx.stroke();
@@ -87,7 +88,8 @@ class PianoBox extends MidiBox {
                 ctx.stroke();        
                 //this.drawRect(canvas, ctx, x, y, nwidth, height);
             }
-        }   
+        }
+        ctx.restore();
     }
 
     clearNotes() {
