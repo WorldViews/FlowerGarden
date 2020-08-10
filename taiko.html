@@ -6,25 +6,28 @@
     <title>WorldViews Flower Garden</title>
     <link rel="stylesheet" type="text/css" href="css/garden.css">
     <style>
+        #taikoDiv {
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            position: absolute
+        }
+
         #midiControl {
             border-style: none;
             border-width: 2px;
             border-color: red;
             xwidth: 90%;
             height: 200px;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            position: absolute
         }
     </style>
 </head>
 
 <body>
     <div id="gardenDiv" style="width: 100%; height: 100%">
-        <div id="gardenPanel"
-             style="width: 50%; height: 100%; float: left; background: green; position: relative">
-            <canvas id="flowerCanvas"></canvas>
+        <div id="gardenPanel" style="width: 100%; height: 100%; float: left; background: green; position: relative">
+            <canvas id="flowerCanvas" style="height:100%"></canvas>
+            <!-- 
             <div id="controls">
                 <span id="buttons" class="buttons">
                     <button id="login">login</button>
@@ -34,14 +37,14 @@
                 </span>
                 <span id="canvasStat" class="stats">stats</span>
             </div>
-            <div id="midiControl">
-                xxx
-            </div>
-        </div>
-        <div id="rightPanel" style="margin-left: 50%; height: 100%; " class="rightPanel">
-            <div id="projectView" class="projectView" style="width: 100%;">
-            </div>
-            <div id="instagramView" class="instagramView" style="width: 100%; height: 100%">
+
+ -->
+            <div id="taikoDiv">
+                Kuchi Shoga: <input style="width: 95%" id="kuchiShoga" type="text" value="don don doko don"><br>
+                <button id="ff1">Fast and Furious 1</button>
+                <button id="ff2">Fast and Furious 2</button>
+                <div id="midiControl">
+                </div>
             </div>
         </div>
     </div>
@@ -67,23 +70,23 @@
     <script src="js/Display.js"></script>
 
     <!-- Beginning of midi scripts -->
-	<!-- shims -->
-	<script src="/rhythm/wmb/Base64.js"></script>
-	<script src="/rhythm/wmb/Base64binary.js"></script>
-	<script src="/rhythm/wmb/WebAudioAPI.js"></script>
-	<!-- midi.js package -->
-	<script src="/rhythm/wmb/audioDetect.js"></script>
-	<script src="/rhythm/wmb/gm.js"></script>
-	<script src="/rhythm/wmb/loader.js"></script>
-	<script src="/rhythm/wmb/plugin.audiotag.js"></script>
-	<script src="/rhythm/wmb/plugin.webaudio.js"></script>
-	<script src="/rhythm/wmb/plugin.webmidi.js"></script>
-	<script src="/rhythm/wmb/player.js"></script>
-	<!-- utils -->
-	<script src="/rhythm/wmb/dom_request_xhr.js"></script>
-	<script src="/rhythm/wmb/dom_request_script.js"></script>
-	<!-- includes -->
-	<script src="/rhythm/wmb/timer.js"></script>
+    <!-- shims -->
+    <script src="/rhythm/wmb/Base64.js"></script>
+    <script src="/rhythm/wmb/Base64binary.js"></script>
+    <script src="/rhythm/wmb/WebAudioAPI.js"></script>
+    <!-- midi.js package -->
+    <script src="/rhythm/wmb/audioDetect.js"></script>
+    <script src="/rhythm/wmb/gm.js"></script>
+    <script src="/rhythm/wmb/loader.js"></script>
+    <script src="/rhythm/wmb/plugin.audiotag.js"></script>
+    <script src="/rhythm/wmb/plugin.webaudio.js"></script>
+    <script src="/rhythm/wmb/plugin.webmidi.js"></script>
+    <script src="/rhythm/wmb/player.js"></script>
+    <!-- utils -->
+    <script src="/rhythm/wmb/dom_request_xhr.js"></script>
+    <script src="/rhythm/wmb/dom_request_script.js"></script>
+    <!-- includes -->
+    <script src="/rhythm/wmb/timer.js"></script>
     <!-- End of midi scripts -->
 
     <script src="/rhythm/js/RhythmTool.js"></script>
@@ -112,14 +115,9 @@
             gtool.initFirebase();
             gtool.start();
             gtool.setView(0, 0, 800);
-            var gardenName = getParameterByName("garden");
-            if (gardenName) {
-                var gardenURL = sprintf("gardens/%s.json", gardenName)
-                garden = gtool.loadGardenFile(gardenURL);
-            }
-            else {
-                garden = gtool.loadFromFirebase();
-            }
+            var gardenName = getParameterByName("garden", "taikogarden");
+            var gardenURL = sprintf("gardens/%s.json", gardenName)
+            garden = gtool.loadGardenFile(gardenURL);
         });
 
     </script>
