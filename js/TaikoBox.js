@@ -71,8 +71,10 @@ class TaikoMidi {
         this.events.push(event);
     }
 
-    addNote(beats, target) {
+    addNote(beats, target, v) {
         target = target || "center";
+        if (v == null)
+            v = 120;
         var ch = 0;
         var pitch = 60;
         if (target == "rim") {
@@ -87,7 +89,7 @@ class TaikoMidi {
                 {
                     "pitch": pitch,
                     "t0": this.t,
-                    "v": 57,
+                    "v": v,
                     "dur": 30,
                     "type": "note",
                     "channel": ch

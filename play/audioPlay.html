@@ -1,0 +1,32 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <title>Vue App</title>
+</head>
+
+<body>
+    <h3>Playing around with audio</h3>
+    some sample code from
+    
+    <a href="https://developers.google.com/web/fundamentals/media/recording-audio">https://developers.google.com/web/fundamentals/media/recording-audio</a>
+    <audio id="player" controls></audio>
+    <script>
+        const player = document.getElementById('player');
+
+        const handleSuccess = function (stream) {
+            if (window.URL) {
+                player.srcObject = stream;
+            } else {
+                player.src = stream;
+            }
+        };
+
+        navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+            .then(handleSuccess);
+    </script>
+</body>
