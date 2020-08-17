@@ -1,4 +1,31 @@
 {
+    "requirements": [
+        "/js/mididefs.js",
+        "/rhythm/wmb/Base64.js",
+        "/rhythm/wmb/Base64binary.js",
+        "/rhythm/wmb/WebAudioAPI.js",
+        "/rhythm/wmb/audioDetect.js",
+        "/rhythm/wmb/gm.js",
+        "/rhythm/wmb/loader.js",
+        "/rhythm/wmb/plugin.audiotag.js",
+        "/rhythm/wmb/plugin.webaudio.js",
+        "/rhythm/wmb/plugin.webmidi.js",
+        "/rhythm/wmb/player.js",
+        "/rhythm/wmb/dom_request_xhr.js",
+        "/rhythm/wmb/dom_request_script.js",
+        "/rhythm/wmb/timer.js",
+        "/rhythm/js/RhythmTool.js",
+        "/rhythm/js/DynObj/DynamicObject.js",
+        "/rhythm/js/DynObj/DynamicObjectDB.js",
+        "/rhythm/js/MidiTool.js",
+        "/rhythm/js/SoundPlayer.js",
+        "/rhythm/js/RhythmScorer.js",
+        "/rhythm/js/RhythmCanvasGUI.js",
+        "/rhythm/js/GamePad.js",
+        "/js/MidiBox.js",
+        "/rhythm/js/MidiPlayTool.js",
+        "https://unpkg.com/@tonejs/midi"
+    ],
     "items": [
         {
             "type": "PianoBox",

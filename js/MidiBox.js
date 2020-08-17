@@ -166,5 +166,5 @@ class MidiBox extends Garden {
     }
 }
 
-
+window.MidiBox = MidiBox;
 //# sourceURL=js/MidiBox.js
