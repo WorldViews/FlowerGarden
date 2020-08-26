@@ -4,90 +4,10 @@
     <script src="./js/jquery-3.1.1.min.js"></script>
     <script src="./js/jquery-ui.js"></script>
     <script src="./js/Utils.js"></script>
+    <script src="./js/PanoProxy.js"></script>
     <script src="./js/TourCanvas.js"></script>
     <script src="./js/TourScripts.js"></script>
-
-    <script>
-        class PanoProxy {
-            constructor() {
-                this.playTime = 0;
-                this.yaw = 0;
-                this.pitch = 0;
-                this.fov = 60;
-            }
-            setVideoURL(url) {
-                console.log("setVideoURL", url);
-            }
-            setImageSource(src) {
-                this.imageSrc = src;
-            }
-
-            setPlayTime(t) {
-                this.playTime = t;
-            }
-            getPlayTime() {
-                return this.playTime;
-            }
-
-            getViewYaw() {
-                return this.yaw;
-            }
-
-            getViewPitch() {
-                return this.pitch;
-            }
-
-            getViewFOV() {
-                return this.fov;
-            }
-
-            setViewYawPhi(yaw, phi) {
-                this.yaw = yaw;
-                this.phi = phi;
-            }
-        }
-
-        var pano = new PanoProxy();
-
-        //HOST = "platonia";
-        //HOST = document.location.hostname;
-        //var IHOST = document.location.hostname;
-        var IHOST = "tours.paldeploy.com";
-        //MAP_IMAGE_SERVER = "http://dvr4.paldeploy.com/PanoJS/images/";
-        MAP_IMAGE_SERVER = "./images/";
-        //MAP_IMAGE_SERVER = "http://platonia:8000/tours/";
-        //MAP_IMAGE_SERVER = "http://platonia:8000/images/";
-        //MAP_IMAGE_SERVER = "http://localhost:8001/";
-        F1 = 3.0 * .8;
-        F2 = 0.5 * .8;
-        F3 = 40.0;
-        PROPS = {
-            tours: [
-                "hiller_main_path_1",
-                "hiller_main_path_2",
-                //"hiller_main_path_3",
-                "hiller_lobby_path_1",
-                "hiller_upstairs_path_1",
-            ],
-            view: { x: 40, y: 42, width: 470 },
-            graphicsURL: "data/hiller_graphics.json",
-            images: [
-                {
-                    url: MAP_IMAGE_SERVER + "HillerGmap2.png",
-                    //x: -750, y: -880, width: F1*550, height: F1*732
-                    x: -9500, y: -7100, width: F3 * 408, height: F3 * 315
-                },
-                {
-                    url: MAP_IMAGE_SERVER + "HillerGmap1.png",
-                    //x: -750, y: -880, width: F1*550, height: F1*732
-                    x: -680, y: -880, width: F1 * 500, height: F1 * 732
-                },
-            ]
-        };
-
-        report("**** done with <head> script ****");
-
-    </script>
+    <script src="../js/Display.js"></script>
 
     <style>
         //body {background-color:rgb(200,200,255);}
@@ -103,14 +23,7 @@
 </head>
 
 <body bg>
-	 <span id="toggleControls" style="color:white;">controls</span>
-    <!--
-        <button onclick="pano.setSphere(); return false;">P</button>
-        <button onclick="pano.setCirc(); return false;">C</button>
-        <button onclick="pano.setEllipse(); return false;">E</button>
-        <button onclick="pano.toggleFullScreen(); return false;">F</button>
-        <br>
--->
+    <span id="toggleControls" style="color:white;">controls</span>
     <div id="controls" style="display: none;">
         <button onclick="pano.setMark(); return false;">Mark</button>
         <button onclick="pano.gotoMark(); return false;">|&lt;</button>
@@ -125,119 +38,150 @@
             right: 10px;
         }
 
-        .xx {
-            border-width: 0;
-            border-style: solid;
-            height: 100
+        #videoDiv {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            width: auto;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            vertical-align: middle;
         }
     </style>
     <!-- <div style="border-style:solid; border-width: 1"> -->
     <div>
-        <!--
-  <h3>Hiller Aviation Museum Virtual Tour</h3>
--->
-
-        <canvas id="canvas1" width=640 height=480>
-        </canvas>
-        <br>
-        <div id="mapStatusDiv"></div><br>
-        </td>
-
-        <input id="playButton" type="button" value="Go">
-        <!--
-<input id="reverse" type="button" value="Reverse">
--->
-        <input id="pauseButton" type="button" value="Stop">
-        &nbsp;
-        <input id="speedUp" type="button" value="Speed Up">
-        <input id="slowDown" type="button" value="Slow Down">
-        &nbsp;
-        View Mode:
-        <select id="movementMode">
-            <option value="RELATIVE_CAM">Rel to Cam</option>
-            <option value="RELATIVE_MOTION">Rel to Motion</option>
-            <option value="ABSOLUTE">Absolute</option>
-            <option value="TARGET">Target</option>
-        </select>
-
-        <br>
-        <link rel="stylesheet" href="css/jquery-ui.css">
-        <style>
-            .ui-slider .ui-slider-handle {
-                height: 20px;
-                width: 5px;
-                //padding-left: 50px;
-            }
-        </style>
-        <p>&nbsp;
-
-
-            <!--
-<input id="getBookmarksButton" type="button" onClick="setBookmark();" value="Set">
-<input id="bookmarkName" type="text" onClick="updateBookmarks();" value="" size="20">
--->
-            Tour Points:
-            <select id="bookmarkSelection">
-                <option value=""></option>
-            </select>
-
-        <p>
+        <div id="videoPlayer" style="width:400px;height:300px">
+            video player goes here
+        </div>
+        <div>
+            <canvas id="canvas1" width=640 height=480>
+            </canvas>
             <br>
-            <!--
-<input id="editTourInfo" type="button" value="Edit">
--->
-        <div id="tourInfo" style="display: none; width: 95%; border-style: solid; border-width:1">
-            <b>TourPoints:</b>
-            &nbsp;
-            <input id="addTourPoint" type="button" value="Add">
-            <input id="removeTourPoints" type="button" value="Remove">
-            <input id="prevTourPoint" type="button" value="<">
-            <input id="nextTourPoint" type="button" value=">">
-            &nbsp;&nbsp;
-            <input id="saveTour" type="button" value="Save">
-            <input id="restoreTour" type="button" value="Restore">
-            <p>
-            <div id="tourTimeLine"></div>
-            Tour Info:
+            <div id="mapStatusDiv"> </div><br>
         </div>
+    </div>
+    <input id="playButton" type="button" value="Go">
+    <!--
+        <input id="reverse" type="button" value="Reverse">
+        -->
+    <input id="pauseButton" type="button" value="Stop">
+    &nbsp;
+    <input id="speedUp" type="button" value="Speed Up">
+    <input id="slowDown" type="button" value="Slow Down">
+    &nbsp;
+    View Mode:
+    <select id="movementMode">
+        <option value="RELATIVE_CAM">Rel to Cam</option>
+        <option value="RELATIVE_MOTION">Rel to Motion</option>
+        <option value="ABSOLUTE">Absolute</option>
+        <option value="TARGET">Target</option>
+    </select>
+
+    <br>
+    <p></p>
+    <!--
+        <input id="getBookmarksButton" type="button" onClick="setBookmark();" value="Set">
+        <input id="bookmarkName" type="text" onClick="updateBookmarks();" value="" size="20">
+        -->
+    Tour Points:
+    <select id="bookmarkSelection">
+        <option value=""></option>
+    </select>
+    <p></p>
+    <br>
+    <!--
+        <input id="editTourInfo" type="button" value="Edit">
+        -->
+    <div id="tourInfo" style="display: none; width: 95%; border-style: solid; border-width:1">
+        <b>TourPoints:</b>
+        &nbsp;
+        <input id="addTourPoint" type="button" value="Add">
+        <input id="removeTourPoints" type="button" value="Remove">
+        <input id="prevTourPoint" type="button" value="<">
+        <input id="nextTourPoint" type="button" value=">">
+        &nbsp;&nbsp;
+        <input id="saveTour" type="button" value="Save">
+        <input id="restoreTour" type="button" value="Restore">
         <p>
-        <div id="statusDiv"></div>
+        <div id="tourTimeLine"></div>
+        Tour Info:
+    </div>
+    <p>
+    <div id="statusDiv"></div>
+    <div id="tourList"></div>
 
-        <div id="tourList">
-        </div>
+    <script>
+        SITE_NAME = "hiller";
+        var videoId = "W1oo0FfPLZo";
+        var display = new Display(null, "videoPlayer", {videoId});
+        var pano = new PanoProxy(display);
+        var currentTourName = null;
+        //MAP_IMAGE_SERVER = "http://server/PanoJS/images/";
+        MAP_IMAGE_SERVER = "./images/";
+        F1 = 2.4;
+        F2 = 0.4;
+        F3 = 40.0;
+        /*
+        https://www.youtube.com/watch?v=W1oo0FfPLZo
+        https://www.youtube.com/watch?v=huxePzEN9is
+        https://www.youtube.com/watch?v=aXxLpMcQkYM
+        */
+        PROPS = {
+            tours: [
+                "hiller_main_path_1",
+                "hiller_main_path_2",
+                //"hiller_main_path_3",
+                "hiller_lobby_path_1",
+                "hiller_upstairs_path_1",
+            ],
+            view: { x: 40, y: 42, width: 470 },
+            graphicsURL: "./data/hiller_graphics.json",
+            images: [
+                {
+                    url: MAP_IMAGE_SERVER + "HillerGmap2.png",
+                    x: -9500, y: -7100, width: F3 * 408, height: F3 * 315
+                },
+                {
+                    url: MAP_IMAGE_SERVER + "HillerGmap1.png",
+                    x: -680, y: -880, width: F1 * 500, height: F1 * 732
+                },
+            ]
+        };
 
-        <script>
-            SITE_NAME = "hiller";
+        function toggleControls() {
+            if ($("#controls").is(":visible") == true) {
+                $("#controls").hide(200);
+            }
+            else {
+                $("#controls").show(200);
+            }
+        }
 
-            function toggleControls() {
-                if ($("#controls").is(":visible") == true) {
-                    $("#controls").hide(200);
+        $(document).ready(function () {
+            $("#toggleControls").click(toggleControls);
+
+            tourCanvas.noticeCurrentTour = function (tour) {
+                console.log("**** notice tour: " + tour.name);
+                if (tour.name == currentTourName) {
+                    console.log("same tour");
+                    return;
                 }
-                else {
-                    $("#controls").show(200);
+                currentTourName = tour.name;
+                var vidName = tour.videoName;
+                if (!vidName)
+                    vidName = tour.name;
+                var url = "./video/Hiller/" + vidName + ".mp4";
+                console.log("vidName: " + vidName);
+                pano.setVideoURL(url);
+                if (tour.youtubeId) {
+                    var id = tour.youtubeId;
+                    display.playVideo(id);
                 }
             }
+        });
 
-            TC.robotWidth = 9;
-            TC.robotLength = 6;
-            TC.tourLineWidth = 0.1;
-
-            $(document).ready(function () {
-                $("#toggleControls").click(toggleControls);
-
-                tourCanvas.noticeCurrentTour = function (tour) {
-                    report("****************************** new tour: " + tour.name);
-                    var vidName = tour.videoName;
-                    if (!vidName)
-                        vidName = tour.name;
-                    var url = "http://dvr4.paldeploy.com/video/Hiller/" + vidName + ".mp4";
-                    report("vidName: " + vidName);
-                    report("url: " + url);
-                    pano.setVideoURL(url);
-                }
-            });
-
-        </script>
+    </script>
 </body>
 
 </html>

@@ -14,19 +14,19 @@ var PC = null;
 
 
 function setupURLs() {
-    report("setupURLs");
+    console.log("setupURLs");
     if (document.URL.startsWith("file:")) {
         alert("Virtual Tours are not fully functional with file URLs");
     }
     if (!HOST) {
-        report("Using document server for host");
+        console.log("Using document server for host");
         HOST = window.location.host;
     }
     if (!HOST) {
-        //report("no server detected - assuming localhost:8000");
+        //console.log("no server detected - assuming localhost:8000");
         //HOST = "localhost:8000";
         HOST = "dvr4.paldeploy.com";
-        report("no server detected - assuming " + HOST);
+        console.log("no server detected - assuming " + HOST);
     }
     if (!METADATA_HOST) {
         //METADATA_HOST = HOST.replace(":8000", "");
@@ -38,12 +38,12 @@ function setupURLs() {
     if (HOST == "dvr4.paldeploy.com") {
         URL_ROOT = "/PanoJS/";
     }
-    report("HOST: " + HOST);
-    report("SERVER: " + SERVER);
-    report("URL_ROOT: " + URL_ROOT);
+    console.log("HOST: " + HOST);
+    console.log("SERVER: " + SERVER);
+    console.log("URL_ROOT: " + URL_ROOT);
 
     if (!TOUR_URL_BASE) {
-        report("Setting TOUR_URL_BASE");
+        console.log("Setting TOUR_URL_BASE");
         //TOUR_URL_BASE = "http://%HOST%/".replace("%HOST%", METADATA_HOST);
         //TOUR_URL_BASE = "http://dvr4.paldeploy.com/PanoJS/tours/data/";
         //TOUR_URL_BASE = "http://platonia:8000/tours/data/";
@@ -56,9 +56,9 @@ function setupURLs() {
         //UPDATE_BOOKMARKS_URL = "http://%HOST%/update/bookmarks.json".replace("%HOST%", METADATA_HOST);
         UPDATE_BOOKMARKS_URL = BOOKMARKS_URL;
     }
-    report("TOUR_URL_BASE: " + TOUR_URL_BASE);
-    report("BOOKMARKS_URL: " + BOOKMARKS_URL);
-    report("UPDATE_BOOKMARKS_URL: " + UPDATE_BOOKMARKS_URL);
+    console.log("TOUR_URL_BASE: " + TOUR_URL_BASE);
+    console.log("BOOKMARKS_URL: " + BOOKMARKS_URL);
+    console.log("UPDATE_BOOKMARKS_URL: " + UPDATE_BOOKMARKS_URL);
 }
 
 /*
@@ -84,10 +84,6 @@ var currentTourName = null;
 function pano_yaw_to_tour_yaw(pyaw) { return 90 - pyaw; }
 function tour_yaw_to_pano_yaw(tyaw) { return 90 - tyaw; }
 
-function report(str) {
-    console.log(str);
-}
-
 
 function join(a, b) {
     if (a.slice(-1) != "/" && b[0] != "/")
@@ -99,19 +95,14 @@ function join(a, b) {
 
 
 function checkReply(obj) {
-    //report("reply: "+JSON.stringify(obj));
+    //console.log("reply: "+JSON.stringify(obj));
     if (obj.error) {
         alert("Error reported by server: " + obj.error);
     }
 }
 
 function move(dyaw, dphi, droll) {
-    report("moveView " + dyaw + " " + dphi + " " + droll);
-    var url = join(SERVER, "fccontrol?moveView=" + dyaw + "," + dphi + "," + droll);
-    report("getJSON url: " + url);
-    $.getJSON(url, function (data) {
-        checkReply(data);
-    });
+    console.log("moveView " + dyaw + " " + dphi + " " + droll);
 }
 
 /*
@@ -123,18 +114,18 @@ function move(dyaw, dphi, droll) {
 //function setYaw(yaw)
 function setVirtualCamYaw(yaw) {
     var y0 = curPose.yaw;
-    //report("TS.setVirtualCamYaw "+yaw+"  y0: "+y0);
+    //console.log("TS.setVirtualCamYaw "+yaw+"  y0: "+y0);
     if (yaw > 0 && y0 < 0) {
         while (yaw > 0) {
             yaw -= 360;
         }
-        report("corrected yaw: " + yaw);
+        console.log("corrected yaw: " + yaw);
     }
     else if (yaw < 0 && y0 > 0) {
         while (yaw < 0) {
             yaw += 360;
         }
-        report("corrected yaw: " + yaw);
+        console.log("corrected yaw: " + yaw);
     }
     var phi = curPose.phi;
     var roll = curPose.roll;
@@ -153,163 +144,91 @@ function setCamView(yaw, phi, roll) {
     curPose.yaw = yaw;
     curPose.phi = phi;
     curPose.roll = roll;
-    var url = join(SERVER, "fccontrol?setView=" + yaw + "," + phi + "," + roll);
-    report("getJSON url: " + url);
-    $.getJSON(url, function (data) {
-        checkReply(data);
-    });
 }
 
 function zoom(zf) {
-    report("zoom " + zf);
-    var url = join(SERVER, "fccontrol?zoom=" + zf);
-    report("getJSON url: " + url);
-    $.getJSON(url, function (data) {
-        checkReply(data);
-    });
+    console.log("zoom " + zf);
 }
 
 function startDrag() {
-    report("startDrag");
-    var url = join(SERVER, "fccontrol?startDrag=1");
-    report("getJSON url: " + url);
-    $.getJSON(url, function (data) {
-        checkReply(data);
-    });
+    console.log("startDrag");
 }
 
 var lastDragTime = 0;
 
 function drag(dx, dy) {
-    report("drag " + dx + " " + dy);
+    console.log("drag " + dx + " " + dy);
     var t = Date.now() / 1000.0;
     var dt = t - lastDragTime;
     if (dt < 0.2) {
-        report("skipping drag event  dt: " + dt);
+        console.log("skipping drag event  dt: " + dt);
         return;
     }
     lastDragTime = t;
-    var url = join(SERVER, "fccontrol?drag=" + dx + "," + dy);
-    report("getJSON url: " + url);
-    $.getJSON(url, function (data) {
-        checkReply(data);
-    });
 }
 
 function setMode(mode) {
-    report("mode: " + mode);
-    var url = join(SERVER, "fccontrol?params=" + mode);
-    report("url: " + url);
-    $.get(url, function (data) {
-        checkReply(data);
-    });
+    console.log("mode: " + mode);
 }
 
 function goToHome() {
-    report("goToHome: " + mode);
-    var url = join(SERVER, "fccontrol?defineViewpoint=home");
-    report("url: " + url);
-    $.get(url, function (data) {
-        checkReply(data);
-    });
+    console.log("goToHome: " + mode);
 }
 
 function goToHomeView() {
-    report("goToHomeView");
-    var url = join(SERVER, "fccontrol?goToViewpoint=home");
-    report("url: " + url);
-    $.get(url, function (data) {
-        checkReply(data);
-    });
+    console.log("goToHomeView");
 }
 
 function setHomeView() {
-    report("setHomeView");
-    var url = join(SERVER, "fccontrol?defineViewpoint=home");
-    report("url: " + url);
-    $.get(url, function (data) {
-        checkReply(data);
-    });
+    console.log("setHomeView");
 }
 
 function goToPos(x, y) {
-    report("goToPos " + x + " " + y);
-    var url = join(SERVER, "fccontrol?command=goToPos");
-    url += "&x=" + x;
-    url += "&y=" + y;
-    report("url: " + url);
-    $.get(url, function (data) {
-        checkReply(data);
-    });
+    console.log("goToPos " + x + " " + y);
 }
 
 function handleRecording() {
-    var url;
     var amRecording = ($("#recordingButton").val() != "Record");
     if (amRecording) {
-        url = join(SERVER, "fccontrol?command=finishRecording");
         $("#recordingButton").val("Record");
     }
     else {
-        url = join(SERVER, "fccontrol?command=startRecording");
         $("#recordingButton").val("Stop Recording");
     }
-    $.get(url, function (data) {
-        checkReply(data);
-    });
 }
 
 function handleDecorations() {
-    report("decorationsCheckbox");
+    console.log("decorationsCheckbox");
     var showDecs = $("#decorationsCheckbox").is(':checked');
-    report("decorationsCheckbox " + showDecs);
-    var url = join(SERVER, "fccontrol?command=setProps");
-    if (showDecs) {
-        url += "&decorations=1";
-    }
-    else {
-        url += "&decorations=0";
-    }
-    $.get(url, function (data) {
-        checkReply(data);
-    });
+    console.log("decorationsCheckbox " + showDecs);
 }
 
 function handlePlay() {
-    report("handlePlay");
+    console.log("handlePlay");
     setPlaySpeed(1);
     pano.play();
-    pano.imageSource.video.autoplay = true;
     if (PC)
         PC.sendMessage({ type: 'pano.control', playSpeed: 1 });
 }
 
 function handlePause() {
-    report("handlePause");
+    console.log("handlePause");
     setPlaySpeed(0);
     pano.pause();
-    pano.imageSource.video.autoplay = false;
     if (PC)
         PC.sendMessage({ type: 'pano.control', playSpeed: 0 });
 }
 
 function setPlaySpeed(speed) {
     playSpeed = speed;
-    report("setPlaySpeed " + speed);
+    console.log("setPlaySpeed " + speed);
     pano.setPlaySpeed(speed);
     if (PC)
         PC.sendMessage({ type: 'pano.control', playSpeed: speed });
-    /*
-         var url = join(SERVER, "fccontrol?command=setPlaySpeed");
-         url += "&playSpeed="+speed;
-         $.get(url, function(data) {
-           checkReply(data);
-         });
-    */
 }
 
 function handleSpeedUp() {
-    report("speedUp");
+    console.log("speedUp");
     if (playSpeed == 0)
         pano.play();
     if (playSpeed > .3 || playSpeed < -.3) {
@@ -324,7 +243,7 @@ function handleSpeedUp() {
 }
 
 function handleSlowDown() {
-    report("slowDown");
+    console.log("slowDown");
     if (playSpeed > .3) {
         setPlaySpeed(playSpeed / 1.2);
     }
@@ -337,7 +256,7 @@ function handleSlowDown() {
 }
 
 function handleReverse() {
-    report("reverse");
+    console.log("reverse");
     playSpeed = -playSpeed;
     if (playSpeed == 0)
         playSpeed = -1;
@@ -352,19 +271,10 @@ function getPlayTime() {
 // The server will send images, and a future status message
 // will indiate the time.
 function setPlayTime(t) {
-    report("setPlayTime " + t);
+    console.log("setPlayTime " + t);
     pano.setPlayTime(t);
     if (PC)
         PC.sendMessage({ 'type': 'pano.control', time: t });
-    /*
-     var url = join(SERVER, "fccontrol?command=setPlayTime");
-     url += "&playTime="+t;
-     if (currentTourName)
-	 url += ("&sourceName="+currentTourName);
-     $.get(url, function(data) {
-       checkReply(data);
-     });
-    */
 }
 
 var prevRequestedPlayTime = 0;
@@ -375,9 +285,6 @@ function noticeRequestedPlayTime(t) {
 }
 
 function sendRequestedPlayTime() {
-    //report("sendRequestedPlayTime...");
-    //report("requestedPlayTime: "+requestedPlayTime);
-    //report("prevRequestedPlayTime: "+prevRequestedPlayTime);
     if (requestedPlayTime != prevRequestedPlayTime) {
         setPlayTime(requestedPlayTime);
         prevRequestedPlayTime = requestedPlayTime;
@@ -393,9 +300,9 @@ function fmt3(f) {
 }
 
 function getStatus() {
-    //report("getStatus ");
+    //console.log("getStatus ");
     if (!pano) {
-        report("no pano");
+        console.log("no pano");
         return
     }
     var t = pano.getPlayTime();
@@ -453,9 +360,9 @@ function updatePos() {
 }
 
 function getBookmarks() {
-    report("getBookmarks");
+    console.log("getBookmarks");
     var url = BOOKMARKS_URL;
-    report("getJSON url: " + url);
+    console.log("getJSON url: " + url);
     $.getJSON(url, function (data) {
         showBookmarks(data);
     });
@@ -464,14 +371,14 @@ function getBookmarks() {
 
 function setBookmark() {
     var name = $("#bookmarkName").val();
-    report("name: " + name);
+    console.log("name: " + name);
     var bm = {
         t: curPose.t, phi: curPose.phi, yaw: curPose.yaw, roll: curPose.roll,
         name: name
     };
     if (tourCanvas && tourCanvas.currentTour) {
         var tourName = tourCanvas.currentTour.name;
-        report("tourName: " + name);
+        console.log("tourName: " + name);
         bm.tour = tourName;
     }
     else {
@@ -488,7 +395,7 @@ function setBookmark() {
 
 function showBookmarks(data) {
     BOOKMARKS = data;
-    report("BOOKMARKS: " + JSON.stringify(data));
+    console.log("BOOKMARKS: " + JSON.stringify(data));
 
     var bookmarkNames = Object.keys(BOOKMARKS);
     bookmarkNames.sort();
@@ -497,13 +404,13 @@ function showBookmarks(data) {
     $("#bookmarkSelection").append($('<option>', { value: "", text: "" }));
     for (var i = 0; i < bookmarkNames.length; i++) {
         var name = bookmarkNames[i];
-        report("name: " + name + " view: " + JSON.stringify(BOOKMARKS[name]));
+        console.log("name: " + name + " view: " + JSON.stringify(BOOKMARKS[name]));
         //ANIM.viewNames.push(name);
         $("#bookmarkSelection").append($('<option>', { value: name, text: name }));
     }
     /*
     if (ANIM.views["Home"]) {
-	report("Going to Home after loading bookmarks");
+	console.log("Going to Home after loading bookmarks");
 	ANIM.gotoView("Home", 1);
     }
     */
@@ -512,19 +419,19 @@ function showBookmarks(data) {
 
 function updateBookmarks() {
     jstr = JSON.stringify(BOOKMARKS);
-    report("uploading BOOKMARKS: " + jstr);
+    console.log("uploading BOOKMARKS: " + jstr);
     var url = UPDATE_BOOKMARKS_URL;
-    report("uploadBookmarks to " + url);
+    console.log("uploadBookmarks to " + url);
     jQuery.post(url, jstr, function () {
-        report("Succeeded at upload bookmarks")
+        console.log("Succeeded at upload bookmarks")
     }, "json");
 }
 
 function handleBookmarkSelection() {
     var name = $("#bookmarkSelection").val();
-    report("selection made name: " + name);
+    console.log("selection made name: " + name);
     var view = BOOKMARKS[name];
-    report("view tour: " + view.tour);
+    console.log("view tour: " + view.tour);
     if (view.tour) {
         currentTourName = view.tour;
         if (tourCanvas) {
@@ -536,23 +443,16 @@ function handleBookmarkSelection() {
     setCamView(view.yaw, view.phi, view.roll);
 }
 
-/*
-function updateTime()
-{
-    T = (T+.1) % 200;
-    report("T: "+T);
-    tourCanvas.setTime(T);
-}
-*/
+
 
 function tourSliderChanged(e, ui) {
     var tour = tourCanvas.currentTour;
     if (!tour) {
-        report("*** no tour selected ***");
+        console.log("*** no tour selected ***");
         return;
     }
     var t = ui.value * tour.duration;
-    report("slider val: " + ui.value + " " + t);
+    console.log("slider val: " + ui.value + " " + t);
     setPlayTime(t);
 }
 
@@ -598,10 +498,10 @@ $(document).ready(function () {
 
     setupURLs();
     imagePushUrl = join(SERVER, "pushImages?camId=viewImage");
-    report("imagePushUrl: " + imagePushUrl);
+    console.log("imagePushUrl: " + imagePushUrl);
     $("#viewImg").attr('src', imagePushUrl);
 
-    report("ready");
+    console.log("ready");
     $("#playButton").click(handlePlay);
     $("#pauseButton").click(handlePause);
 
@@ -650,14 +550,14 @@ $(document).ready(function () {
         setHomeView();
     });
     $("#viewImg").dblclick(function (e) {
-        report("dbl click on img");
+        console.log("dbl click on img");
         mouseIsDown = false;
         downX = e.clientX;
         downY = e.clientY;
         goToPos(downX, downY);
     });
     $("#viewImg").mousedown(function (e) {
-        report("down on img");
+        console.log("down on img");
         e.preventDefault();
         mouseIsDown = true;
         downX = e.clientX;
@@ -670,23 +570,23 @@ $(document).ready(function () {
     });
 
     $("#viewImg").mouseup(function (e) {
-        report("up on img");
+        console.log("up on img");
         mouseIsDown = false;
     });
     $("#viewImg").mousemove(function (e) {
-        //report("mouse move on img e.which "+e.which);
+        //console.log("mouse move on img e.which "+e.which);
         //if (e.which == 2) {
         if (mouseIsDown) {
             var dx = e.clientX - downX;
             var dy = e.clientY - downY;
-            report("mouse drag " + " " + dx + " " + dy);
+            console.log("mouse drag " + " " + dx + " " + dy);
             drag(dx, dy);
         }
     });
     $("#decorationsCheckbox").click(handleDecorations);
 
     $("#bookmarkName").keyup(function (e) {
-        report('enterBookmark');
+        console.log('enterBookmark');
         if (e.keyCode == 13) {
             setBookmark();
         }
@@ -695,7 +595,7 @@ $(document).ready(function () {
     $("#bookmarkSelection").change(handleBookmarkSelection);
 
     $("#editTourInfo").click(function (e) {
-        report("editTourInfo click");
+        console.log("editTourInfo click");
         if ($("#editTourInfo").val() == "Edit") {
             $("#editTourInfo").val("Hide");
             $("#tourInfo").show(200);
@@ -712,7 +612,7 @@ $(document).ready(function () {
     setInterval(getStatus, 50);
     getBookmarks();
 
-    report("-------------------");
+    console.log("-------------------");
     PROPS.x = "25";
     setupTourInfo();
     tourCanvas = new TourCanvas("canvas1", PROPS);

@@ -10,6 +10,7 @@ class Display {
         var inst = this;
         this.name = opts.name;
         this.gtool = gtool;
+        this.videoId = opts.videoId || 'FAtdv94yzp4';
         var str = "";
         str += '<div id="mainScreen">\n';
         str += ' <div id="videoDiv">\n'
@@ -47,7 +48,7 @@ class Display {
         //inst.player = new YT.Player('player', {
         //inst.player = new YT.Player('mainScreen', {
         inst.player = new YT.Player('videoDiv', {
-            videoId: 'FAtdv94yzp4',
+            videoId: inst.videoId,
             height: '750',
             width: '1600',
             events: {
@@ -75,6 +76,14 @@ class Display {
     test() {
         var url = "https://www.youtube.com/watch?v=pZVdQLn_E5w&t=96s";
         this.playVideo()
+    }
+
+    setPlayTime(t) {
+        if (!this.player) {
+            console.log("no player");
+            return;
+        }
+        this.player.seekTo(t);
     }
 
     playVideo(idOrURL) {

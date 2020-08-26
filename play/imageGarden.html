@@ -1,0 +1,64 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Image Garden</title>
+    <link rel="stylesheet" type="text/css" href="../css/garden.css">
+    <script src="../js/libs/jquery-3.1.0.min.js"></script>
+    <script src="../js/libs/socket.io-1.4.5.js"></script>
+    <script src="../js/libs/sprintf.js"></script>
+    <script src="../js/CanvasTool.js"></script>
+    <script src="../js/GardenTool.js"></script>
+    <script src="../js/Garden.js">d</script>
+    <script src="../js/Flower.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="../js/QuireClient.js"></script>
+    <script src="../js/libs/jquery.instagramFeed.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script src="../js/libs/paho-mqtt.js"></script>
+    <script src="../js/GardenMQTT.js"></script>
+    <script src='https://meet.jit.si/external_api.js'></script>
+    <script src="../js/GardenJitsi.js"></script>
+    <script src="../js/MUSEControl.js"></script>
+    <script src="../js/Display.js"></script>
+    <script src="../js/TourMap.js"></script>
+</head>
+
+<body>
+    <div id="gardenDiv" style="width: 100%; height: 100%">
+        <div id="gardenPanel" style="width: 100%; height: 100%; float: left; background: green; position: relative">
+            <canvas id="flowerCanvas"></canvas>
+            <div id="controls">
+                <span id="buttons" class="buttons">
+                    <button id="login">login</button>
+                    <button id="save">save</button>
+                    <button id="jitsi">jitsi</button>
+                    <span id="userInfo">null</span>
+                </span>
+                <span id="canvasStat" class="stats">stats</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var gtool;
+        var garden;
+        var display;
+
+        $(document).ready(function () {
+            gtool = new GardenTool("flowerCanvas");
+            gtool.initFirebase();
+            gtool.start();
+            gtool.setView(0, 0, 800);
+            var gardenURL = "../gardens/tourMap.json";
+            garden = gtool.loadGardenFile(gardenURL);
+            gtool.addHUD();
+        });
+
+    </script>
+</body>
+
+</html>

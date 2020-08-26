@@ -18,12 +18,14 @@ TC.RELATIVE_MOTION = "RELATIVE_MOTION";// Fiexed direction relative to motion
 
 TC.robotWidth = 9;
 TC.robotLength = 6;
-TC.tourLineWidth = 1;
+TC.tourLineWidth = 0.5;
+
+
 
 // convert yaw in degrees to equivalent (i.e. mod 360)
 // yaw in range 0 <= yaw < 360;
 TC.fixYaw = function (y) {
-    //report("TC.fixYaw: "+y);
+    //console.log("TC.fixYaw: "+y);
     while (y < 360)
         y += 36000;
     return y % 360;
@@ -124,9 +126,9 @@ TC.numTours = 0;
 
 class Tour {
     constructor(data) {
-        report("*** TC.Tour ***");
+        console.log("*** TC.Tour ***");
         var h = TC.numTours++;
-        report("url: " + data.url);
+        console.log("url: " + data.url);
         if (data.name)
             this.name = data.name;
         else {
@@ -145,13 +147,13 @@ class Tour {
         this.endTime = this.startTime + this.duration;
         this.recs = [{ time: 0, rt: 0, yaw: 0, pos: [0, h, 0] },
         { time: 1, rt: 1, yaw: 0, pos: [10, h, 0] }]
-        report("*** Created tour " + JSON.stringify(this));
+        console.log("*** Created tour " + JSON.stringify(this));
     }
 }
 
 class TourCanvas {
     constructor(canvasId, props) {
-        report("TourCanvas: props: " + JSON.stringify(props));
+        console.log("TourCanvas: props: " + JSON.stringify(props));
         this.status = "";
         var tourCanv = this;
         this.targetPos = null;
@@ -187,25 +189,25 @@ class TourCanvas {
         this.canvas = document.getElementById(this.canvasId);
         this.canvWd = $(jqId).width();
         this.canvHt = $(jqId).height();
-        report("canvas ----- size: " + $(jqId).width() + " " + $(jqId).height());
+        console.log("canvas ----- size: " + $(jqId).width() + " " + $(jqId).height());
         this.trans = { sx: 1.0, sy: -1.0, x0: 0, y0: 0 };
         var instance = this;
         this.whichDown = 0;
         if (1) {
             $('#canvasDiv').keypress(function (e) {
-                report("*** keypress");
+                console.log("*** keypress");
             });
             $('document').keydown(function (e) {
-                report("keydown");
+                console.log("keydown");
             });
             $(jqId).keyup(function (e) {
-                report("keyup");
+                console.log("keyup");
             });
         }
         $(jqId).mousedown(function (e) {
             var x = e.pageX - $(jqId).offset().left;
             var y = e.pageY - $(jqId).offset().top;
-            report("*** down event v.x,v.y:" + x + " " + y + " which: " + e.which);
+            console.log("*** down event v.x,v.y:" + x + " " + y + " which: " + e.which);
             instance.ctrlKey = e.ctrlKey;
             this.whichDown = e.which;
             if (e.which == 1)
@@ -214,16 +216,16 @@ class TourCanvas {
                 instance.middleDown(e, x, y);
         });
         $(jqId).mouseup(function (e) {
-            report("*** up event");
+            console.log("*** up event");
             instance.ctrlKey = e.ctrlKey;
             this.whichDown = 0;
             instance.mouseUp(e);
         });
         $(jqId).mousemove(function (e) {
-            //report("move");
+            //console.log("move");
             var x = e.pageX - $(jqId).offset().left;
             var y = e.pageY - $(jqId).offset().top;
-            //report("move event x,y:" + x+" "+y+"  which: "+e.which);
+            //console.log("move event x,y:" + x+" "+y+"  which: "+e.which);
             var w = this.whichDown;
             instance.ctrlKey = e.ctrlKey;
             //we should be able to use e.which, but there seems
@@ -244,11 +246,11 @@ class TourCanvas {
         if (this.images) {
             for (var i = 0; i < this.images.length; i++) {
                 var img = this.images[i];
-                report("*** image " + img.x + " " + img.y + " " + img.url);
+                console.log("*** image " + img.x + " " + img.y + " " + img.url);
                 var imageObj = new Image();
                 img.obj = imageObj;
                 imageObj.onload = function () {
-                    report("onload for " + JSON.stringify(img));
+                    console.log("onload for " + JSON.stringify(img));
                     instance.numImagesLoaded += 1;
                     if (instance.numImagesLoaded == instance.images.length)
                         instance.redraw();
@@ -303,7 +305,7 @@ class TourCanvas {
     }
 
     setEditMode(onOrOff) {
-        report("setEditMode " + onOrOff);
+        console.log("setEditMode " + onOrOff);
         if (this.locked)
             onOrOff = false;
         this.editMode = onOrOff;
@@ -319,7 +321,7 @@ class TourCanvas {
     }
 
     handleZoom(zf) {
-        report("handleZoom " + zf);
+        console.log("handleZoom " + zf);
         var v = this.getView();
         this.setView(v.x, v.y, v.width * zf);
     }
@@ -337,27 +339,27 @@ class TourCanvas {
         for (var i = 0; i < this.tours.length; i++) {
             if (this.tours[i].name == tour.name) {
                 this.tours[i] = tour;
-                report("Replacing " + tour.name);
+                console.log("Replacing " + tour.name);
                 added = true;
             }
         }
         if (!added) {
-            report("added new tour " + tour.name);
+            console.log("added new tour " + tour.name);
             this.tours.push(tour);
         }
         var bbox = this.getBBox(tour);
         this.bbox = bbox;
-        report("bbox: " + JSON.stringify(bbox));
+        console.log("bbox: " + JSON.stringify(bbox));
         var x0 = (bbox.xMin + bbox.xMax) / 2.0;
         var y0 = (bbox.yMin + bbox.yMax) / 2.0;
-        report("x0 " + x0 + "  y0: " + y0);
+        console.log("x0 " + x0 + "  y0: " + y0);
         var recs = tour.recs;
         var DELTA_T = 0;
         var maxT = 0;
         if (tour.DELTA_T)
             DELTA_T = tour.DELTA_T;
         for (var i = 0; i < recs.length; i++) {
-            //report("i: "+i+" "+JSON.stringify(recs[i]));
+            //console.log("i: "+i+" "+JSON.stringify(recs[i]));
             var t = recs[i].time;
             var rt = t - tour.startTime - DELTA_T;
             recs[i].rt = rt;
@@ -384,7 +386,7 @@ class TourCanvas {
                 var dy = pky - pjy;
                 var a = Math.atan2(dy, dx);
                 recs[i].yaw = toDegrees(a);
-                //report("computed yaw "+i+" "+recs[i].yaw);
+                //console.log("computed yaw "+i+" "+recs[i].yaw);
             }
             recs[i].yaw = TC.fixYaw(recs[i].yaw);
         }
@@ -399,21 +401,21 @@ class TourCanvas {
     }
 
     smoothYaws(recs) {
-        report("******************* smoothYaws *****************");
+        console.log("******************* smoothYaws *****************");
         for (var i = 1; i < recs.length - 1; i++) {
             var syaw = (recs[i - 1].yaw + recs[i + 1].yaw) / 2;
             if (Math.abs(syaw - recs[i].yaw) < 10) {
                 recs[i].yaw = syaw;
             }
             else {
-                //report("****** winding transition");
+                //console.log("****** winding transition");
             }
         }
     }
 
     getHandler(tc, id, tour) {
         return function (e) {
-            report("----> clicky clack " + id);
+            console.log("----> clicky clack " + id);
             tour.locked = !tour.locked;
             tc.redraw();
         };
@@ -428,7 +430,7 @@ class TourCanvas {
             var name = tour.name;
             var id = "cb_" + name;
             var inst = this;
-            report("tour: " + name);
+            console.log("tour: " + name);
             $('<input />',
                 {
                     type: 'checkbox',
@@ -459,22 +461,22 @@ class TourCanvas {
     }
 
     handleCBclick(e, id) {
-        report("this: " + this.id);
-        report("**** click: " + id);
+        console.log("this: " + this.id);
+        console.log("**** click: " + id);
     }
 
 
     getTour(url) {
-        report("getJSON tour url: " + url);
+        console.log("getJSON tour url: " + url);
         //$.getJSON(url, function(data) {
         WV.getJSON(url, function (data) {
-            report("*** got tour data for " + url);
+            console.log("*** got tour data for " + url);
             var tour = data;
             tour.duration = tour.endTime - tour.startTime;
             tourCanvas.addTour(data);
         },
             function (e) {
-                report("*** failed to get tour data for " + url)
+                console.log("*** failed to get tour data for " + url)
                 var tour = new Tour({ 'url': url });
                 tourCanvas.addTour(tour)
             });
@@ -489,7 +491,7 @@ class TourCanvas {
 
     restoreTour(tour) {
         if (!this.checkPointTour) {
-            report("No tour checkpointed");
+            console.log("No tour checkpointed");
             return;
         }
         var tour = jQuery.extend(true, {}, this.checkPointTour);
@@ -498,14 +500,14 @@ class TourCanvas {
 
 
     uploadTour(tour) {
-        report("uploadTour " + tour.name);
+        console.log("uploadTour " + tour.name);
         jstr = JSON.stringify(tour);
-        report("uploading TOUR: " + jstr);
+        console.log("uploading TOUR: " + jstr);
         //var url = TOUR_URL_BASE+"update/"+tour.name+".json";
         var url = TOUR_URL_BASE + tour.name + ".json";
-        report("uploadTour to " + url);
+        console.log("uploadTour to " + url);
         jQuery.post(url, jstr, function () {
-            report("Succeeded at upload tour")
+            console.log("Succeeded at upload tour")
         }, "json");
     }
 
@@ -530,11 +532,11 @@ class TourCanvas {
     }
 
     getGraphics(url) {
-        report("getJSON graphics url: " + url);
+        console.log("getJSON graphics url: " + url);
         var inst = this;
         WV.getJSON(url,
             function (data) {
-                report("********************** got graphics for " + url);
+                console.log("********************** got graphics for " + url);
                 inst.graphics = data.graphics;
                 //inst.points = data.points;
                 inst.showPoints = data.showPoints;
@@ -542,10 +544,10 @@ class TourCanvas {
                 inst.points = data.points;
                 if (data.labelFont)
                     inst.labelFont = data.labelFont;
-                report("graphics: " + JSON.stringify(inst.graphics));
+                console.log("graphics: " + JSON.stringify(inst.graphics));
             },
             function (e) {
-                report("**************** failed to get graphics data for " + url)
+                console.log("**************** failed to get graphics data for " + url)
             }
         );
     }
@@ -557,7 +559,7 @@ class TourCanvas {
         ctx.fillStyle = "red";
         ctx.scale(1, -1)
         for (var ptName in this.points) {
-            //report("ptName: "+ptName);
+            //console.log("ptName: "+ptName);
             var pt = this.getPoint(ptName);
             ctx.fillText(ptName, pt[0], -pt[1]);
         }
@@ -580,7 +582,7 @@ class TourCanvas {
     }
 
     drawLabelGraphic(gr) {
-        //report("draw text "+gr.text+" "+gr.pos);
+        //console.log("draw text "+gr.text+" "+gr.pos);
         var ctx = this.canvas.getContext("2d");
         ctx.save();
         var x = gr.pos[0];
@@ -606,9 +608,9 @@ class TourCanvas {
     */
     getPoint(pt) {
         if (typeof pt == typeof "str") {
-            //report("***************** getting point for "+pt);
+            //console.log("***************** getting point for "+pt);
             pt = this.points[pt];
-            //report("pt: "+pt);
+            //console.log("pt: "+pt);
         }
         var x = pt[0];
         if (typeof x == typeof "str") {
@@ -626,7 +628,7 @@ class TourCanvas {
     }
 
     drawPolygonGraphic(gr) {
-        //report("draw polygon "+gr.points);
+        //console.log("draw polygon "+gr.points);
         var ctx = this.canvas.getContext("2d");
         ctx.save();
         ctx.scale(1, -1)
@@ -658,10 +660,10 @@ class TourCanvas {
     }
 
     selectTourPoint(i) {
-        report("selectTourPoint " + i);
+        console.log("selectTourPoint " + i);
         tour = this.currentTour;
         if (!tour) {
-            report("no tour");
+            console.log("no tour");
             return;
         }
         var rec = tour.recs[i];
@@ -672,14 +674,14 @@ class TourCanvas {
 
 
     gotoPrevTourPoint() {
-        report("gotoPrevTourPoint");
+        console.log("gotoPrevTourPoint");
         if (!this.currentTour) {
-            report("No tour selected");
+            console.log("No tour selected");
             return;
         }
         var t = this.getTime();
         var r = this.findRecIndexInTourByTime(this.currentTour, t);
-        report("prev r: " + JSON.stringify(r));
+        console.log("prev r: " + JSON.stringify(r));
         if (r.dt > 0)
             i = r.i;
         else
@@ -691,10 +693,10 @@ class TourCanvas {
     }
 
     gotoNextTourPoint() {
-        report("gotoNextTourPoint");
+        console.log("gotoNextTourPoint");
         var tour = this.currentTour;
         if (!tour) {
-            report("No tour selected");
+            console.log("No tour selected");
             return;
         }
         var t = this.getTime();
@@ -815,7 +817,7 @@ class TourCanvas {
         ctx.fill();
 
         // draw the view frustrum
-        //report("vx1: "+vx1+" vy1: "+vy1+" vx2: "+vx2+" vy2: "+vy2);
+        //console.log("vx1: "+vx1+" vy1: "+vy1+" vx2: "+vx2+" vy2: "+vy2);
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(vx1, vy1);
@@ -845,7 +847,7 @@ class TourCanvas {
     }
 
     drawAxes() {
-        //report("drawAxes");
+        //console.log("drawAxes");
         var ctx = this.canvas.getContext("2d");
         var INF = 5000;
         var N = 10;
@@ -872,8 +874,8 @@ class TourCanvas {
     }
 
     redraw() {
-        //report("redraw");
-        //report(" called by "+arguments.callee.caller.toString());
+        //console.log("redraw");
+        //console.log(" called by "+arguments.callee.caller.toString());
         var ctx = this.canvas.getContext("2d");
         var T = this.trans;
         ctx.setTransform(T.sx, 0, 0, T.sy, T.x0, T.y0);
@@ -886,16 +888,16 @@ class TourCanvas {
                         TC.drawImage(ctx, img.obj, img.x, img.y, img.width, img.height);
                     }
                     catch (e) {
-                        report("failed to drawImage " + e);
+                        console.log("failed to drawImage " + e);
                     }
                 }
                 else {
-                    report("**** image not yet loaded ****");
+                    console.log("**** image not yet loaded ****");
                 }
             }
         }
         else {
-            report("**** no images ****");
+            console.log("**** no images ****");
         }
         /*******/
         if (this.bestMatch) {
@@ -947,7 +949,7 @@ class TourCanvas {
     has given width in canvas coordinates.
      */
     setView(x0, y0, width) {
-        report("setView " + x0 + " " + y0 + " " + width);
+        console.log("setView " + x0 + " " + y0 + " " + width);
         var s = this.canvWd / width;
         var w = this.canvWd;
         var h = this.canvHt;
@@ -959,9 +961,9 @@ class TourCanvas {
     }
 
     findPoseByTime(t) {
-        //report("findPoseByTime "+t);
+        //console.log("findPoseByTime "+t);
         if (this.currentTour) {
-            //report("findPoseByTime in current tour "+t);
+            //console.log("findPoseByTime in current tour "+t);
             return this.findPoseInTourByTime(this.currentTour, t);
         }
         for (var i = 0; i < this.tours.length; i++) {
@@ -992,7 +994,7 @@ class TourCanvas {
                 var rt = (1 - s) * rec1.rt + s * rec2.rt;
                 //var yaw  = (1-s)*rec1.yaw  + s*rec2.yaw;
                 var yaw = TC.interpYaw(rec1.yaw, rec2.yaw, s);
-                //report("yaw1: "+rec1.yaw+" yaw2: "+rec2.yaw+" s: "+s+" yaw: "+yaw);
+                //console.log("yaw1: "+rec1.yaw+" yaw2: "+rec2.yaw+" s: "+s+" yaw: "+yaw);
                 var pos = TC.interpVec(rec1.pos, rec2.pos, s);
                 return { i: i, s: s, rt: rt, pos: pos, yaw: yaw };
                 return recs[i];
@@ -1031,7 +1033,7 @@ class TourCanvas {
         for (var i = 0; i < this.tours.length; i++) {
             var tour = this.tours[i];
             if (!this.ctrlKey && tour.locked) {
-                report(">>>>>>>>>>> this.ctrlKey " + this.ctrlKey);
+                console.log(">>>>>>>>>>> this.ctrlKey " + this.ctrlKey);
                 continue;
             }
             var match = this.findRecInTourByPos(tour, x, y);
@@ -1040,11 +1042,11 @@ class TourCanvas {
             }
         }
         if (!bestMatch) {
-            report(">>> findRecByPos couldnt find good rec");
+            console.log(">>> findRecByPos couldnt find good rec");
             return null;
         }
-        //report("bestMatch: "+JSON.stringify(bestMatch));
-        //report("bestMatch: "+bestMatch);
+        //console.log("bestMatch: "+JSON.stringify(bestMatch));
+        //console.log("bestMatch: "+bestMatch);
         bestMatch.mx = x;
         bestMatch.my = y;
         //this.setBestMatch(bestMatch);
@@ -1108,27 +1110,27 @@ class TourCanvas {
         if (!rec)
             return;
         if (rec.yaw == null) {
-            report("*** rec with no yaw ***");
-            report("rec: " + JSON.stringify(rec));
+            console.log("*** rec with no yaw ***");
+            console.log("rec: " + JSON.stringify(rec));
         }
         this.setPosition(rec.pos[0], rec.pos[1], true);
         var mode = $("#movementMode").val();
         this.camMode = mode;
-        //report("mode: "+mode);
+        //console.log("mode: "+mode);
         if (mode == TC.ABSOLUTE) {
-            //report("camMode ABSOLUTE -- not yet supported");
+            //console.log("camMode ABSOLUTE -- not yet supported");
             var viewYaw = this.getViewYaw()
             this.targetPos = null;
             this.setRobotYaw(rec.yaw, true);
             this.setViewYaw(viewYaw);
         }
         else if (mode == TC.RELATIVE_MOTION) {
-            //report("camMode RELATIVE_MOTION -- not yet supported");
+            //console.log("camMode RELATIVE_MOTION -- not yet supported");
             this.targetPos = null;
             this.setRobotYaw(rec.yaw, true);
         }
         else if (mode == TC.RELATIVE_CAMERA) {
-            //report("camMode RELATIVE_CAMERA");
+            //console.log("camMode RELATIVE_CAMERA");
             this.targetPos = null;
             this.setRobotYaw(rec.yaw, true);
         }
@@ -1140,7 +1142,7 @@ class TourCanvas {
             this.setViewYaw(viewYaw);
         }
         else {
-            report("****** unknown camMode " + mode);
+            console.log("****** unknown camMode " + mode);
             this.setRobotYaw(rec.yaw, true);
         }
         this.redraw();
@@ -1150,14 +1152,14 @@ class TourCanvas {
     // but call a handler to have it dones from TourScripts.
     requestPlayTime(t) {
         if (this.playTimeHandler) {
-            report("calling playTimeHandler");
+            //console.log("calling playTimeHandler");
             this.playTimeHandler(t);
         }
     }
 
 
     setRobotYaw(yaw, noRefresh) {
-        //report("setRobotYaw "+yaw);
+        //console.log("setRobotYaw "+yaw);
         this.currentRobotYaw = yaw;
         if (!noRefresh)
             this.redraw();
@@ -1172,7 +1174,7 @@ class TourCanvas {
     // to switch to that view.   To do that use global setVirtualCamYaw
     setVirtualCamYaw(yaw, noRefresh) {
         yaw = eval(yaw);
-        //report("setVirtualCamYaw "+yaw);
+        //console.log("setVirtualCamYaw "+yaw);
         this.currentVirtualCamYaw = yaw;
         if (!noRefresh)
             this.redraw();
@@ -1196,7 +1198,7 @@ class TourCanvas {
 
     setPosition(x, y, noRefresh) {
         this.currentPos = [x, y];
-        //report("setPosition "+this.currentPos);
+        //console.log("setPosition "+this.currentPos);
         if (!noRefresh)
             this.redraw();
     }
@@ -1229,11 +1231,11 @@ class TourCanvas {
 
     //TourCanvas.prototype.mouseClick = function(e, x, y) {
     leftDown(e, x, y) {
-        report("mouseClick " + e + " " + x + " " + y);
+        console.log("mouseClick " + e + " " + x + " " + y);
         var cp = this.viewToCanv(x, y);
-        report("cx,cy: " + cp.x + " " + cp.y);
+        console.log("cx,cy: " + cp.x + " " + cp.y);
         if (e.shiftKey && !this.editMode) {
-            report("************** set target **********");
+            console.log("************** set target **********");
             this.targetPos = [cp.x, cp.y];
             this.camMode = TC.TARGET;
             $("#movementMode").val(TC.TARGET);
@@ -1249,24 +1251,24 @@ class TourCanvas {
         var bestMatch = this.findRecByPos(cp.x, cp.y);
         var bx = bestMatch.x;
         var by = bestMatch.y;
-        //report("nearestRec: "+JSON.stringify(r));
+        //console.log("nearestRec: "+JSON.stringify(r));
         var rec = bestMatch.rec;
         //this.setBestMatch(bestMatch);
         if (rec == null) {
-            report("No rec found");
+            console.log("No rec found");
             this.draggingCursor = false;
             return;
         }
-        report("nearest rec: " + bx + " " + by);
+        console.log("nearest rec: " + bx + " " + by);
         var d = this.dist(cp.x, cp.y, bx, by);
         if (e.altKey) {
-            report("**** ALT Click ****");
+            console.log("**** ALT Click ****");
             this.currentPos[0] = cp.x;
             this.currentPos[1] = cp.y;
             this.addTourPoint(e);
             return;
         }
-        report("d: " + d);
+        console.log("d: " + d);
         if (d > 2.0) {
             this.draggingCursor = false;
             this.adjustYaw(e, cp);
@@ -1280,24 +1282,24 @@ class TourCanvas {
     }
 
     middleDown(e, x, y) {
-        report("middleDown " + e + " " + x + " " + y);
+        console.log("middleDown " + e + " " + x + " " + y);
         var T = this.trans;
         this.mouseDownData = { x: x, y: y, x0: T.x0, y0: T.y0 };
         var cp = this.viewToCanv(x, y);
-        report("cx,cy: " + cp.x + " " + cp.y);
+        console.log("cx,cy: " + cp.x + " " + cp.y);
         e.preventDefault();
     }
 
 
     mouseMove(e, x, y) {
-        //report("mouseMove "+x+" "+y);
+        //console.log("mouseMove "+x+" "+y);
         var cp = this.viewToCanv(x, y);
         this.showMouseStatus(x, y, cp.x, cp.y);
     };
 
     showMouseStatus(vx, vy, cx, cy) {
         //var mousePos = "v: "+fmt1(vx)+", "+fmt1(vy);
-        //report("showMouseStatus "+vx+" "+vy);
+        //console.log("showMouseStatus "+vx+" "+vy);
         var mousePos = "v: " + fmt0(vx) + ", " + fmt0(vy);
         mousePos += "&nbsp;&nbsp;   c: " + fmt3(cx) + ", " + fmt3(cy);
         this.status = mousePos;
@@ -1305,12 +1307,12 @@ class TourCanvas {
     }
 
     mouseUp(e) {
-        report("mouseUp");
+        console.log("mouseUp");
         this.setEditMode(false);
         if (e.ctrlKey) {
-            report("****** Control UP!!!");
+            console.log("****** Control UP!!!");
             if (this.currentTour) {
-                report("**** toggle locked");
+                console.log("**** toggle locked");
                 this.currentTour.locked = !this.currentTour.locked;
                 tourCanvas.showTourList();
             }
@@ -1321,12 +1323,12 @@ class TourCanvas {
     };
 
     leftDrag(e, x, y) {
-        //report("leftDrag");
+        //console.log("leftDrag");
         e.preventDefault();
         var cp = this.viewToCanv(x, y);
         this.showMouseStatus(x, y, cp.x, cp.y);
         if (this.draggingCursor) {
-            report("Dragging cursor.");
+            console.log("Dragging cursor.");
             this.setCursorPos(e, cp);
         }
         else {
@@ -1335,13 +1337,13 @@ class TourCanvas {
     }
 
     middleDrag(e, x, y) {
-        //report("middleDrag");
+        //console.log("middleDrag");
         e.preventDefault();
         var d = this.mouseDownData;
         var s = 1.0;
         var dx = s * (x - d.x);
         var dy = s * (y - d.y);
-        //report("dx,dy: "+dx+" "+dy);
+        //console.log("dx,dy: "+dx+" "+dy);
         this.trans.x0 = d.x0 + dx;
         this.trans.y0 = d.y0 + dy;
         this.redraw();
@@ -1351,21 +1353,21 @@ class TourCanvas {
 
     //TourCanvas.prototype.setCursorPos = function(e, cp, rec)
     setCursorPos(e, cp) {
-        report("setCursorPos shift " + e.shiftKey);
+        console.log("setCursorPos shift " + e.shiftKey);
         var rt, x, y;
         if (e.shiftKey && !e.editMode) {
             this.setEditMode(true);
         }
         if (this.editMode) {
-            report("in edit mode");
+            console.log("in edit mode");
             rt = this.currentTime;
             x = cp.x;
             y = cp.y;
             if (this.currentTour) {
                 var i = this.selectedRecIndex;
-                report("i: " + i);
+                console.log("i: " + i);
                 if (i != null) {
-                    report("moving selected rec");
+                    console.log("moving selected rec");
                     rec = this.currentTour.recs[i];
                     rec.pos[0] = x;
                     rec.pos[1] = y;
@@ -1381,13 +1383,13 @@ class TourCanvas {
                 this.setCurrentTour(tour);
             }
             else {
-                report("**** No tour found ****");
+                console.log("**** No tour found ****");
             }
             x = bestMatch.x;
             y = bestMatch.y;
             rt = bestMatch.rt;
             this.showTourStatus(tour);
-            report("setCursorPos x: " + x + "  y: " + y + "  rt: " + rt);
+            console.log("setCursorPos x: " + x + "  y: " + y + "  rt: " + rt);
         }
         this.setPosition(x, y);
         this.currentTime = rt;
@@ -1411,20 +1413,20 @@ class TourCanvas {
         this.currentTour = tour;
         this.currentTourName = tour.name;
         currentTourName = tour.name;
-        report("currentTourName: " + currentTourName);
+        console.log("currentTourName: " + currentTourName);
         if (this.noticeCurrentTour)
             this.noticeCurrentTour(tour);
     }
 
     adjustYaw(e, cp) {
         if (e.shiftKey && !e.editMode) {
-            report("*** enter edit mode");
+            console.log("*** enter edit mode");
             if (this.selectedRecIndex != null) {
                 this.setEditMode(true);
                 this.showTourStatus();
             }
             else {
-                report("*** No rec selected");
+                console.log("*** No rec selected");
             }
         }
 
@@ -1434,20 +1436,20 @@ class TourCanvas {
         var dy = cp.y - cursory;
         var thetaRad = Math.atan2(dy, dx);
         var viewYaw = toDegrees(thetaRad);
-        //report("Dragging view direction dx,dy: "+dx+" "+dy);
-        report("new viewYaw: " + viewYaw + " degrees");
+        //console.log("Dragging view direction dx,dy: "+dx+" "+dy);
+        console.log("new viewYaw: " + viewYaw + " degrees");
         var robotYaw = this.currentRobotYaw;
         if (this.editMode) {
             i = this.selectedRecIndex;
             rec = this.currentTour.recs[i];
             var virtualCamYaw = this.currentVirtualCamYaw;
             var offset = this.yawOffset;
-            report("virtualCamYaw: " + virtualCamYaw);
-            report("viewYaw: " + viewYaw);
-            report("offset: " + offset);
-            report("sum: " + (virtualCamYaw + viewYaw + offset));
+            console.log("virtualCamYaw: " + virtualCamYaw);
+            console.log("viewYaw: " + viewYaw);
+            console.log("offset: " + offset);
+            console.log("sum: " + (virtualCamYaw + viewYaw + offset));
             var robotYaw = virtualCamYaw + viewYaw - this.yawOffset;
-            report("robotYaw: " + robotYaw +
+            console.log("robotYaw: " + robotYaw +
                 "  camYaw: " + virtualCamYaw +
                 "  offset: " + this.yawOffset);
             rec.yaw = robotYaw;
@@ -1456,16 +1458,16 @@ class TourCanvas {
         }
         else {
             var camYaw = - viewYaw + robotYaw + this.yawOffset;
-            //report("----- camYaw: "+camYaw);
+            //console.log("----- camYaw: "+camYaw);
             setVirtualCamYaw(camYaw);
         }
     }
 
     addTourPoint(e) {
-        report("addTourPoint");
+        console.log("addTourPoint");
         var tour = this.currentTour;
         if (!tour) {
-            report("addTourPoint - no tour selected");
+            console.log("addTourPoint - no tour selected");
             return;
         }
         var yaw = this.currentRobotYaw;
@@ -1473,7 +1475,7 @@ class TourCanvas {
         var t = getPlayTime();
         var x = this.currentPos[0];
         var y = this.currentPos[1];
-        report("t: " + t + "  x: " + x + "  y: " + y);
+        console.log("t: " + t + "  x: " + x + "  y: " + y);
         var rec = {
             "yaw": yaw,
             "pos": [x, y, 0],
@@ -1490,15 +1492,15 @@ class TourCanvas {
     }
 
     removeTourPoints() {
-        report("removeTourPoints");
+        console.log("removeTourPoints");
         var tour = this.currentTour;
         if (!tour)
             return;
         if (this.selectedRecIndex == null) {
-            report("No points selected");
+            console.log("No points selected");
             return;
         }
-        report("removeTourPoints " + this.selectedRecIndex);
+        console.log("removeTourPoints " + this.selectedRecIndex);
         tour.recs.splice(this.selectedRecIndex, 1);
         this.selectedRecIndex == null;
         tourCanvas.redraw();
@@ -1512,11 +1514,11 @@ class TourCanvas {
         var t = rec.time;
         for (var i = 0; i < tour.recs.length; i++) {
             var tr = tour.recs[i].time;
-            report("t: " + t + "  tr: " + tr);
+            console.log("t: " + t + "  tr: " + tr);
             if (t < tour.recs[i].time)
                 break;
         }
-        report("addTourRect addPos: i = " + i);
+        console.log("addTourRect addPos: i = " + i);
         tour.recs.splice(i, 0, rec);
         return i;
     }

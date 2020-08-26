@@ -1,13 +1,13 @@
 
 WV = {};
 
-function report(str) {
-	console.log(str);
-}
+//function report(str) {
+//	console.log(str);
+//}
 
 WV.errsShown = {};
 function error(str) {
-	report(str);
+	console.log(str);
 	if (!WV.errsShown[str]) {
 		WV.errsShown[str] = 1;
 		alert(str);
@@ -56,11 +56,11 @@ WV.getJSON = function (url, handler, errFun) {
 				handler(data);
 			}
 			catch (e) {
-				report("**************************************************");
-				report("**************************************************");
-				report("*** error: " + e);
+				console.log("**************************************************");
+				console.log("**************************************************");
+				console.log("*** error: " + e);
 				alert("JSON error: " + e);
-				//report("str: "+str);
+				//console.log("str: "+str);
 			}
 		},
 		error: function (e) {
