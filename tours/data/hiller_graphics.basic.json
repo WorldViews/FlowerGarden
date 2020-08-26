@@ -1,0 +1,39 @@
+{
+    "labelFont": "8px Arial",
+    "points": {
+	"foo": [-50,-50]
+    },
+    "graphics": [
+	{"type": "polygon", "text": "building outline",
+	 "strokeStyle": "black", "fillStyle": "lightyellow",
+	 "points": [[-240,30],
+		    [-150,30], [-150,-160], [260,-160], [260,30],
+		    [105,30], [105,130], [180,130], [180,275],
+		    [-150,275],
+		    [-150,130],
+		    [-240,130]]},
+	{"type": "polygon", "text": "drone cage",
+	 "strokeStyle": "black", "fillStyle": "lightgreen",
+	 "points": [[230,-160], [230,-70], [260,-70], [260,-160]]},
+	{"type": "label", "text": "1903", "pos": [-120,80],
+	 "font": "8px Arial", "fillStyle": "purple"},
+	{"type": "label", "text": "Wright Flyer", "pos": [-130,70],
+	 "font": "8px Arial", "fillStyle": "purple"},
+	{"type": "label", "text": "Argonaut", "pos": [-10,120],
+	 "font": "8px Arial", "fillStyle": "purple"},
+	{"type": "label", "text": "Flight", "pos": [-130,200],
+	 "font": "12px Arial", "fillStyle": "black"},
+	{"type": "label", "text": "Shop", "pos": [-130,185],
+	 "font": "12px Arial", "fillStyle": "black"},
+	{"type": "label", "text": "Entry", "pos": [-220,80],
+	 "font": "12px Arial", "fillStyle": "black"},
+	{"type": "label", "text": "Aerocycloid", "pos": [-95,-145]},
+	{"type": "label", "text": "Monocoupe", "pos": [-25,-145],
+	 "fillStyle": "purple"},
+	{"type": "label", "text": "Grumman", "pos": [110,-60]},
+	{"type": "label", "text": "Albatross", "pos": [110,-70]},
+	{"type": "label", "text": "Drone", "pos": [235,-120]},
+	{"type": "label", "text": "cage", "pos": [235,-130]},
+	{"type": "label", "text": "J3", "pos": [15,15]}
+    ]
+}

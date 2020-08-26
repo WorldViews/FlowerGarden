@@ -1,0 +1,18 @@
+{
+   "hall of fame theatre": {
+      "phi": 3.750000000000057, 
+      "name": "hall of fame theatre", 
+      "yaw": 252.91479820627825, 
+      "tour": "hiller_lobby_path_1", 
+      "t": 38.172423, 
+      "roll": 0
+   }, 
+   "lobby facing front": {
+      "phi": 4.500000000000057, 
+      "name": "lobby facing front", 
+      "yaw": -80.71748878923768, 
+      "tour": "hiller_lobby_path_1", 
+      "t": 129.23237, 
+      "roll": 0
+   }
+}

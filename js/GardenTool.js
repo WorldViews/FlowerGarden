@@ -109,10 +109,10 @@ class GardenTool extends CanvasTool {
     this.jitsi = new GardenJitsi(this, {parentId});;
   }
 
-  addHUD() {
+  addHUD(parentName) {
     if (this.hudDisplay)
       return;
-     this.hudDisplay = new Display(this);
+     this.hudDisplay = new Display(this, parentName);
   }
 
   xresize() {

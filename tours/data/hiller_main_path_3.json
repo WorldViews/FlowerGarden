@@ -1,0 +1,31 @@
+{
+   "locked": false, 
+   "name": "hiller_main_path_3", 
+   "DELTA_T": 0, 
+   "startTime": 0, 
+   "duration": 1, 
+   "recs": [
+      {
+         "rt": 0, 
+         "yaw": 0, 
+         "pos": [
+            0, 
+            0, 
+            0
+         ], 
+         "time": 0
+      }, 
+      {
+         "rt": 1, 
+         "yaw": 0, 
+         "pos": [
+            10, 
+            0, 
+            0
+         ], 
+         "time": 1
+      }
+   ], 
+   "endTime": 1, 
+   "type": "PanoTour"
+}
