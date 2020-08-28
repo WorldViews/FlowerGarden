@@ -28,7 +28,11 @@ class PanoProxy {
     }
 
     getViewYaw() {
-        return this.yaw;
+        var obj = this.display.getView();
+        if (obj == null) {
+            return this.yaw;
+        }
+        return obj.yaw;
     }
 
     getViewPitch() {
@@ -42,6 +46,7 @@ class PanoProxy {
     setViewYawPhi(yaw, phi) {
         this.yaw = yaw;
         this.phi = phi;
+        this.display.setYaw(yaw);
     }
 
     setPlaySpeed(speed) {

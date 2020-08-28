@@ -19,7 +19,7 @@
     "graphics": [
         {
             "type": "polygon",
-            "text": "theatre",
+            "text": "store",
             "strokeStyle": "black",
             "fillStyle": "lightblue",
             "points": [
@@ -31,131 +31,23 @@
         },
         {
             "type": "label",
-            "text": "1903",
-            "pos": [
-                -120,
-                80
-            ],
-            "font": "8px Arial",
-            "fillStyle": "purple"
-        },
-        {
-            "type": "label",
-            "text": "Wright Flyer",
-            "pos": [
-                -130,
-                70
-            ],
-            "font": "8px Arial",
-            "fillStyle": "purple"
-        },
-        {
-            "type": "label",
-            "text": "Argonaut",
-            "pos": [
-                -10,
-                120
-            ],
-            "font": "8px Arial",
-            "fillStyle": "purple"
-        },
-        {
-            "type": "label",
-            "text": "Flight",
-            "pos": [
-                -130,
-                200
-            ],
-            "font": "12px Arial",
-            "fillStyle": "black"
-        },
-        {
-            "type": "label",
-            "text": "Shop",
-            "pos": [
-                -130,
-                185
-            ],
-            "font": "12px Arial",
-            "fillStyle": "black"
-        },
-        {
-            "type": "label",
-            "text": "rest",
-            "pos": [
-                -70,
-                150
-            ],
-            "font": "10px Arial",
-            "fillStyle": "black"
-        },
-        {
-            "type": "label",
-            "text": "rooms",
-            "pos": [
-                -70,
-                140
-            ],
-            "font": "10px Arial",
-            "fillStyle": "black"
-        },
-        {
-            "type": "label",
-            "text": "Restoration",
-            "pos": [
-                -25,
-                225
-            ],
-            "font": "12px Arial",
-            "fillStyle": "black"
-        },
-        {
-            "type": "label",
-            "text": "Offices",
-            "pos": [
-                110,
-                215
-            ],
-            "font": "12px Arial",
-            "fillStyle": "black"
-        },
-        {
-            "type": "label",
-            "text": "Workshop",
-            "pos": [
-                -25,
-                210
-            ],
-            "font": "12px Arial",
-            "fillStyle": "black"
-        },
-        {
-            "type": "label",
             "text": "Entry",
             "pos": [
-                -220,
-                75
+                220,
+                0
             ],
             "font": "12px Arial",
             "fillStyle": "black"
         },
         {
             "type": "label",
-            "text": "Theatre",
+            "text": "Reach & Teach",
             "pos": [
                 55,
                 75
             ],
             "font": "12px Arial",
             "fillStyle": "black"
-        },
-        {
-            "type": "label",
-            "text": "J3",
-            "pos": [
-                15,
-                15
-            ]
         }
     ]
 }

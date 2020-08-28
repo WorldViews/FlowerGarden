@@ -49,8 +49,8 @@ class Display {
         //inst.player = new YT.Player('mainScreen', {
         inst.player = new YT.Player('videoDiv', {
             videoId: inst.videoId,
-            height: '750',
-            width: '1600',
+            //height: '750',
+            //width: '1000',
             events: {
                 'onReady': e => inst.onPlayerReady(e),
                 'onStateChange': e => inst.onPlayerStateChange(e)
@@ -84,6 +84,22 @@ class Display {
             return;
         }
         this.player.seekTo(t);
+    }
+
+    getView() {
+        if (!this.player) {
+            console.log("no player");
+            return null;
+        }
+        return this.player.getSphericalProperties();
+    }
+    
+    setYaw(yaw) {
+        if (!this.player) {
+            console.log("no player");
+            return;
+        }
+        this.player.setSphericalProperties({yaw});
     }
 
     playVideo(idOrURL) {
