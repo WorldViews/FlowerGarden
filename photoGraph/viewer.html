@@ -27,7 +27,7 @@
         var container, stats;
         var camera, cameraTarget, scene, renderer;
         var plyURL = "./models/reconstruction_72.ply";
-
+        var camDist = 5;
         init(plyURL);
         animate();
 
@@ -37,9 +37,9 @@
             document.body.appendChild(container);
 
             camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
-            camera.position.set(3, 0.15, 3);
+            camera.position.set(3, 1.0, 3);
 
-            cameraTarget = new THREE.Vector3(0, - 0.1, 0);
+            cameraTarget = new THREE.Vector3(0, - 0.3, 0);
 
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x72645b);
@@ -68,9 +68,12 @@
 
             loader.load(plyURL, function (geometry) {
 
-                var material = new THREE.PointCloudMaterial({ vertexColors: true, size: 0.01 });
+                var material = new THREE.PointCloudMaterial({ vertexColors: true, size: 0.02 });
                 var mesh = new THREE.PointCloud(geometry, material);
-                mesh.scale.multiplyScalar(.2);
+                mesh.scale.multiplyScalar(1.0);
+                mesh.rotation.x = 3.9;
+                mesh.position.y = .8;
+                window.MESH = mesh;
                 scene.add(mesh);
 
             });
@@ -113,8 +116,8 @@
 
         function render() {
             var timer = Date.now() * 0.0005;
-            camera.position.x = Math.sin(timer) * 2.5;
-            camera.position.z = Math.cos(timer) * 2.5;
+            camera.position.x = Math.sin(timer) * camDist;
+            camera.position.z = Math.cos(timer) * camDist;
             camera.lookAt(cameraTarget);
             renderer.render(scene, camera);
         }
