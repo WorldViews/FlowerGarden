@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    This code is based on the ThreeJS webgl_loader_ply and comments in
+    https://stackoverflow.com/questions/30243216/change-square-to-circle-in-three-js-pointcloud
+-->
+<head>
+    <title>three.js webgl - PLY</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <script src="../js/libs/three.js"></script>>
+    <script src="../js/libs/stats.min.js"></script>
+    <script src="../js/libs/loaders/PLYLoader.js"></script>
+
+    <script xxxtype="module">
+        //import * as THREE from '../js/libs/three.module.js';
+        //window.THREE = THREE;
+        //import Stats from '../js/libs/stats.module.js';
+        //import { PLYLoader } from '../js/libs/loaders/PLYLoader.js';
+        //import '../js/libs/loaders/PLYLoader.js';
+
+        var PLYLoader = THREE.PLYLoader;
+        var container, stats;
+        var camera, cameraTarget, scene, renderer;
+        var plyURL = "./models/reconstruction_72.ply";
+
+        init(plyURL);
+        animate();
+
+        function init(plyURL) {
+
+            container = document.createElement('div');
+            document.body.appendChild(container);
+
+            camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
+            camera.position.set(3, 0.15, 3);
+
+            cameraTarget = new THREE.Vector3(0, - 0.1, 0);
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x72645b);
+            scene.fog = new THREE.Fog(0x72645b, 2, 15);
+
+            // Ground
+
+            var plane = new THREE.Mesh(
+                new THREE.PlaneBufferGeometry(40, 40),
+                new THREE.MeshPhongMaterial({ color: 0x999999, specular: 0x101010 })
+            );
+            plane.rotation.x = - Math.PI / 2;
+            plane.position.y = - 0.5;
+            //scene.add(plane);
+            //plane.receiveShadow = true;
+
+
+            // PLY file
+            var loader = new PLYLoader();
+
+            loader.setPropertyNameMapping({
+                diffuse_red: 'red',
+                diffuse_green: 'green',
+                diffuse_blue: 'blue'
+            });
+
+            loader.load(plyURL, function (geometry) {
+
+                var material = new THREE.PointCloudMaterial({ vertexColors: true, size: 0.01 });
+                var mesh = new THREE.PointCloud(geometry, material);
+                mesh.scale.multiplyScalar(.2);
+                scene.add(mesh);
+
+            });
+
+            // Lights
+
+            scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
+
+            // renderer
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.outputEncoding = THREE.sRGBEncoding;
+
+            renderer.shadowMap.enabled = true;
+
+            container.appendChild(renderer.domElement);
+
+            // stats
+
+            stats = new Stats();
+            container.appendChild(stats.dom);
+
+            // resize
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+            stats.update();
+        }
+
+        function render() {
+            var timer = Date.now() * 0.0005;
+            camera.position.x = Math.sin(timer) * 2.5;
+            camera.position.z = Math.cos(timer) * 2.5;
+            camera.lookAt(cameraTarget);
+            renderer.render(scene, camera);
+        }
+
+    </script>
+</body>
+
+</html>
