@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+If your organization is willing to host a copy of the JS for free, contact the Account Chooser working group at http://goo.gl/jClJN
+
+Error: X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" content="cache">
+    <meta http-equiv="Cache-control" content="public">
+    <script type="text/javascript" src="https://ssl.gstatic.com/caja/5716m/html-css-sanitizer-minified.js"></script>
+    <script type="text/javascript" src="https://www.accountchooser.com/static/58/ac-iframe.js"></script>
+    <script type="text/javascript" src="ac-config.js"></script>
+    <script type="text/javascript">
+      accountchooser.util.checkAccountChooserDomain();
+      accountchooser.rpc.initIFrame();
+      accountchooser.csp.setContentSecurityPolicy({
+          'default-src': ['none'],
+          'frame-src': accountchooser.config.ACCOUNT_BOOTSTRAP_IDP_ENDPOINTS || []
+      });
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
