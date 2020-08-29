@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>WorldViews Flower Garden</title>
     <link rel="stylesheet" type="text/css" href="css/garden.css">
+    <link rel="stylesheet" type="text/css" href="css/authGarden.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css">		
 </head>
 
 <body>
@@ -30,6 +32,10 @@
         </div>
     </div>
 
+		<div id="authModal" class="modal">
+			<div id="firebaseui-auth-container"></div>				
+		</div>
+
     <script src="js/libs/jquery-3.1.0.min.js"></script>
     <script src="js/libs/socket.io-1.4.5.js"></script>
     <script src="js/libs/sprintf.js"></script>
@@ -43,6 +49,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <script src="js/libs/paho-mqtt.js"></script>
     <script src="js/GardenMQTT.js"></script>
     <script src='https://meet.jit.si/external_api.js'></script>
