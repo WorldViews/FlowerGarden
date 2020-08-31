@@ -6,13 +6,18 @@
 -->
 
 <head>
-    <title>PhotoGraph Point Cloud Viewer</title>
+    <title>three.js webgl - PLY</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link type="text/css" rel="stylesheet" href="main.css">
 </head>
 
 <body>
+    <script src="../js/libs/three.js"></script>
+    <script src="../js/libs/stats.min.js"></script>
+    <script src="../js/libs/loaders/PLYLoader.js"></script>
+    <script src="../js/libs/controls/TrackballControls.js"></script>
+    <script src="../js/libs/dat.gui.js"></script>
     <script type="module">
         function getParameterByName(name, defaultVal) {
             //console.log("getParameterByName", name, defaultVal);
@@ -23,23 +28,19 @@
             return val;
         }
 
-        import * as THREE from '../modules/three/three.module.js';
-        import Stats from '../modules/libs/stats.module.js';
-        import { PLYLoader } from '../modules/three/loaders/PLYLoader.js';
-        //import '../modules/three/loaders/PLYLoader.js';
-        import { GUI } from '../modules/libs/dat.gui.module.js';
-        import { TrackballControls } from '../modules/three/controls/TrackballControls.js';
-        import { OrbitControls } from '../modules/three/controls/OrbitControls.js';
-        window.THREE = THREE;
-        window.controlType;
+        //import * as THREE from '../js/libs/three.module.js';
+        //window.THREE = THREE;
+        //import Stats from '../js/libs/stats.module.js';
+        //import { PLYLoader } from '../js/libs/loaders/PLYLoader.js';
+        //import '../js/libs/loaders/PLYLoader.js';
+        //import { GUI } from './jsm/libs/dat.gui.module.js';
+        //import { TrackballControls } from '../js/libs/controls/TrackballControls.js';
 
+        var PLYLoader = THREE.PLYLoader;
+        var TrackballControls = THREE.TrackballControls;
+        var GUI = dat.GUI;
         var container, stats;
         var camera, controls, cameraTarget, scene, renderer;
-        var points;
-        var params = {
-            useTrackball: true,
-            pointSize: 0.02
-        }
         var plyURL = getParameterByName("plyURL", "./models/reconstruction_72.ply");
         var camDist = 5;
         init(plyURL);
@@ -56,7 +57,7 @@
             cameraTarget = new THREE.Vector3(0, - 0.3, 0);
 
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x000033);
+            scene.background = new THREE.Color(0x72645b);
             //scene.fog = new THREE.Fog(0x72645b, 2, 15);
 
             // Ground
@@ -70,6 +71,7 @@
             //scene.add(plane);
             //plane.receiveShadow = true;
 
+
             // PLY file
             var loader = new PLYLoader();
 
@@ -80,42 +82,39 @@
             });
 
             loader.load(plyURL, function (geometry) {
-                var material = new THREE.PointsMaterial({ vertexColors: true, size: params.pointSize });
-                points = new THREE.Points(geometry, material);
-                points.scale.multiplyScalar(1.0);
-                points.rotation.x = 3.9;
-                points.position.y = .8;
-                window.MESH = points;
-                scene.add(points);
+
+                var material = new THREE.PointCloudMaterial({ vertexColors: true, size: 0.02 });
+                var mesh = new THREE.PointCloud(geometry, material);
+                mesh.scale.multiplyScalar(1.0);
+                mesh.rotation.x = 3.9;
+                mesh.position.y = .8;
+                window.MESH = mesh;
+                scene.add(mesh);
+
             });
 
             // Lights
-            //scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
+
+            scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
 
             // renderer
+
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.outputEncoding = THREE.sRGBEncoding;
-            //renderer.shadowMap.enabled = true;
+
+            renderer.shadowMap.enabled = true;
 
             container.appendChild(renderer.domElement);
 
             // stats
+
             stats = new Stats();
             container.appendChild(stats.dom);
 
-            createControls();
+            createControls(camera);
 
-            var gui = new GUI();
-            gui.add(params, 'useTrackball').name('use Trackball').onChange(function (value) {
-                createControls();
-            });
-
-            gui.add(params, 'pointSize', 0.001, .2).name('point size').onChange(function (value) {
-                points.material = 
-                new THREE.PointsMaterial({ vertexColors: true, size: params.pointSize });
-            })
 
             // resize
             window.addEventListener('resize', onWindowResize, false);
@@ -126,7 +125,21 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
-
+        /*
+                function animate() {
+                    requestAnimationFrame(animate);
+                    render();
+                    stats.update();
+                }
+        
+                function render() {
+                    var timer = Date.now() * 0.0005;
+                    camera.position.x = Math.sin(timer) * camDist;
+                    camera.position.z = Math.cos(timer) * camDist;
+                    camera.lookAt(cameraTarget);
+                    renderer.render(scene, camera);
+                }
+        */
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
@@ -139,19 +152,8 @@
         }
 
 
-        function createControls() {
-            //controls = new TrackballControls(camera, renderer.domElement);
-            if (controls) {
-                controls.dispose();
-            }
-            if (params.useTrackball) {
-                console.log("creating TrackballControls");
-                controls = new TrackballControls(camera, renderer.domElement);
-            }
-            else {
-                console.log("creating OrbitControls");
-                controls = new OrbitControls(camera, renderer.domElement);
-            }
+        function createControls(camera) {
+            controls = new TrackballControls(camera, renderer.domElement);
             controls.rotateSpeed = 1.0;
             controls.zoomSpeed = 1.2;
             controls.panSpeed = 0.8;
@@ -160,5 +162,4 @@
 
     </script>
 </body>
-
 </html>
