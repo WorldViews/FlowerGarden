@@ -35,7 +35,7 @@
         var container, stats;
         var camera, controls, cameraTarget, scene, renderer;
         var points;
-        var controllerTypes = ["Trackball", "Orbit", "Fly", "Map"];
+        var controllerTypes = ["Trackball", "Orbit", "Fly", "Map", "None"];
         var views = {};
         var params = {
             controllerType: "Trackball",
@@ -129,6 +129,9 @@
             window.VIEWS = views;
             window.THREE = THREE;
             window.CAMERA = camera;
+            window.SCENE = scene;
+            var axes = new THREE.AxesHelper();
+            scene.add(axes);
             //window.MESH = points; // not available until points loaded
         }
 
@@ -140,7 +143,8 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            controls.update();
+            if (controls)
+                controls.update();
             stats.update();
             render();
         }
@@ -178,6 +182,7 @@
             //controls = new TrackballControls(camera, renderer.domElement);
             if (controls) {
                 controls.dispose();
+                controls = null;
             }
             if (params.controllerType == "Trackball") {
                 console.log("creating TrackballControls");
@@ -215,6 +220,9 @@
 				controls.minDistance = 1;
 				controls.maxDistance = 2000;
 				controls.maxPolarAngle = Math.PI / 2;
+            }
+            else if (params.controllerType == "None") {
+                // we won't create new controller...
             }
             else { //should never happen
                 alert("Unknown controller type " + params.controllerType);
