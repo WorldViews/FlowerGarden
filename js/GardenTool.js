@@ -159,18 +159,17 @@ class GardenTool extends CanvasTool {
   }
 
   handleLogin() {
+    // window.open('./PlayAuth/auth.html');
     if (this.user) {
       firebase.auth().signOut().then(function () {
-        console.log("SignOut successful");
+        // Sign-out successful.
       }).catch(function (error) {
-        console.log("SignOut error: " + error);
+        // An error happened.
       });
     }
     else {
-	    // window.open('./PlayAuth/auth.html');
-      // window.location = './PlayAuth/authGarden.html';
-			document.getElementById("authModal").style.display = "block";		
-    }		
+      window.location = './PlayAuth/authGarden.html';
+    }
   }
 
   start() {
@@ -350,29 +349,6 @@ class GardenTool extends CanvasTool {
     // go to fetch data.
     firebase.initializeApp(firebaseConfig);
     inst.firebase = firebase;
-		
-		// take care of Firebase authentication UI:
-    var uiConfig = {
-      callbacks: {
-				signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-					// User successfully signed in.
-					// Return type determines whether we continue the redirect automatically
-					// or whether we leave that to developer to handle.				
-					document.getElementById("authModal").style.display = "none";
-					return false;  // do not redirect to signInSuccessUrl
-				}
-      },
-			signInOptions: [
-				firebase.auth.EmailAuthProvider.PROVIDER_ID
-			],
-			tosUrl: './service.html', // Terms of service url
-			privacyPolicyUrl: './privacy.html' // Privacy policy url
-    };
-		
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());		
-    ui.start('#firebaseui-auth-container', uiConfig);						
-		
-		// get from database
     var db = firebase.database();
     inst.firebaseDB = db;
     var dbRef = db.ref('/userState');
@@ -397,19 +373,9 @@ class GardenTool extends CanvasTool {
         $("#login").html("signout");
         inst.heartBeater = setInterval(() => inst.produceHeartBeat(), 15000);
         // ...
-				// send email verification and show an alert window if not verified:
-				if (user && ! user.emailVerified) {
-					user.sendEmailVerification().then(function() {
-						// verification email sent:
-						alert("A verification email has been sent to " + user.email + ".\nPlease click on the link in the mail to complete\nthe verification process.");
-						// verification is completed by firebase.auth.Auth.applyActionCode
-					}).catch(function(error) {
-						console.log("Error sending verification email: " + error);
-					});
-				}				
       } else {
         // User is signed out.
-        // ... TODO: may need to handle AccountChooser's iFrame here
+        // ...
         $("#userInfo").html("guest");
         $("#login").html("login");
         if (inst.heartBeater) {
