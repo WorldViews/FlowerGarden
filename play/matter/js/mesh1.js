@@ -20,9 +20,9 @@ var render = Render.create({
     engine: engine
 });
 
-var wd = 100;
+var wd = 80;
 var ht = 80;
-var ncols = 7;
+var ncols = 10;
 var nrows = 4;
 var x0 = 50;
 var y0 = 100;
@@ -30,8 +30,12 @@ var y0 = 100;
 var bodies = [];
 var constraints = [];
 var bodiesByRowCol = {};
-var stiffness = 0.05;
-var W = 15;
+var stiffness = 0.1;
+
+params = {
+    A: .01,
+    W: 20
+};
 
 function addMesh() {
     for (var i = 0; i < ncols; i++) {
@@ -118,14 +122,31 @@ World.add(world, mouseConstraint);
 // keep the mouse in sync with rendering
 render.mouse = mouse;
 
+var tickNum = 0;
+function showStats(t) {
+    tickNum++;
+    $("#stats").html(sprintf("%5d %5.1f", tickNum, t));
+}
+
+var gui = null;
+function setupGUI() {
+    gui = new dat.GUI();
+    gui.add(params, "W", 0, 50);
+    gui.add(params, "A", 0.0, 0.02);
+}
+
+setupGUI();
+
 var b0 = bodies[6];
 var E = null;
 Events.on(engine, "beforeUpdate", (e) => {
     //console.log("beforeUpdate");
     E = e;
     var t = e.timestamp / 1000;
-    console.log("t", t);
-    var A = .01;
+    showStats(t);
+    //console.log("t", t);
+    var A = params.A;
+    var W = params.W;
     var vx = A*Math.sin(W*t);
     var vy = A*Math.cos(W*t);
     var v = Vector.create(vx, vy);

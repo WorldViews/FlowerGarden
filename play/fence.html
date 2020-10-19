@@ -1,0 +1,66 @@
+<html>
+
+<head>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <style>
+        .bgImage {
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        .fence {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+        }
+    </style>
+
+    <div style="position: relative; left: 0; top: 0;">
+        <img id="bgImage" src="yosemite.jpg" style="width:640px;height:400px" class="bgImage">
+        <img id="fence" src="fence.png" style="width:640px;height:150" class="fence">
+    </div>
+    <button id="in">enter</button>
+    <button id="out">exit</button>
+    <script>
+        // https://stackoverflow.com/questions/23429557/jquery-blur-animation/23429685
+        function blurElement(element, size, dur) {
+            var filterVal = 'blur(' + size + 'px)';
+            var animVal = 'all '+dur+'s ease-out';
+            $(element).css({
+                'filter': filterVal,
+                'webkitFilter': filterVal,
+                'mozFilter': filterVal,
+                'oFilter': filterVal,
+                'msFilter': filterVal,
+                'transition': animVal,
+                '-webkit-transition': animVal,
+                '-moz-transition': animVal,
+                '-o-transition': animVal
+            });
+        }
+
+        function enterScene() {
+            $("#fence").fadeOut(2000);
+            blurElement("#bgImage", 0, 2);
+        }
+
+        function exitScene() {
+            $("#fence").fadeIn(2000);
+            blurElement("#bgImage", 2, 2);
+        }
+
+        $(document).ready(e => {
+            console.log("Starting");
+            blurElement("#bgImage", 2, 0);
+            $("#in").click(enterScene);
+            $("#out").click(exitScene);
+            setTimeout(enterScene, 2000);
+        })
+    </script>
+</body>
+
+</html>
