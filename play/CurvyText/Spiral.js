@@ -115,6 +115,10 @@ function computeSplines(pts)
     return pathStr;
 }
 
+var WORDS = [
+    "peace", "Love", "infinite peace", "compassion", "energy"
+];
+
 class CurvyText {
     constructor() {
         var inst = this;
@@ -130,14 +134,25 @@ class CurvyText {
         //this.setPathCirc(500, 0, 160, 120);
         this.setPathSpiral(500, 0);
         //this.setText("Now is the time for all bad men to leave their country.");
+        /*
         this.addText("New Text1", 100);
         this.addText("Text2", 200);
         this.addText("Text3", 300, "blue");
         this.addText("Text4", 400);
+        */
+        this.addWords(25);
         this.wordsInput = document.querySelector("#words");
         this.addButton = document.querySelector("#addButton");
         this.addButton.addEventListener('click', e => inst.updateText());
         this.wordsInput.addEventListener('change', e => inst.handleInput());
+    }
+
+    addWords(num) {
+        for (var i=0; i<num; i++) {
+            var k = i % WORDS.length;
+            var word = WORDS[k];
+            this.addText(word, 100);
+        }
     }
 
     addText(str, offset, color) {
@@ -161,7 +176,7 @@ class CurvyText {
         text.setAttribute("href", "#curve");
         text.setAttribute("startOffset", offset);
         text.setAttribute("id", id);
-        this.textPaths[id] = text;
+        this.textPaths[id] = {id, textPath: text};
         parent.appendChild(text);
     }
 
@@ -182,7 +197,7 @@ class CurvyText {
         var reverse = 1;
         if (reverse)
             str = str.split("").reverse().join("");
-        var tp = this.textPaths[id];
+        var tp = this.textPaths[id].textPath;
         tp.innerHTML = str;
         var len = tp.getAttribute("textLength");
         console.log("text length", len);
@@ -204,7 +219,7 @@ class CurvyText {
                 str += ("L " + pt[0] + "," + pt[1] + "\n");
             }
         }
-        console.log("str", str);
+        //console.log("str", str);
         str = computeSplines(points);
         this.setPathStr(str);
         //computeSplines(points);
@@ -231,7 +246,7 @@ class CurvyText {
             let f = i / n;
             let t = f * thetaMax;
             let r = (1-f)*r0 + f*r1;
-            let x = cx + r * Math.sin(t);
+            let x = cx + r * Math.sin(-t);
             let y = cy + r * Math.cos(t);
             pts.push([x, y]);
         }
@@ -254,19 +269,24 @@ class CurvyText {
     }
 
     setFrac(f) {
-        var maxFontSize = 100;
+        var maxFontSize = 70;
+        var minFontSize = 70;
         let percent = f * 100;
         var i = 0;
+        var s = 400 * f - 200;
         for (var id in this.textPaths) {
             i++;
-            var soff = i* 400 * f;
             //console.log("off", soff);
-            var tp = this.textPaths[id];
-            tp.setAttribute("startOffset", soff);
-            var fontSize = (i+1)*percent;
-            if (fontSize > 100)
+            var tp = this.textPaths[id].textPath;
+            tp.setAttribute("startOffset", s);
+            var fontSize = s/20;
+            if (fontSize < minFontSize)
+                fontSize = minFontSize;
+            if (fontSize > maxFontSize)
                 fontSize = maxFontSize;
             tp.style.fontSize = fontSize+"%";
+            var len = tp.getComputedTextLength();
+            s += len + 20;
         }
         //console.log("percent", percent);
     }
@@ -275,8 +295,8 @@ class CurvyText {
         var inst = this;
         this.frac = 0;
         setInterval(e => {
-            inst.frac += 0.0005;
-            if (inst.frac > 2)
+            inst.frac += 0.002;
+            if (inst.frac > 10)
                 inst.frac = 0;
             inst.setFrac(inst.frac);
         }, 20);
