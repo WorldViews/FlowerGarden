@@ -121,7 +121,6 @@ class CurvyText {
         this.numTexts = 0;
         var pathId = "#text-path";
         this.textPaths = {};
-        this.textPath = document.querySelector(pathId);
         this.inputStr = document.querySelector("#words");
         this.frac = 0;
         this.path = document.querySelector('path');
@@ -177,12 +176,13 @@ class CurvyText {
         this.setText(str);
     }
 
-    setText(str, textName) {
+    setText(str, id) {
         //textId = textId || "text-path2";
+        id = "text_1";
         var reverse = 1;
         if (reverse)
             str = str.split("").reverse().join("");
-        var tp = this.textPath;
+        var tp = this.textPaths[id];
         tp.innerHTML = str;
         var len = tp.getAttribute("textLength");
         console.log("text length", len);
@@ -254,21 +254,19 @@ class CurvyText {
     }
 
     setFrac(f) {
+        var maxFontSize = 100;
         let percent = f * 100;
-        //console.log("percent", percent);
-        //var soff = (-percent * 40) + 1200;
-        var soff = 500 * f;
-        //console.log("soff", soff);
-        this.textPath.setAttribute("startOffset", soff)
-        //textPath.style.fontSize = "50%";
-        this.textPath.style.fontSize = 2 * percent + "%";
         var i = 0;
         for (var id in this.textPaths) {
             i++;
-            soff = i* 400 * f;
-            console.log("off", soff);
+            var soff = i* 400 * f;
+            //console.log("off", soff);
             var tp = this.textPaths[id];
             tp.setAttribute("startOffset", soff);
+            var fontSize = (i+1)*percent;
+            if (fontSize > 100)
+                fontSize = maxFontSize;
+            tp.style.fontSize = fontSize+"%";
         }
         //console.log("percent", percent);
     }
