@@ -20,6 +20,7 @@ class PeaceTree extends CanvasTool.Graphic {
         window.PT = this;
         this.value = 0;
         this.dataUrl = "https://io.adafruit.com/api/v2/reachandteach/feeds/peacetree";
+        this.dataUrl = "https://io.adafruit.com/api/v2/donkimber/feeds/bobbletree";
         this.getData();
         this.mqtt = null;
         //this.startMQTT();

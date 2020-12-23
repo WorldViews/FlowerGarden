@@ -9,7 +9,8 @@ firebaseConfig = {
     'projectId': "fir-helloworld-39759",
     'storageBucket': "fir-helloworld-39759.appspot.com",
     'messagingSenderId': "1080893233748",
-    'appId': "1:1080893233748:web:1614aab0d167c094322bc1"
+    'appId': "1:1080893233748:web:1614aab0d167c094322bc1",
+    'serviceAccount': "firebaseServiceAccountKey.json"
 }
 
 class FireDB:
@@ -20,7 +21,7 @@ class FireDB:
         print("got auth:", self.auth)
         #user = auth.sign_in_with_email_and_password("donkimber@gmail.com", "chickenlittle")
         self.user = self.auth.sign_in_with_email_and_password("donkimber@gmail.com", "xxxxxx")
-        #print("user", user)
+        print("user", self.user)
         self.token = self.user['idToken']
         print("token", self.token)
         print("fb", self.firebase)
@@ -35,6 +36,7 @@ class FireDB:
 
         #obj = db.child("text").get(token)
         objRef = self.db.get(self.token)
+        #objRef = self.db.get()
         obj = objRef.val()
         print("obj:", obj)
         jstr = json.dumps(obj, indent=3)
@@ -87,8 +89,9 @@ class FireDB:
 
 if __name__ == '__main__':
     fdb = FireDB()
+    fdb.dump()
     #fdb.dump("firebase.db.json")
-    fdb.saveProjects("../projects.bak.json")
+    #fdb.saveProjects("../projects.bak.json")
     #fdb.addProjects()
     #fdb.addProjects("../projects.bak.json")
     #fdb.addUser()

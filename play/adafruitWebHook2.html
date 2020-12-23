@@ -1,0 +1,53 @@
+<html>
+
+<head>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <form target="_blank" method="post"
+        action="https://io.adafruit.com/api/v2/webhooks/feed/M383TjgC5uNb2Aui56DCSTXPxUAd">
+        <label>
+            Make a choice:
+            <select name="value">
+                <option value="0">0</option>
+                <option value="50" selected>50</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+                <option value="1023">1023</option>
+                <option value="2005">2005</option>
+                <option value="3005">3005</option>
+                <option value="3010">3010</option>
+            </select>
+        </label>
+        <button type="submit">Set Booble Value!</button>
+    </form>
+    <button id="sendValue10">Send 10</button>
+    <button id="sendValue1024">Send 1024</button>
+    <button id="sendValue3005">Send 3005</button>
+    <button id="sendValue3010">Send 3010</button>
+    <br>
+    <span id="status">...</span> <br>
+    <script>
+
+        function sendValue(val) {
+            console.log("sendValue", val);
+            $("#status").html(val);
+            var url = "https://io.adafruit.com/api/v2/webhooks/feed/M383TjgC5uNb2Aui56DCSTXPxUAd";
+            var obj = {'value': val};
+            console.log("post", obj, url);
+            $.post(url, obj, val => {
+                console.log("receieved", val)
+            });
+        }
+
+        $(document).ready(() => {
+            $("#sendValue10").click(() => sendValue(10));
+            $("#sendValue1024").click(() => sendValue(1024));
+            $("#sendValue3005").click(() => sendValue(3005));
+            $("#sendValue3010").click(() => sendValue(3010));
+        })
+    </script>
+</body>
+
+</html>

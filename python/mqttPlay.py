@@ -8,7 +8,8 @@ def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     #client.subscribe("$SYS/#")
-    topic = "reachandteach/feeds/peacetree"
+    #topic = "reachandteach/feeds/peacetree"
+    topic = "donkimber/feeds/bobble"
     print("subscribing to", topic);
     #client.subscribe("$SYS/#")
     client.subscribe(topic)
@@ -26,7 +27,7 @@ def sendVal(client, val=60):
     print("publishing to", topic, val)
     client.publish(topic, val)
 
-def run(host="io.adafruit.com"):
+def run(host="io.adafruit.com", user=None, pw=None):
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
@@ -34,7 +35,9 @@ def run(host="io.adafruit.com"):
 
     print("Connecting to", host);
     #client.connect("mqtt.eclipse.org", 1883, 60)
-    client.username_pw_set("donkimber", "aio_HMWG45yUsVI72dEx0W2lFWoiv7QF")
+    if user:
+        print("user", user, "pw:", pw)
+        client.username_pw_set("donkimber", "aio_HMWG45yUsVI72dEx0W2lFWoiv7QF")
     client.connect(host, 1883, 60)
 
     # Blocking call that processes network traffic, dispatches callbacks and
@@ -44,4 +47,5 @@ def run(host="io.adafruit.com"):
     client.loop_forever()
 
 if __name__ == '__main__':
-    run()
+    #run("io.adafruit.com", "donkimber", "aio_HMWG45yUsVI72dEx0W2lFWoiv7QF")
+    run("localhost")

@@ -5,7 +5,7 @@
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}
 
 class TaikoMidi {
     constructor() {
@@ -26,11 +26,14 @@ class TaikoMidi {
         this.reset();
         this.setInstruments([116, 115]);
         var parts = str.split(/[ ,]+/);
-        console.log("parts");
+        console.log("parts", parts);
         for (var i = 0; i < parts.length; i++) {
             var part = parts[i];
             if (part == '')
                 continue;
+            if (part == '|')
+                continue;
+            //console.log("part", part);
             if (part == "don") {
                 this.addNote(1);
                 continue;
@@ -40,7 +43,7 @@ class TaikoMidi {
                 this.addNote(0.5);
                 continue;
             }
-            if (part == "ka") {
+            if (part == "ka" || part == "ta") {
                 this.addNote(1, "rim");
                 continue;
             }
@@ -49,7 +52,8 @@ class TaikoMidi {
                 this.addNote(0.5, "rim");
                 continue;
             }
-            if (part == "su") {
+            if (part == "su" || part == '_' || part == '-') {
+                //console.log("su add", this.beatDur);
                 this.t += this.beatDur;
                 continue;
             }
@@ -82,7 +86,7 @@ class TaikoMidi {
             ch = 1;
         }
         if (beats == null)
-            bearts = 1;
+            beats = 1;
         var event = [
             this.t,
             [
@@ -156,6 +160,7 @@ class TaikoBox extends MidiBox {
         $("#kuchiShoga").change(e => inst.noticeNewKuchiShoga());
         $("#ff1").click(e => inst.playFastAndFurious1());
         $("#ff2").click(e => inst.playFastAndFurious2());
+        $("#matsuri").click(e => inst.playMatsuri());
     }
 
     playFastAndFurious1() {
@@ -166,9 +171,8 @@ class TaikoBox extends MidiBox {
         don don  don  don  ka doko doko doko
         ka  doko doko doko ka doko doko doko
         `;
-        //$("#kuchiShoga").val(ff1);
         this.playKuchiShoga(ff1);
-       }
+    }
 
     playFastAndFurious2() {
         var ff2 = `
@@ -177,8 +181,20 @@ class TaikoBox extends MidiBox {
         ka doko kara doko ka   doko kara doko
         ka doko kara doko kara doko kara doko
         `;
-        //$("#kuchiShoga").val(ff2);
         this.playKuchiShoga(ff2);
+    }
+
+    playMatsuri() {
+        var matsuri = `
+ su   su   su   su |
+
+ don  su   don  su  don kara ka ka |
+ don  don  su   don don kara ka ka |
+ su   don  su   don don kara ka ta |
+ doko su   kara don don kara ka ta |
+ doko kara don  don don kara ka ta |
+        `;
+        this.playKuchiShoga(matsuri);
     }
 
     noticeNewKuchiShoga() {
@@ -205,7 +221,7 @@ class TaikoBox extends MidiBox {
         setTimeout(() => {
             //console.log("set style", i, prevStyle);
             target.on = false;
-        }, dur*1000);
+        }, dur * 1000);
     }
 
     draw(canvas, ctx) {
