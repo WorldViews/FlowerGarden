@@ -551,6 +551,7 @@ CanvasTool.TextGraphic = class extends CanvasTool.Graphic {
         opts.height = opts.height || 1;
         opts.textAlign = opts.textAlign || "center";
         super(opts);
+        this.font = opts.font;
         this.fillStyle = opts.fillStyle;
         //this.width = opts.width || 1;
         //this.height = opts.height || 1;
@@ -560,8 +561,11 @@ CanvasTool.TextGraphic = class extends CanvasTool.Graphic {
 
     draw(canvas, ctx) {
         ctx.save();
+        if (this.rotation) {
+            ctx.rotate(this.rotation);
+        }
         this.drawRect(canvas, ctx, this.x, this.y, this.width, this.height);
-        this.drawText(canvas, ctx, this.x, this.y, this.text);
+        this.drawText(canvas, ctx, this.x, this.y, this.text, this.font);
         ctx.restore();
     }
 

@@ -1,0 +1,24 @@
+{
+    "items": [
+        {
+            "type": "Penguin",
+            "name": "penguin1",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "type": "SpiralText",
+            "id": "spiralText1",
+            "x": 0,
+            "y": 0,
+            "strokeStyle": "black",
+            "textStyle": "red",
+            "fillStyle": "pink",
+            "font": "24px Arial",
+            "repeat": 10,
+            "xxwidth": 200,
+            "xxheight": 80,
+             "text": "This is some spiral text.   What do you think of it?"
+        }
+    ]
+}
