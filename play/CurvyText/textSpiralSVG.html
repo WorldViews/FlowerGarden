@@ -6,24 +6,32 @@
     body {
       font: 400 40px/1.3 'Oleo Script', Helvetica, sans-serif;
       color: #2b2b2b;
-      xxxtext-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+      text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
 
 <body>
-  Top of Page
+  <center>Text Spiral using SVG</center>
   <svg width="100%" height="500px" viewBox="0 0 1098.72 89.55">
     <path id="curve" fill="transparent" d=""></path>
     <text id="textBody" width="100%" style="transform:translate3d(0,0,0);">
     </text>
   </svg>
-  <script src="Spiral.js"></script>
+  <script src="CurvyTextSVG.js"></script>
   <input id="words" type="text" style="width:80%">
+  <!--
   <button id="addButton">Add</button>
   <button id="replaceButton">Replace</button>
+  -->
   <script>
-    let ct = new CurvyText();
+    let ct = new CurvyTextSVG();
+    //var str = `Every fifth word is <tspan style="fill:red">red</tspan>.`;
+    var str = `May peace on earth prevail.`;
+    str = [str, str, str, str].join(" ");
+    str = [str, str, str, str].join(" ");
+    //ct.addText("This is a multiline \n i think it ignores newlines.")
+    ct.addText(str);
     ct.start();
   </script>
 </body>

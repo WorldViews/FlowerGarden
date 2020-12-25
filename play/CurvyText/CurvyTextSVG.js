@@ -25,97 +25,91 @@ L -200, 50
 let path3 = "M 0,0 L 1000, 100"
 
 /*creates formated path string for SVG cubic path element*/
-function path(x1,y1,px1,py1,px2,py2,x2,y2)
-{
-	return "M "+x1+" "+y1+" C "+px1+" "+py1+" "+px2+" "+py2+" "+x2+" "+y2;
+function path(x1, y1, px1, py1, px2, py2, x2, y2) {
+    return "M " + x1 + " " + y1 + " C " + px1 + " " + py1 + " " + px2 + " " + py2 + " " + x2 + " " + y2;
 }
 
 /*computes control points given knots K, this is the brain of the operation*/
-function computeControlPoints(K)
-{
+function computeControlPoints(K) {
     var p1, p2, n, a, b, c, r;
-	p1=new Array();
-	p2=new Array();
-	n = K.length-1;
-	
-	/*rhs vector*/
-	a=new Array();
-	b=new Array();
-	c=new Array();
-	r=new Array();
-	
-	/*left most segment*/
-	a[0]=0;
-	b[0]=2;
-	c[0]=1;
-	r[0] = K[0]+2*K[1];
-	
-	/*internal segments*/
-	for (var i = 1; i < n - 1; i++)
-	{
-		a[i]=1;
-		b[i]=4;
-		c[i]=1;
-		r[i] = 4 * K[i] + 2 * K[i+1];
-	}
-			
-	/*right segment*/
-	a[n-1]=2;
-	b[n-1]=7;
-	c[n-1]=0;
-	r[n-1] = 8*K[n-1]+K[n];
-	
-	/*solves Ax=b with the Thomas algorithm (from Wikipedia)*/
-	for (var i = 1; i < n; i++)
-	{
-		var m = a[i]/b[i-1];
-		b[i] = b[i] - m * c[i - 1];
-		r[i] = r[i] - m*r[i-1];
-	}
- 
-	p1[n-1] = r[n-1]/b[n-1];
-	for (var i = n - 2; i >= 0; --i)
-		p1[i] = (r[i] - c[i] * p1[i+1]) / b[i];
-		
-	/*we have p1, now compute p2*/
-	for (var i=0;i<n-1;i++)
-		p2[i]=2*K[i+1]-p1[i+1];
-	
-	p2[n-1]=0.5*(K[n]+p1[n-1]);
-	
-	return {p1:p1, p2:p2};
+    p1 = new Array();
+    p2 = new Array();
+    n = K.length - 1;
+
+    /*rhs vector*/
+    a = new Array();
+    b = new Array();
+    c = new Array();
+    r = new Array();
+
+    /*left most segment*/
+    a[0] = 0;
+    b[0] = 2;
+    c[0] = 1;
+    r[0] = K[0] + 2 * K[1];
+
+    /*internal segments*/
+    for (var i = 1; i < n - 1; i++) {
+        a[i] = 1;
+        b[i] = 4;
+        c[i] = 1;
+        r[i] = 4 * K[i] + 2 * K[i + 1];
+    }
+
+    /*right segment*/
+    a[n - 1] = 2;
+    b[n - 1] = 7;
+    c[n - 1] = 0;
+    r[n - 1] = 8 * K[n - 1] + K[n];
+
+    /*solves Ax=b with the Thomas algorithm (from Wikipedia)*/
+    for (var i = 1; i < n; i++) {
+        var m = a[i] / b[i - 1];
+        b[i] = b[i] - m * c[i - 1];
+        r[i] = r[i] - m * r[i - 1];
+    }
+
+    p1[n - 1] = r[n - 1] / b[n - 1];
+    for (var i = n - 2; i >= 0; --i)
+        p1[i] = (r[i] - c[i] * p1[i + 1]) / b[i];
+
+    /*we have p1, now compute p2*/
+    for (var i = 0; i < n - 1; i++)
+        p2[i] = 2 * K[i + 1] - p1[i + 1];
+
+    p2[n - 1] = 0.5 * (K[n] + p1[n - 1]);
+
+    return { p1: p1, p2: p2 };
 }
 
 /*computes spline control points*/
-function computeSplines(pts)
-{	
+function computeSplines(pts) {
     console.log("-------------------------------------------");
     console.log("computeSpline\n", pts);
-	/*grab (x,y) coordinates of the control points*/
-	let x=new Array();
-	let y=new Array();
+    /*grab (x,y) coordinates of the control points*/
+    let x = new Array();
+    let y = new Array();
     var n = pts.length;
-	for (i=0;i<n;i++)
-	{
-		/*use parseInt to convert string to int*/
-		x[i]=pts[i][0];
-		y[i]=pts[i][1];
-	}
-	
-	/*computes control points p1 and p2 for x and y direction*/
-	let px = computeControlPoints(x);
-	let py = computeControlPoints(y);
-	
+    for (i = 0; i < n; i++) {
+        /*use parseInt to convert string to int*/
+        x[i] = pts[i][0];
+        y[i] = pts[i][1];
+    }
+
+    /*computes control points p1 and p2 for x and y direction*/
+    let px = computeControlPoints(x);
+    let py = computeControlPoints(y);
+
     /*updates path settings, the browser will draw the new spline*/
     var pathStr = "";
-	for (var i=0;i<(n-1);i++) {
-        pathStr += path(x[i],y[i],px.p1[i],py.p1[i],px.p2[i],py.p2[i],x[i+1],y[i+1]) + "\n";
+    for (var i = 0; i < (n - 1); i++) {
+        pathStr += path(x[i], y[i], px.p1[i], py.p1[i], px.p2[i], py.p2[i], x[i + 1], y[i + 1]) + "\n";
     }
     //console.log("pathStr\n", pathStr);
     return pathStr;
 }
 
-class CurvyText {
+class CurvyTextSVG {
     constructor() {
         var inst = this;
         this.numTexts = 0;
@@ -131,29 +125,33 @@ class CurvyText {
         //this.setPathCirc(500, 0, 160, 120);
         this.setPathSpiral(500, 0);
         //this.setText("Now is the time for all bad men to leave their country.");
+        /*
         this.addText("New Text1", 100);
         this.addText("Text2", 200);
         this.addText("Text3", 300, "blue");
         this.addText("Text4", 400);
+        */
+        //this.addText("This is a longer version of initial text string just to see how it does.")
         this.wordsInput = document.querySelector("#words");
-        this.addButton = document.querySelector("#addButton");
-        this.addButton.addEventListener('click', e => inst.updateText());
+        //this.addButton = document.querySelector("#addButton");
+        //this.addButton.addEventListener('click', e => inst.updateText());
         this.wordsInput.addEventListener('change', e => inst.handleInput());
     }
 
     addText(str, offset, color) {
+        offset = offset || 0;
         var NS = "http://www.w3.org/2000/svg";
         this.numTexts++;
-        var id = "textPath_"+this.numTexts;
+        var id = "textPath_" + this.numTexts;
         var parent = document.querySelector("#textBody");
         if (!parent) {
             console.log("cannot get #textBody");
             return;
         }
-        var text = document.createElementNS(NS,"textPath");
+        var text = document.createElementNS(NS, "textPath");
         //var text = document.createElement("textPath");
         text.innerHTML = str;
-        text.style="transform:translate3d(0,0,0);";
+        text.style = "transform:translate3d(0,0,0);";
         text.style.fontSize = "50%";
         text.style.color = "black";
         if (color)
@@ -177,12 +175,15 @@ class CurvyText {
         this.setText(str);
     }
 
-    setText(str, textName) {
+    setText(str, textId) {
+        if (!textId)
+            textId = Object.keys(this.textPaths)[0];
+
         //textId = textId || "text-path2";
         var reverse = 1;
         if (reverse)
             str = str.split("").reverse().join("");
-        var tp = this.textPath;
+        var tp = this.textPaths[textId];
         tp.innerHTML = str;
         var len = tp.getAttribute("textLength");
         console.log("text length", len);
@@ -221,16 +222,17 @@ class CurvyText {
         this.setPath(pts);
     }
 
-    setPathSpiral(cx, cy) {
+    setPathSpiral(cx, cy, nturns) {
+        nturns = nturns || 6;
         let pts = [];
-        let n = 40;
+        let n = 10 * nturns;
         let r0 = 20;
         let r1 = 350;
-        var thetaMax = 5 * 2 * Math.PI;
+        var thetaMax = nturns * 2 * Math.PI;
         for (var i = 0; i < n; i++) {
             let f = i / n;
             let t = f * thetaMax;
-            let r = (1-f)*r0 + f*r1;
+            let r = (1 - f) * r0 + f * r1;
             let x = cx + r * Math.sin(t);
             let y = cy + r * Math.cos(t);
             pts.push([x, y]);
@@ -247,41 +249,46 @@ class CurvyText {
         //this.textPath.style.fontSize = "50%";
     }
 
-    setPathSmooth()
-    {
-      // NYI - do something based on
-      // https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74  
+    setPathSmooth() {
+        // NYI - do something based on
+        // https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74  
     }
 
     setFrac(f) {
-        let percent = f * 100;
-        //console.log("percent", percent);
-        //var soff = (-percent * 40) + 1200;
-        var soff = 500 * f;
-        //console.log("soff", soff);
-        this.textPath.setAttribute("startOffset", soff)
-        //textPath.style.fontSize = "50%";
-        this.textPath.style.fontSize = 2 * percent + "%";
+        var handleFirst = false;
+        if (handleFirst) {
+            let percent = f * 100;
+            //console.log("percent", percent);
+            //var soff = (-percent * 40) + 1200;
+            var soff = 500 * f;
+            //console.log("soff", soff);
+            this.textPath.setAttribute("startOffset", soff)
+            //textPath.style.fontSize = "50%";
+            this.textPath.style.fontSize = 2 * percent + "%";
+        }
         var i = 0;
         for (var id in this.textPaths) {
             i++;
-            soff = i* 400 * f;
-            console.log("off", soff);
+            soff = i * 400 * f;
+            //console.log("off", soff);
             var tp = this.textPaths[id];
             tp.setAttribute("startOffset", soff);
         }
         //console.log("percent", percent);
     }
 
-    start() {
+    start(pctPerSec) {
+        pctPerSec = pctPerSec || 10;
+        var fps = 50.0;
+        var deltaPct = (pctPerSec / fps);
         var inst = this;
         this.frac = 0;
         setInterval(e => {
-            inst.frac += 0.0005;
+            inst.frac += deltaPct/100.0;
             if (inst.frac > 2)
                 inst.frac = 0;
             inst.setFrac(inst.frac);
-        }, 20);
+        }, 1000/fps);
     }
 }
 
