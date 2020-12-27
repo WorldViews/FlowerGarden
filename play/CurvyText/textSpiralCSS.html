@@ -1,0 +1,32 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script src="CurvyTextCSS.js"></script>
+    <style>
+        h3 {
+            color: red;
+        }
+        h3 span {
+            color: orange;
+            position: absolute;
+            font-size: 36px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Using CSS for text paths
+    </h3>
+    <h3 id="curvyText">xxx</h3>
+    <p>
+        We will try to do it with CSS.
+    </p>
+    <script>
+      var cc = new CurvyTextCSS();
+       cc.setText("This is the text.", 8);
+       cc.update();
+    </script>
+    
+ </body>
+</html>
