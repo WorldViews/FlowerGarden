@@ -16,7 +16,6 @@ def on_connect(client, userdata, flags, rc):
     print("subscribing to", topic);
     #client.subscribe("$SYS/#")
     client.subscribe(topic)
-    #sendVal(client)
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -35,24 +34,25 @@ def run(host="io.adafruit.com", user=None, pw=None):
     client.on_connect = on_connect
     client.on_message = on_message
     client.on_publish = on_publish
-
-    print("Connecting to", host);
+    port = 1883
+    print("Connecting to", host, port)
     #client.connect("mqtt.eclipse.org", 1883, 60)
     if user:
         print("user", user, "pw:", pw)
         client.username_pw_set("donkimber", pw)
-    client.connect(host, 1883, 60)
-
-    vals = [0, 50, 100, 500, 1024]
-    for val in vals:
-        sendVal(client, val)
-        time.sleep(4)
+    client.connect(host, port, 60)
 
     # Blocking call that processes network traffic, dispatches callbacks and
     # handles reconnecting.
     # Other loop*() functions are available that give a threaded interface and a
     # manual interface.
-    client.loop_forever()
+    #client.loop_forever()
+    client.loop_start()
+
+    vals = [0, 50, 100, 500, 1024]
+    for val in vals:
+        sendVal(client, val)
+        time.sleep(4)
 
 """
 Note, to test this with a local mosquitto clients you could use
@@ -63,6 +63,6 @@ and
 """
 if __name__ == '__main__':
     #run("io.adafruit.com", "donkimber", "aio_HMWG45yUsVI72dEx0W2lFWoiv7QF")
-    run("io.adafruit.com", "donkimber", "aio_eVJW42TnBdjKwLLEmYNtiYQeEmDu")
-    #run("worldviews.org")
+    #run("io.adafruit.com", "donkimber", "aio_eVJW42TnBdjKwLLEmYNtiYQeEmDu")
+    run("worldviews.org")
     #run("localhost")

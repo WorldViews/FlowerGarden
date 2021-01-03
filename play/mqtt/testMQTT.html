@@ -1,0 +1,118 @@
+<!--
+ *-->
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../../js/libs/paho-mqtt.js"></script>
+    <style>
+        #jsonHere {
+            max-height: 60vh;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hello</h1>
+    <button id="send" >click me!</button><br>
+    <button id="peace">Peace!</button><br>
+    <button id="peace2">Peace!!</button>
+    <pre id="jsonArea"></pre>
+    <script>
+        class MyMQTT {
+            constructor() {
+                var inst = this;
+                // Create a client instance
+                var host = "io.adafruit.com";
+                host = "worldviews.org";
+                //var port = 443;
+                var port = 1883;
+                var client = new Paho.MQTT.Client(host, port, "test1234");
+                console.log("client", client);
+                this.client = client;
+                // set callback handlers
+                client.onConnectionLost = (responseObject) => {
+                    inst.onConnectionLost(responseObject);
+                }
+                client.onMessageArrived = (msg) => {
+                    inst.onMessageArrived(msg);
+                }
+                //this.connect();
+            }
+
+            connect() {
+                var inst = this;
+                // connect the client
+                var opts = {
+                    onSuccess: () => inst.onConnect(),
+                    //userName: "donkimber",
+                    //password: "aio_pNca44mdiZm4C6tpMK3yGOPx3eBA"
+                };
+                console.log("initiating connect", opts);
+                this.client.connect(opts);
+            }
+
+            // called when the client connects
+            onConnect() {
+                // Once a connection has been made, make a subscription and send a message.
+                console.log("onConnect");
+                this.client.subscribe("reachandteach/feeds/peacetree");
+                this.connected = true;
+                //client.send(message);
+            }
+
+            sendMessage(str) {
+                var message = new Paho.MQTT.Message("Hello");
+                message.destinationName = "World";
+                this.client.send(message);
+            }
+
+            // called when the client loses its connection
+            onConnectionLost(responseObject) {
+                this.connected = false;
+                if (responseObject.errorCode !== 0) {
+                    console.log("onConnectionLost:" + responseObject.errorMessage);
+                }
+                var inst = this;
+                setTimeout(() => inst.connect(), 2000);
+            }
+
+            // called when a message arrives
+            onMessageArrived(message) {
+                console.log("onMessageArrived:" + message.payloadString);
+                $("#jsonArea").html(message.payloadString);
+            }
+        }
+
+        var mqtt = null;
+
+        $(document).ready(() => {
+            mqtt = new MyMQTT();
+            mqtt.connect();
+            $("#send").click(() => {
+                console.log("click send");
+                mqtt.sendMessage("foo");
+            });
+            $("#peace").click(() => {
+                console.log("peace");
+                t = new Date().getTime();
+                url = "http://www.reachandteach.com/peacetree.php?rttime="+t;
+                console.log("url: ", url);
+                $.getJSON(url);
+            });
+            $("#peace2").click(() => {
+                console.log("peace2");
+                t = new Date().getTime();
+                url = "http://www.reachandteach.com/peacetree2.php?rttime="+t;
+                console.log("url: ", url);
+                 $.getJSON(url);
+            });
+        })
+    </script>
+</body>
+
+</html>

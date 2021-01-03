@@ -1,6 +1,8 @@
 
 import paho.mqtt.client as mqtt
 
+TOPIC = "donkimber/feeds/bobbletree"
+
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -9,7 +11,7 @@ def on_connect(client, userdata, flags, rc):
     # reconnect then subscriptions will be renewed.
     #client.subscribe("$SYS/#")
     #topic = "reachandteach/feeds/peacetree"
-    topic = "donkimber/feeds/bobble"
+    topic = TOPIC
     print("subscribing to", topic);
     #client.subscribe("$SYS/#")
     client.subscribe(topic)
@@ -23,7 +25,7 @@ def on_publish(client, userdata, mid):
     print(client, userdata, mid)
 
 def sendVal(client, val=60):
-    topic = "reachandteach/feeds/peacetree"
+    topic = TOPIC
     print("publishing to", topic, val)
     client.publish(topic, val)
 
@@ -32,13 +34,13 @@ def run(host="io.adafruit.com", user=None, pw=None):
     client.on_connect = on_connect
     client.on_message = on_message
     client.on_publish = on_publish
-
-    print("Connecting to", host);
+    port = 1883
+    print("Connecting to", host, port)
     #client.connect("mqtt.eclipse.org", 1883, 60)
     if user:
         print("user", user, "pw:", pw)
         client.username_pw_set("donkimber", "aio_HMWG45yUsVI72dEx0W2lFWoiv7QF")
-    client.connect(host, 1883, 60)
+    client.connect(host, port, 60)
 
     # Blocking call that processes network traffic, dispatches callbacks and
     # handles reconnecting.
@@ -48,4 +50,5 @@ def run(host="io.adafruit.com", user=None, pw=None):
 
 if __name__ == '__main__':
     #run("io.adafruit.com", "donkimber", "aio_HMWG45yUsVI72dEx0W2lFWoiv7QF")
-    run("localhost")
+    #run("localhost")
+    run("worldviews.org")
