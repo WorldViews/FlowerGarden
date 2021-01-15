@@ -517,8 +517,9 @@ CanvasTool.Graphic = class {
     }
 
     contains(pt) {
-        var fpt = {x: this.cx, y: this.cy};
-        var d = this.tool.dist(fpt, pt);
+        //var fpt = {x: this.cx, y: this.cy};
+        //var d = this.tool.dist(fpt, pt);
+        var d = this.tool.dist(this, pt);
         //console.log("contains", this.id, d, this.x, this.y, pt, this.radius);
         var v = d <= this.radius;
         //console.log("v", v);
@@ -543,6 +544,21 @@ CanvasTool.RectGraphic = class extends CanvasTool.Graphic {
         return this.x - this.width / 2 < pt.x && pt.x < this.x + this.width / 2 &&
             this.y - this.height / 2 < pt.y && pt.y < this.y + this.height / 2;
     }
+}
+
+CanvasTool.CircleGraphic = class extends CanvasTool.Graphic {
+    draw(canvas, ctx) {
+        //console.log("circle radius", this.radius);
+        this.drawCircle(canvas, ctx, this.radius, this.x, this.y, );
+    }
+
+    //contains(pt) {
+    //    if (this.id == 10)
+    //        console.log("contains", pt.x, pt.y, this.x, this.y);
+    //    return super.contains(pt);
+    //    return this.x - this.width / 2 < pt.x && pt.x < this.x + this.width / 2 &&
+    //        this.y - this.height / 2 < pt.y && pt.y < this.y + this.height / 2;
+    //}
 }
 
 CanvasTool.TextGraphic = class extends CanvasTool.Graphic {

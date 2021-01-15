@@ -1,0 +1,21 @@
+<html>
+<head>
+  <title>test Ws mqtt.js</title>
+</head>
+<body>
+<script xxsrc="https://unpkg.com/mqtt/dist/mqtt.js"
+   src="https://unpkg.com/mqtt@4.0.1/dist/mqtt.js"></script>
+<script>
+  //var client = mqtt.connect('mqtt://worldviews.org:1883');
+  var client = mqtt.connect('wss://test.mosquitto.org:8081');
+  client.subscribe("mqtt/demo")
+ 
+  client.on("message", function (topic, payload) {
+    alert([topic, payload].join(": "))
+    client.end()
+  })
+ 
+  client.publish("mqtt/demo", "hello world!")
+</script> 
+</body>
+</html>
