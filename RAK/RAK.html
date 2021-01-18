@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Welcome to RAK</title>
+    <title>Emotional Contagion Simulation</title>
     <script src="../js/libs/jquery-3.1.0.min.js"></script>
     <script src="../js/libs/sprintf.js"></script>
     <script src="../js/libs/dat.gui.js"></script>
@@ -11,6 +11,16 @@
 
     <script>
         var rak = null;
+
+        function setupLoveBomb() {
+            rak.setOpts({
+                numActors: 144, grid: true, mobile: false, distThresh: 55,
+                emotionalDrift: 0,
+                pNiceGivenHappy: 0.1, pNiceGivenSad: 0.0,
+                pNiceGivenSad: 0, pMeanGivenSad: 0.01
+            });
+            rak.setAll({ happiness: 0.5 });
+        }
 
         $(document).ready(() => {
             console.log("started");
@@ -29,9 +39,11 @@
         body {
             overflow-y: hidden;
         }
+
         #game {
             height: 100%;
         }
+
         #examples {
             height: 80%;
             overflow-y: auto;
@@ -45,52 +57,69 @@
 </head>
 
 <body>
-    <h3>Welcome to RAK</h3>
+    <h3>RAK - Emotional Contagion Simulation</h3>
     <div id="game">
         <div id="stats"></div>
         <canvas id="canvas1" width=500 height=400></canvas>
         <div id="canvasStat"></div>
+        <!--
+        <button id="case1">Grid Randon Acts 1</button>
+        -->
+        <button id="case2">Random Sim</button>
         <div id="examples">
-            <button id="case1">Grid Randon Acts 1</button>
-            <button id="case2">Grid Randon Acts 2</button>
+
+            <h3>introduction</h3>
+
+            <p>
+                This project was motivated by wondering about emotional contagion, and how acts of love, or
+                even simple kindness might cascade to create more love and kindness. It is in the spirit
+                "Random Acts of Kindness" or "pay it forward", where generous acts are performed without
+                an expection of returns, but hoping the acts are paid forward through kind acts to others.
+                Besides kind acts cascading so can unkind acts.
+            </p>
+            <p>
+                This simulation models each person as being sad, happy, or emotionally neutral. Initially all
+                people are in the neutral state. There is a parameter, emotionalDrift, which models how emotions
+                may change over time, based of reaction to events happening to a person.
+                There is a rate pAction at which people take actions to neighbors,
+                and probababilities pNiceGivenSad, and pNiceGivenHappy of kind actions (e.g. smile) given that a
+                person feels sad or happy, and probabilities pMeanGivenSad, pMeanGivenHappy, of mean actions
+                (e.g. acting rudely) give that a person feels sad or happy. During the simulation, little dots will
+                move between people indicating interactions.
+            </p>
+            <p>
+                The simulation can be paused, or various parameters changed through the control dialog.
+                Selecting "mobile" causes the people to move around some. This can be used to produce more
+                randome clusters, by letting them move for a few seconds. The distThreshold controls how close
+                people have to be to interact.
+                The right mouse button can be used to pan, and the trackwheel can be used to zoom in or out.
+                Clicking on a person with the left mouse button, causes them to be happy. Try this, and see how it can
+                cascade so that the kindness spreads.
+            </p>
             <h3>Love Bomb</h3>
-            One of the ideas that led to this project was thinking about a "Love Bomb"
-            <script>
-                function setup1() {
-                    rak.setOpts({
-                        numActors: 144, grid: true, mobile: false, distThresh: 55,
-                        emotionalDrift: 0,
-                        pNiceGivenHappy: 0.01, pNiceGivenSad: 0.0,
-                        pNiceGivenSad: 0, pMeanGivenSad: 0.01
-                    });
-                    rak.setAll({ happiness: 0 });
-                }
-            </script>
-            <button id="setup1" onclick="setup1()">Setup Love Bomb</button>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
-            <p>foo bar</p>
+            <p>
+                This simulation was first imaged as a sort of art piece, presenting the idea of a "Love Bomb".
+                Just as in some circumstances, a chain reaction of Uranium atoms could cause horrible destructon
+                one might wonder, could a corresponding chain reaction occur in some positive sense. One way
+                it could is through a contagion of positive emotion. Start this simulation by clicking
+            </p>
+            <p>
+                <button id="setup1" onclick="setupLoveBomb()">Setup Love Bomb</button>
+            </p>
+            <p>
+                Now the population is all in the neutral state. Left click on any of the people, which is a kind
+                act to make them happy! They will "pay it forward" by randomly acting kind to their neighbors.
+                The good feeling will propagate until all the people are happy.
+
+                You can play around with the paramters to explore the resiliance of the community as a functiono
+                of the general emotional volatility (emotionalDrift) as well as the interaction between positive
+                and negative acts.
+
+                Notice that in a community, norms of kind behaviours to others creates a short of emotional
+                resiliance that helps recover from emotional volatility.
+            </p>
+
+            <p style="height:500px"></p>
         </div>
 
     </div>

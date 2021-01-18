@@ -142,7 +142,7 @@ class Actor extends CanvasTool.CircleGraphic {
             this.y += s * (Math.random() - 0.5);
         }
         else {
-            var s = 100 * this.deltaT;
+            var s = 20 * this.deltaT;
             this.vx += s * (Math.random() - 0.5);
             this.vy += s * (Math.random() - 0.5);
             this.x += this.vx;
@@ -288,7 +288,7 @@ class RAKTool extends CanvasTool {
         this.pNiceGivenHappy = 0.1;
         this.pNiceGivenSad = 0.0;
         this.pMeanGivenHappy = 0.0;
-        this.pMeanGivenSad = 0.0;
+        this.pMeanGivenSad = 0.1;
         this.initialHappiness = .4;
         this.run = true;
         tool = this;
@@ -309,6 +309,13 @@ class RAKTool extends CanvasTool {
         console.log("setOpts", opts);
         this.distThresh = opts.distThresh || 50;
         this.numActors = opts.numActors || 20;
+        for (var key in opts) {
+            if (this[key] == undefined) {
+                alert("No such param as "+ key);
+            }
+            this[key] = opts[key];
+        }
+        /*
         this.grid = true;
         if (opts.grid != undefined)
             this.grid = opts.grid;
@@ -316,8 +323,18 @@ class RAKTool extends CanvasTool {
         if (opts.mobile != undefined)
             this.mobile = opts.mobile;
         this.emotionalDrift = opts.emotionalDrift;
+        */
         this.reset();
         this.updateGui();
+    }
+
+    setAll(props) {
+        for (var id in this.actors) {
+            var actor = this.actors[id];
+            for (var key in props) {
+                actor[key] = props[key];
+            }
+        }
     }
 
     setupDATGUI() {
