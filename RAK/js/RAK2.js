@@ -85,7 +85,7 @@ class RAKTool extends CanvasTool {
         this.egoDistThresh = 40;
         this.groupDistThresh = 0;
         this.egoK = 1.0;
-        this.groupK = 0.0;
+        this.groupK = 0.2;
         this.mass = 2;
         this.drag1 = 0.01;
         this.drag2 = 0.01;
