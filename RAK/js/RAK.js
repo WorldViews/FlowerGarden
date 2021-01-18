@@ -2,14 +2,14 @@
 var tool = null;
 
 function rand() { return Math.random(); }
-function interp(f, x1, x2) { return x1*(1-f) + x2*f; }
+function interp(f, x1, x2) { return x1 * (1 - f) + x2 * f; }
 class Act {
     constructor(action, actor, targetActor) {
         this.action = action;
         this.actor = actor;
         this.target = targetActor;
-        this.t0 = getClockTime();
-        this.dur = 2;
+        this.t0 = actor.rak.getPlayTime();
+        this.dur = 1;
     }
 }
 
@@ -20,11 +20,12 @@ class Actor extends CanvasTool.CircleGraphic {
         opts.radius = 15;
         super(opts);
         this.rak = rak;
+        this.prevPlayTime = rak.getPlayTime();
+        this.deltaT = 0;
         this.vx = 0;
         this.vy = 0;
-       // this.radius = 10;
-        this.happiness = 0.5;
-        this.pActNice = 0.01;
+        // this.radius = 10;
+        this.happiness = rak.initialHappiness;
         this.acts = [];
     }
 
@@ -33,16 +34,36 @@ class Actor extends CanvasTool.CircleGraphic {
     }
 
     tick() {
-        var ids = this.getNeighbors();
-        var pActNice = this.rak.pActNice;
-        var pActMean = this.rak.pActMean;
+        var pt = this.rak.getPlayTime();
+        this.deltaT = pt - this.prevPlayTime;
+        this.prevPlayTime = pt;
         this.handleQueuedActs();
+        this.produceActs();
+    }
+
+    produceActs() {
+        var inst = this;
+        var ids = this.getNeighbors();
+        var rak = this.rak;
         ids.forEach(id => {
-            if (rand() < pActNice) {
-                this.act("smile", id);
+            if (rand() > rak.pAction)
+                return;
+            if (inst.happiness < 0.333) {
+                if (rand() < rak.pNiceGivenSad) {
+                    this.act("smile", id);
+                }
+                else if (rand() < rak.pMeanGivenSad) {
+                    this.act("frown", id);
+                }
             }
-            else if (rand() < pActMean) {
-                this.act("frown", id);
+            if (inst.happiness > 0.666) {
+                //console.log("happy", inst.id);
+                if (rand() < rak.pNiceGivenHappy) {
+                    this.act("smile", id);
+                }
+                else if (rand() < rak.pMeanGivenHappy) {
+                    this.act("frown", id);
+                }
             }
         });
         //console.log("id", this.id, "neighbors", ids);
@@ -60,7 +81,7 @@ class Actor extends CanvasTool.CircleGraphic {
     }
 
     handleQueuedActs() {
-        var t = getClockTime();
+        var t = this.rak.getPlayTime();
         while (this.acts.length > 0) {
             var act = this.acts[0];
             if (t - act.t0 >= act.dur) {
@@ -121,7 +142,7 @@ class Actor extends CanvasTool.CircleGraphic {
             this.y += s * (Math.random() - 0.5);
         }
         else {
-            var s = 1;
+            var s = 100 * this.deltaT;
             this.vx += s * (Math.random() - 0.5);
             this.vy += s * (Math.random() - 0.5);
             this.x += this.vx;
@@ -141,18 +162,26 @@ class Actor extends CanvasTool.CircleGraphic {
     }
 
     draw(canvas, ctx) {
-        var inst = this;
-        var t = getClockTime();
-        if (this.happiness > .8)
-            this.fillStyle = "#0a0";
-        if (this.happiness < .3) {
+        if (this.happiness < .33) {
             this.fillStyle = "#a00";
         }
+        else if (this.happiness < .66) {
+            this.fillStyle = "gray";
+        }
+        else {
+            this.fillStyle = "#0a0";
+        }
         super.draw(canvas, ctx);
+        this.drawActs(canvas, ctx);
+    }
+
+    drawActs(canvas, ctx) {
+        var inst = this;
+        var t = this.rak.getPlayTime();
         this.acts.forEach(act => {
             var f = (t - act.t0) / act.dur;
-            var x = interp(f, this.x, act.target.x);
-            var y = interp(f, this.y, act.target.y);
+            var x = interp(f, inst.x, act.target.x);
+            var y = interp(f, inst.y, act.target.y);
             //ctx.lineWidth = 10;
             ctx.strokeStyle = act.action == "smile" ? "green" : "red";
             ctx.fillStyle = act.action == "smile" ? "green" : "red";
@@ -163,7 +192,7 @@ class Actor extends CanvasTool.CircleGraphic {
             ctx.stroke();
             */
             ctx.beginPath();
-            ctx.arc(x, y, 2.0, 0, 2 * Math.PI);
+            ctx.arc(x, y, 3.0, 0, 2 * Math.PI);
             ctx.fill();
             ctx.stroke();
         });
@@ -247,15 +276,20 @@ class RAKTool extends CanvasTool {
     constructor(canvasName, opts) {
         super(canvasName);
         opts = opts || {};
+        this.playSpeed = 1.0;
         this.distThresh = 50;
+        this.pAction = 0.1;
         this.numActors = 20;
         this.numActs = 0;
         this.numPendingActs = 0;
         this.grid = true;
         this.mobile = true;
         this.emotionalDrift = 0.1;
-        this.pActNice = 0.1;
-        this.pActMean = 0.0;
+        this.pNiceGivenHappy = 0.1;
+        this.pNiceGivenSad = 0.0;
+        this.pMeanGivenHappy = 0.0;
+        this.pMeanGivenSad = 0.0;
+        this.initialHappiness = .4;
         this.run = true;
         tool = this;
         this.setupDATGUI();
@@ -281,6 +315,7 @@ class RAKTool extends CanvasTool {
         this.mobile = true;
         if (opts.mobile != undefined)
             this.mobile = opts.mobile;
+        this.emotionalDrift = opts.emotionalDrift;
         this.reset();
         this.updateGui();
     }
@@ -290,11 +325,15 @@ class RAKTool extends CanvasTool {
         var gui = new dat.GUI();
         this.gui = gui;
         gui.add(P, "run");
+        gui.add(P, "playSpeed", 0, 2.0);
         gui.add(P, 'numActors', 2, 400);
         gui.add(P, 'distThresh', 0, 200);
         gui.add(P, "emotionalDrift", 0, 1);
-        gui.add(P, "pActNice", 0, 1.0);
-        gui.add(P, "pActMean", 0, 1.0);
+        gui.add(P, "pAction", 0, 1.0);
+        gui.add(P, "pNiceGivenHappy", 0, 1.0);
+        gui.add(P, "pNiceGivenSad", 0, 1.0);
+        gui.add(P, "pMeanGivenHappy", 0, 1.0);
+        gui.add(P, "pMeanGivenSad", 0, 1.0);
         gui.add(P, 'mobile');
         gui.add(P, 'grid');
         gui.add(P, 'reset');
@@ -333,6 +372,8 @@ class RAKTool extends CanvasTool {
         super.init();
         this.setView(300, 300, 800)
         Actor.reset();
+        this.playTime = 0;
+        this.prevClockTime = getClockTime();
         this.stepNum = 0;
         this.numActs = 0;
         //this.numActors = 20;
@@ -343,6 +384,10 @@ class RAKTool extends CanvasTool {
         this.initPositions();
         //console.log("********* graphics:", this.graphics);
         //this.initInteractions();
+    }
+
+    getPlayTime() {
+        return this.playTime;
     }
 
     initInteractions() {
@@ -447,6 +492,12 @@ class RAKTool extends CanvasTool {
 
     tick() {
         //console.log("tick...");
+        var t = getClockTime();
+        var dt = t - this.prevClockTime;
+        this.prevClockTime = t;
+        if (this.run) {
+            this.playTime += this.playSpeed * dt;
+        }
         if (!this.run) {
             this.computeLinks(this.distThresh);
             this.draw();
@@ -462,21 +513,39 @@ class RAKTool extends CanvasTool {
             this.actors[id].tick();
         for (var id in this.groups)
             this.groups[id].tick();
-        var str = sprintf("N: %3d NumActors: %3d  NumActs: %3d  Pending: %3d",
-            this.stepNum, this.getNumActors(), this.numActs, this.numPendingActs);
+        this.showStats();
+    }
+
+    showStats() {
+        var happiness = 0;
+        for (var id in this.actors) {
+            var actor = this.actors[id];
+            happiness += actor.happiness;
+        }
+        var avgHappiness = happiness / this.getNumActors();
+        var str = sprintf("N: %3d t: %5.1f NumActors: %3d  NumActs: %3d  Avg Happiness: %4.2f  Pending: %3d",
+            this.stepNum, this.getPlayTime(), this.getNumActors(), this.numActs, avgHappiness, this.numPendingActs);
         $("#stats").html(str);
+
+    }
+
+    handleFrame() {
+        var inst = this;
+        try {
+            inst.tick();
+        }
+        catch (e) {
+            console.log("error", e);
+        }
+        requestAnimationFrame(() => inst.handleFrame());
     }
 
     start() {
         console.log("HAK.start");
         this.init();
-        this.tick();
-        let inst = this;
-        setInterval(() => inst.tick(), 20);
+        this.handleFrame();
+        //this.tick();
+        //let inst = this;
+        //setInterval(() => inst.tick(), 20);
     }
 }
-
-function newFunction(dc) {
-    dc.beginPath();
-}
-

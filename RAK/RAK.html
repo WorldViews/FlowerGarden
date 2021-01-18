@@ -1,36 +1,100 @@
 <html>
-    <head>
-        <title>Welcome to RAK</title>
-        <script src="../js/libs/jquery-3.1.0.min.js"></script>
-        <script src="../js/libs/sprintf.js"></script>
-        <script src="../js/libs/dat.gui.js"></script>
-        <script src="../js/util.js"></script>
-        <script src="../js/CanvasTool.js"></script>
-        <script src="./js/RAK.js"></script>
 
-    </head>
-    <body>
-        <h1>Welcome to RAK</h1>
+<head>
+    <title>Welcome to RAK</title>
+    <script src="../js/libs/jquery-3.1.0.min.js"></script>
+    <script src="../js/libs/sprintf.js"></script>
+    <script src="../js/libs/dat.gui.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="../js/CanvasTool.js"></script>
+    <script src="./js/RAK.js"></script>
+
+    <script>
+        var rak = null;
+
+        $(document).ready(() => {
+            console.log("started");
+            rak = new RAKTool("canvas1");
+            rak.start();
+
+            $("#case1").click(() => {
+                rak.setOpts({ numActors: 300, grid: false })
+            });
+            $("#case2").click(() => {
+                rak.setOpts({ numActors: 144, grid: true, mobile: false, distThresh: 55 })
+            });
+        })
+    </script>
+    <style>
+        body {
+            overflow-y: hidden;
+        }
+        #game {
+            height: 100%;
+        }
+        #examples {
+            height: 80%;
+            overflow-y: auto;
+        }
+
+        canvas {
+            border-style: solid;
+            border-width: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Welcome to RAK</h3>
+    <div id="game">
         <div id="stats"></div>
-        <canvas id="canvas1" width=600 height=600></canvas>
+        <canvas id="canvas1" width=500 height=400></canvas>
         <div id="canvasStat"></div>
-        <button id="case1">Grid Randon Acts 1</button>
-        <button id="case2">Grid Randon Acts 2</button>
-        <script>
-            var rak = null;
+        <div id="examples">
+            <button id="case1">Grid Randon Acts 1</button>
+            <button id="case2">Grid Randon Acts 2</button>
+            <h3>Love Bomb</h3>
+            One of the ideas that led to this project was thinking about a "Love Bomb"
+            <script>
+                function setup1() {
+                    rak.setOpts({
+                        numActors: 144, grid: true, mobile: false, distThresh: 55,
+                        emotionalDrift: 0,
+                        pNiceGivenHappy: 0.01, pNiceGivenSad: 0.0,
+                        pNiceGivenSad: 0, pMeanGivenSad: 0.01
+                    });
+                    rak.setAll({ happiness: 0 });
+                }
+            </script>
+            <button id="setup1" onclick="setup1()">Setup Love Bomb</button>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+            <p>foo bar</p>
+        </div>
 
-            $(document).ready(() =>{
-                console.log("started");
-                rak = new RAKTool("canvas1");
-                rak.start();
+    </div>
 
-                $("#case1").click(() => {
-                    rak.setOpts({numActors: 300, grid: false})
-                });
-                $("#case2").click(() => {
-                    rak.setOpts({numActors: 144, grid: true, mobile: false, distThresh: 55})
-                });
-            })
-        </script>
-    </body>
+</body>
+
 </html>
