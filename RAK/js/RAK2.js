@@ -84,12 +84,12 @@ class RAKTool extends CanvasTool {
         super(canvasName);
         this.egoDistThresh = 40;
         this.groupDistThresh = 0;
+        this.numActors = 60;
         this.egoK = 1.0;
         this.groupK = 0.2;
         this.mass = 2;
         this.drag1 = 0.01;
         this.drag2 = 0.01;
-        this.numActors = 0;
         this.grid = true;
         this.mobile = true;
         tool = this;
@@ -100,7 +100,7 @@ class RAKTool extends CanvasTool {
     {
         var P = this;
         var gui = new dat.GUI();
-        gui.add(P, 'numActors', 2, 1000);
+        gui.add(P, 'numActors', 2, 200);
         gui.add(P, 'egoDistThresh', 0, 200);
         gui.add(P, 'groupDistThresh', 0, 200);
         gui.add(P, 'egoK', 0, 2);
@@ -143,7 +143,7 @@ class RAKTool extends CanvasTool {
         this.setView(300, 300, 800)
         Actor.reset();
         this.stepNum = 0;
-        this.numActors = 20;
+        //this.numActors = 20;
         this.numLinks = 0;
         this.actors = {};
         this.egoLinks = {};
