@@ -3,29 +3,38 @@
 
 var model = null;
 
-function rand(a,b)
-{
-    return a + (b-a)*Math.random();
+function downloadFromBrowser(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 }
 
-function randIdx(n)
-{
-    return Math.floor(n*Math.random());
+function rand(a, b) {
+    return a + (b - a) * Math.random();
 }
 
-function randItem(v)
-{
+function randIdx(n) {
+    return Math.floor(n * Math.random());
+}
+
+function randItem(v) {
     var i = randIdx(v.length);
     return v[i];
 }
 
-function randShift(x, y, dMin, dMax)
-{
+function randShift(x, y, dMin, dMax) {
     var d = rand(dMin, dMax);
-    var a = rand(0,2*Math.PI);
-    var dx = d*Math.cos(a);
-    var dy = d*Math.sin(a);
-    return {x: x+dx, y: y+dy}
+    var a = rand(0, 2 * Math.PI);
+    var dx = d * Math.cos(a);
+    var dy = d * Math.sin(a);
+    return { x: x + dx, y: y + dy }
 }
 
 function clone(obj) {
@@ -34,41 +43,38 @@ function clone(obj) {
 
 function remove(array, element) {
     const index = array.indexOf(element);
-    
+
     if (index !== -1) {
         array.splice(index, 1);
     }
 }
 
-function relativePos ( event ) {
-  var bounds = event.target.getBoundingClientRect();
-  var x = event.clientX - bounds.left;
-  var y = event.clientY - bounds.top;
-  return {x: x, y: y};
+function relativePos(event) {
+    var bounds = event.target.getBoundingClientRect();
+    var x = event.clientX - bounds.left;
+    var y = event.clientY - bounds.top;
+    return { x: x, y: y };
 }
 
-function dist(x0,y0,x1,y1)
-{
-    var dx = x1-x0;
-    var dy = y1-y0;
-    return Math.sqrt(dx*dx+dy*dy);
+function dist(x0, y0, x1, y1) {
+    var dx = x1 - x0;
+    var dy = y1 - y0;
+    return Math.sqrt(dx * dx + dy * dy);
 }
 
-function findEndPoint(px, py, L, x,y)
-{
+function findEndPoint(px, py, L, x, y) {
     var vx = px - x;
     var vy = py - y;
-    var l = Math.sqrt(vx*vx + vy*vy);
+    var l = Math.sqrt(vx * vx + vy * vy);
     var nvx = vx / l;
     var nvy = vy / l;
-    return {x: x + L*nvx, y: y + L*nvy};
+    return { x: x + L * nvx, y: y + L * nvy };
 }
 
 var numObjs = 0;
-function getUniqueName(baseName)
-{
+function getUniqueName(baseName) {
     numObjs++;
-    return "_"+baseName+"_"+numObjs;
+    return "_" + baseName + "_" + numObjs;
 }
 
 class Widget {
@@ -78,9 +84,9 @@ class Widget {
         this.opts = opts;
         this.name = opts.name;
         this.range = [];
-        this.lastRangeUpdate = model.gen-1;
+        this.lastRangeUpdate = model.gen - 1;
     }
-    
+
     update() {
         if (this.lastRangeUpdate != model.gen) {
             this.updateRange();
@@ -88,8 +94,7 @@ class Widget {
         }
     }
 
-    clearTrail()
-    {
+    clearTrail() {
         this.trail = [];
     }
 
@@ -97,6 +102,10 @@ class Widget {
         var opts = this.opts;
         if (opts.driver && typeof opts.driver != "string")
             opts.driver = opts.driver.name;
+        if (this.pt1)
+            opts.pt1 = this.pt1;
+        if (this.pt2)
+            opts.pt2 = this.pt2;
         return this.opts
     }
 }
@@ -107,6 +116,10 @@ class SlipRod extends Widget {
         this.L = opts.L || 50;
         this.px = opts.px;
         this.py = opts.py;
+        //this.pt1 = opts.pt1 || {x: 0, y: 0};
+        //this.pt2 = opts.pt2 || {x: 0, y: 0};
+        this.pt1 = opts.pt1;
+        this.pt2 = opts.pt2;
         //this.py = 240;
         this.driver = opts.driver;
     }
@@ -115,7 +128,7 @@ class SlipRod extends Widget {
         super.update();
         this.pt1 = this.driver.pt2;
         this.pt2 = findEndPoint(this.px, this.py, this.L,
-                                this.pt1.x, this.pt1.y);
+            this.pt1.x, this.pt1.y);
     }
 
     updateRange() {
@@ -132,15 +145,15 @@ class SlipRod extends Widget {
 
     findGrip(mp) {
         let p = model.viewToModel(mp);
-        if (dist(p.x,p.y, this.px, this.py) < 8)
+        if (dist(p.x, p.y, this.px, this.py) < 8)
             return "slideHole";
-        if (dist(p.x,p.y, this.pt2.x, this.pt2.y) < 5)
+        if (dist(p.x, p.y, this.pt2.x, this.pt2.y) < 5)
             return "endpoint";
         return null;
     }
 
     adjust(grip, vmp) {
-        console.log("crank.adjust "+vmp);
+        console.log("crank.adjust " + vmp);
         let mp = model.viewToModel(vmp);
         if (grip == "slideHole") {
             this.px = mp.x;
@@ -150,8 +163,11 @@ class SlipRod extends Widget {
             this.L = dist(this.pt1.x, this.pt1.y, mp.x, mp.y);
         }
         else {
-            console.log("Unexpected grip name "+grip);
+            console.log("Unexpected grip name " + grip);
         }
+        this.opts.px = this.px;
+        this.opts.py = this.py;
+        this.opts.L = this.L;
         this.updateRange();
     }
 
@@ -183,7 +199,7 @@ class SlipRod extends Widget {
         if (model.showTrails) {
             var range = this.range;
             ctx.beginPath();
-            range.forEach(pt => ctx.lineTo(pt.x,pt.y));
+            range.forEach(pt => ctx.lineTo(pt.x, pt.y));
             ctx.stroke();
         }
     }
@@ -196,34 +212,35 @@ class Crank extends Widget {
         this.R = opts.R || 20;
         this.x0 = opts.x0;
         this.y0 = opts.y0;
+        this.pt2 = opts.p2 || {x: 0, y: 0};
         this.updateRange();
     }
 
     update() {
-        var a = -this.w*model.t;
+        var a = -this.w * model.t;
         this.pt2 = {
-            x: this.x0 + this.R*Math.cos(a),
-            y: this.y0 + this.R*Math.sin(a)
+            x: this.x0 + this.R * Math.cos(a),
+            y: this.y0 + this.R * Math.sin(a)
         }
     }
 
     updateRange() {
-        console.log("updateRange "+this.name);
+        console.log("updateRange " + this.name);
         this.range = [];
         let numPts = 200;
-        for (let i=0; i<=numPts; i++) {
-            let a = 2*Math.PI*i/numPts;
-            let x = this.x0 + this.R*Math.cos(a);
-            let y = this.y0 + this.R*Math.sin(a);
-            this.range.push({x,y});
+        for (let i = 0; i <= numPts; i++) {
+            let a = 2 * Math.PI * i / numPts;
+            let x = this.x0 + this.R * Math.cos(a);
+            let y = this.y0 + this.R * Math.sin(a);
+            this.range.push({ x, y });
         }
         //console.log("range."+this.name+" ",this.range);
     }
 
-                
+
     findGrip(mp) {
         let p = model.viewToModel(mp);
-        var d = dist(p.x,p.y, this.x0, this.y0);
+        var d = dist(p.x, p.y, this.x0, this.y0);
         if (d < 5)
             return "XY0";
         if (Math.abs(d - this.R) < 5)
@@ -233,18 +250,21 @@ class Crank extends Widget {
 
     adjust(grip, vmp) {
         let mp = model.viewToModel(vmp);
-        console.log("crank.adjust "+mp);
+        console.log("crank.adjust " + mp);
         if (grip == "R") {
-            this.R = dist(mp.x,mp.y, this.x0,this.y0)
+            this.R = dist(mp.x, mp.y, this.x0, this.y0)
         }
         else if (grip == "XY0") {
             this.x0 = mp.x;
             this.y0 = mp.y;
         }
         else {
-            console.log("Unexpected grip name "+grip);
+            console.log("Unexpected grip name " + grip);
         }
         this.updateRange();
+        this.opts.x0 = this.x0;
+        this.opts.y0 = this.y0;
+        this.opts.R = this.R;
     }
 
     draw(c) {
@@ -262,7 +282,7 @@ class Crank extends Widget {
         ctx.stroke();
         // Draw anchor point
         // Draw crank
-        ctx.moveTo(x0,y0);
+        ctx.moveTo(x0, y0);
         ctx.lineTo(pt2.x, pt2.y);
         ctx.stroke();
         // draw trail
@@ -270,7 +290,7 @@ class Crank extends Widget {
         if (model.showTrails) {
             var range = this.range;
             ctx.beginPath();
-            range.forEach(pt => ctx.lineTo(pt.x,pt.y));
+            range.forEach(pt => ctx.lineTo(pt.x, pt.y));
             ctx.stroke();
         }
     }
@@ -299,18 +319,27 @@ class Model {
         this.selectedGrip = null;
         this.initUI();
     }
-    
+
     start() {
         let inst = this;
-        setInterval(() => inst.update(), 1000/60);
+        setInterval(() => inst.update(), 1000 / 60);
     }
 
     viewToModel(mp) {
-//        return {x: mp.x/this.scale - this.tx,
-//                y: mp.y/this.scale - this.ty};
-        return {x: (mp.x - this.tx)/this.scale,
-                y: (mp.y - this.ty)/this.scale};
+        //        return {x: mp.x/this.scale - this.tx,
+        //                y: mp.y/this.scale - this.ty};
+        return {
+            x: (mp.x - this.tx) / this.scale,
+            y: (mp.y - this.ty) / this.scale
+        };
     }
+
+    downloadModel() {
+        var obj = this.getDef();
+        var jstr = JSON.stringify(obj, null, 3);
+        downloadFromBrowser("model.json", jstr);
+    }
+
 
     load(specs) {
         console.log("cloaning specs");
@@ -326,35 +355,44 @@ class Model {
                 inst.addWidget(new Crank(ws));
             }
             else {
-                error("Unrecognized type "+ws.type);
+                error("Unrecognized type " + ws.type);
             }
         });
         this.widgets.forEach(w => {
+            console.log("Seeking driver for", w.name, w.driver, w);
+            if (w instanceof Crank) {
+                console.log("no driver needed for crank", w.name);
+                return;
+            }
             if (w.opts.driver instanceof Widget) {
                 w.driver = w.opts.driver;
+                console.log("using driver", w.driver.name, w.driver);
+                return;
+            }
+            if (typeof w.opts.driver != "string") {
+                console.log("*** driver name not string");
                 return;
             }
             var dw = this.widgetsByName[w.opts.driver];
             if (dw == null) {
-                console.log("*** widget "+w.name+
-                            " cannot find driver named "+w.opts.driver);
+                console.log("*** widget " + w.name +
+                    " cannot find driver named " + w.opts.driver);
                 return;
             }
+            console.log("assigned driver", dw.name, dw);
             w.driver = dw;
             w.opts.driver = dw;
         });
     }
 
-    addRandomWidgets(n)
-    {
-        for (var i=0; i<n; i++) {
+    addRandomWidgets(n) {
+        for (var i = 0; i < n; i++) {
             var w = randItem(model.widgets);
             this.addRandomWidget(w);
         }
     }
 
-    addRandomWidget(w)
-    {
+    addRandomWidget(w) {
         if (!w)
             w = model.selectedWidget;
         if (!w) {
@@ -368,30 +406,29 @@ class Model {
         var pt = randShift(w.pt2.x, w.pt2.y, 40.0, 200.0);
         var len = rand(40, 250);
         var sr = new SlipRod(
-            {L: len, px: pt.x, py: pt.y, driver: w}
+            { L: len, px: pt.x, py: pt.y, driver: w }
         );
         model.addWidget(sr);
         model.selectedWidget = sr;
         model.selectedGrip = null;
     }
-    
+
     addWidget(w) {
         this.widgetsByName[w.name] = w;
         this.widgets.push(w);
     }
-    
+
     loadDefault() {
-        var crank = new Crank({x0: 250, y0: 400, R: 50, w: 2.2});
-        var slipRod = new SlipRod({px: 250, py: 200, L: 300, driver: crank});
-        var crank2 = new Crank({x0: 350, y0: 300, R: 20, w: 1.1});
-        var slipRod2 = new SlipRod({px: 320, py: 200, L: 200, driver: crank2});
-        var slipRod3 = new SlipRod({px: 120, py: 100, L: 200, driver: slipRod});
+        var crank = new Crank({ x0: 250, y0: 400, R: 50, w: 2.2 });
+        var slipRod = new SlipRod({ px: 250, py: 200, L: 300, driver: crank });
+        var crank2 = new Crank({ x0: 350, y0: 300, R: 20, w: 1.1 });
+        var slipRod2 = new SlipRod({ px: 320, py: 200, L: 200, driver: crank2 });
+        var slipRod3 = new SlipRod({ px: 120, py: 100, L: 200, driver: slipRod });
         this.widgets = [crank, slipRod, crank2, slipRod2, slipRod3];
     }
-    
+
     dump() {
         var def = this.getDef();
-        
         console.log(JSON.stringify(def, null, 3));
     }
 
@@ -401,9 +438,9 @@ class Model {
         delete this.widgetsByName[w.name];
         remove(this.widgets, w);
     }
-    
+
     getDef() {
-        var def = {type: "Model", widgets: []};
+        var def = { type: "Model", widgets: [] };
         this.widgets.forEach(w => {
             def.widgets.push(w.getDef());
         });
@@ -413,7 +450,7 @@ class Model {
     clear() {
         this.widgets.forEach(w => w.clearTrail());
     }
-    
+
     setShowTrails(v) {
         if (!v)
             this.clear();
@@ -428,27 +465,27 @@ class Model {
         var n = 20;
         var h = 10000;
         ctx.strokeStyle = "#000000";
-        for (var i = -n; i<=n; i++) {
-            var x = i*dx
-            ctx.moveTo(x,-h);
-	    ctx.lineTo(x, h);
-            var y = i*dx
-            ctx.moveTo(-h,y);
-	    ctx.lineTo(h, y);
+        for (var i = -n; i <= n; i++) {
+            var x = i * dx
+            ctx.moveTo(x, -h);
+            ctx.lineTo(x, h);
+            var y = i * dx
+            ctx.moveTo(-h, y);
+            ctx.lineTo(h, y);
         }
         ctx.stroke();
     }
-    
+
     draw() {
         var c = document.getElementById(this.canvName);
         var ctx = c.getContext("2d");
         //ctx.clearRect(0,0,c.width, c.height);
         var s = 1000000;
-        ctx.clearRect(-s,-s,2*s,2*s);
+        ctx.clearRect(-s, -s, 2 * s, 2 * s);
         this.drawGrid();
         this.widgets.forEach(w => w.draw(c));
     }
-    
+
     clear() {
         this.widgets.forEach(w => w.clearTrail());
     }
@@ -456,7 +493,7 @@ class Model {
     play() { this.dt = 0.02; }
 
     pause() { this.dt = 0; }
-    
+
     update() {
         this.t += this.dt;
         this.widgets.forEach(w => w.update());
@@ -465,9 +502,9 @@ class Model {
         if (model.selectedWidget) {
             statusText += model.selectedWidget.name;
             if (model.selectedGrip)
-                statusText += " "+model.selectedGrip;
+                statusText += " " + model.selectedGrip;
         }
-        statusText += " g: "+this.gen;
+        statusText += " g: " + this.gen;
         $("#status").html(statusText);
     }
 
@@ -491,6 +528,9 @@ class Model {
         $("#fancy").click(() => {
             model.load(MODEL_FANCY_1);
         });
+        $("#download").click(e => {
+            inst.downloadModel();
+        })
         $("#c3").click(() => {
             w.clearTrail();
             w.py = 240;
@@ -504,13 +544,13 @@ class Model {
             w.py = 295;
         });
         $("#myCanvas").bind("mousewheel", e => {
-            console.log("mw delta: "+e.wheelDelta);
+            console.log("mw delta: " + e.wheelDelta);
             var dy = e.originalEvent.deltaY;
             if (dy > 0)
                 this.scale *= this.deltaScale;
             if (dy < 0)
                 this.scale /= this.deltaScale;
-            console.log("dy: "+dy+"  scale: "+model.scale);
+            console.log("dy: " + dy + "  scale: " + model.scale);
             var vmp = relativePos(e);
             this.showPos(vmp);
         });
@@ -519,17 +559,19 @@ class Model {
             if (e.shiftKey) {
                 if (model.selectedWidget) {
                     var sr = new SlipRod(
-                        {L: 200, px: mp.x, py: mp.y,
-                         driver: model.selectedWidget});
+                        {
+                            L: 200, px: mp.x, py: mp.y,
+                            driver: model.selectedWidget
+                        });
                     model.addWidget(sr);
                 }
                 else {
-                    var cs = new Crank({x0: mp.x, y0: mp.y, R: 50, w: 1.2});
+                    var cs = new Crank({ x0: mp.x, y0: mp.y, R: 50, w: 1.2 });
                     model.addWidget(cs);
                 }
             }
             model.mpDown = mp;
-            this.trDown = {x: model.tx, y: model.ty};
+            this.trDown = { x: model.tx, y: model.ty };
             model.mouseDown = true;
             model.selectedGrip = null;
             model.selectedWidget = null;
@@ -541,8 +583,8 @@ class Model {
                     }
                 }
             });
-            console.log("selectedGrip: "+model.selectedGrip);
-            console.log("selectedWidget: "+model.selectedWidget);
+            console.log("selectedGrip: " + model.selectedGrip);
+            console.log("selectedWidget: " + model.selectedWidget);
         });
         $("#myCanvas").mouseup(e => { model.mouseDown = false; });
         $("#myCanvas").mousemove(e => {
@@ -572,6 +614,54 @@ class Model {
         $(document).keydown(e => {
             inst.handleKey(e);
         });
+        var dropzone = $("#myCanvas");
+        dropzone.on('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        dropzone.on('dragenter', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        dropzone.on('drop', (e) => inst.handleDrop(e));
+    }
+
+    handleDrop(e) {
+        var inst = this;
+        console.log("=========================================================");
+        console.log("handleDrop", e);
+        window.Exxx = e;
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files.length) {
+            console.log("handle fild data");
+            e.preventDefault();
+            e.stopPropagation();
+            var files = e.originalEvent.dataTransfer.files;
+            if (files.length > 1) {
+                alert("Cannot handle multiple dropped files");
+                return;
+            }
+            var file = files[0];
+            console.log("file", file);
+            console.log("files", e.originalEvent.dataTransfer.files)
+            var reader = new FileReader();
+            reader.onload = (e) => {
+                var jstr = reader.result;
+                console.log("got jstr", jstr);
+                var data = JSON.parse(jstr);
+                console.log("data", data);
+                console.log("model:\n", JSON.stringify(data, null, 3));
+                model.load(data);
+                console.log("loaded model....\n");
+                inst.dump();
+            };
+            var txt = reader.readAsText(file);
+        }
+        else {
+            //alert("other drop event");
+            const lines = e.originalEvent.dataTransfer.getData("text/uri-list").split("\n");
+        }
     }
 
     handleKey(e) {
@@ -582,16 +672,14 @@ class Model {
             this.deleteWidget(model.selectedWidget);
     }
 
-    showPos(vmp)
-    {
+    showPos(vmp) {
         var cp = this.viewToModel(vmp);
         var posStr =
             sprintf("scale: %.3f %6.1f %6.1f", this.scale, cp.x, cp.y);
-        $("#pos").html(posStr);        
+        $("#pos").html(posStr);
     }
-    
-    togglePlay()
-    {
+
+    togglePlay() {
         //model.dump();
         if ($("#play").val() == "play") {
             model.play();
@@ -603,10 +691,9 @@ class Model {
         }
     }
 
-    noticeTrailsState()
-    {
+    noticeTrailsState() {
         //model.dump();
-        model.setShowTrails( $("#trails").is(":checked") );
+        model.setShowTrails($("#trails").is(":checked"));
     }
 }
 
@@ -616,80 +703,179 @@ $(document).ready(() => {
     model.start();
 });
 
-var MODEL_FANCY_1 =
+var MODEL_FANCY_0 =
 {
-   "type": "Model",
-   "widgets": [
-      {
-         "x0": 250,
-         "y0": 400,
-         "R": 50,
-         "w": 2.2,
-         "type": "Crank",
-         "name": "_Crank_1"
-      },
-      {
-         "px": 250,
-         "py": 200,
-         "L": 300,
-         "driver": "_Crank_1",
-         "type": "SlipRod",
-         "name": "_SlipRod_2"
-      },
-      {
-         "x0": 350,
-         "y0": 300,
-         "R": 20,
-         "w": 1.1,
-         "type": "Crank",
-         "name": "_Crank_3"
-      },
-      {
-         "px": 320,
-         "py": 200,
-         "L": 200,
-         "driver": "_Crank_3",
-         "type": "SlipRod",
-         "name": "_SlipRod_4"
-      },
-      {
-         "px": 120,
-         "py": 100,
-         "L": 200,
-         "driver": "_SlipRod_2",
-         "type": "SlipRod",
-         "name": "_SlipRod_5"
-      }
-   ]
+    "type": "Model",
+    "widgets": [
+        {
+            "x0": 250,
+            "y0": 400,
+            "R": 50,
+            "w": 2.2,
+            "type": "Crank",
+            "name": "_Crank_1"
+        },
+        {
+            "px": 250,
+            "py": 200,
+            "L": 300,
+            "driver": "_Crank_1",
+            "type": "SlipRod",
+            "name": "_SlipRod_2"
+        },
+        {
+            "x0": 350,
+            "y0": 300,
+            "R": 20,
+            "w": 1.1,
+            "type": "Crank",
+            "name": "_Crank_3"
+        },
+        {
+            "px": 320,
+            "py": 200,
+            "L": 200,
+            "driver": "_Crank_3",
+            "type": "SlipRod",
+            "name": "_SlipRod_4"
+        },
+        {
+            "px": 120,
+            "py": 100,
+            "L": 200,
+            "driver": "_SlipRod_2",
+            "type": "SlipRod",
+            "name": "_SlipRod_5"
+        }
+    ]
 };
 
 var MODEL_SIMPLE_1 =
 {
-   "type": "Model",
-   "widgets": [
-      {
-         "x0": 250,
-         "y0": 400,
-         "R": 50,
-         "w": 2.2,
-         "type": "Crank",
-         "name": "_Crank_1"
-      },
-      {
-         "px": 250,
-         "py": 200,
-         "L": 300,
-         "driver": "_Crank_1",
-         "type": "SlipRod",
-         "name": "_SlipRod_2"
-      },
-      {
-         "px": 120,
-         "py": 100,
-         "L": 200,
-         "driver": "_SlipRod_2",
-         "type": "SlipRod",
-         "name": "_SlipRod_5"
-      }
-   ]
+    "type": "Model",
+    "widgets": [
+        {
+            "x0": 250,
+            "y0": 400,
+            "R": 50,
+            "w": 2.2,
+            "type": "Crank",
+            "name": "_Crank_1"
+        },
+        {
+            "px": 250,
+            "py": 200,
+            "L": 300,
+            "driver": "_Crank_1",
+            "type": "SlipRod",
+            "name": "_SlipRod_2"
+        },
+        {
+            "px": 120,
+            "py": 100,
+            "L": 200,
+            "driver": "_SlipRod_2",
+            "type": "SlipRod",
+            "name": "_SlipRod_5"
+        }
+    ]
 }
+
+var MODEL_FANCY_1 =
+{
+    "type": "Model",
+    "widgets": [
+       {
+          "x0": 250,
+          "y0": 400,
+          "R": 50,
+          "w": 2.2,
+          "type": "Crank",
+          "name": "_Crank_1",
+          "pt2": {
+             "x": 222.08222675883587,
+             "y": 441.4800908539861
+          }
+       },
+       {
+          "px": 250,
+          "py": 200,
+          "L": 300,
+          "driver": "_Crank_1",
+          "type": "SlipRod",
+          "name": "_SlipRod_2",
+          "pt1": {
+             "x": 222.08222675883587,
+             "y": 441.4800908539861
+          },
+          "pt2": {
+             "x": 256.53606036888823,
+             "y": 143.46510238936065
+          }
+       },
+       {
+          "px": 120,
+          "py": 100,
+          "L": 200,
+          "driver": "_SlipRod_2",
+          "type": "SlipRod",
+          "name": "_SlipRod_5",
+          "pt1": {
+             "x": 256.53606036888823,
+             "y": 143.46510238936065
+          },
+          "pt2": {
+             "x": 65.95970226274571,
+             "y": 82.796727341076
+          }
+       },
+       {
+          "L": 200,
+          "px": 96.00317764282227,
+          "py": 163.18802642822266,
+          "driver": "_SlipRod_5",
+          "type": "SlipRod",
+          "name": "_SlipRod_1",
+          "pt1": {
+             "x": 65.95970226274571,
+             "y": 82.796727341076
+          },
+          "pt2": {
+             "x": 135.97337179873676,
+             "y": 270.1415593437364
+          }
+       },
+       {
+          "L": 200,
+          "px": 127.00317764282227,
+          "py": 372.18802642822266,
+          "driver": "_SlipRod_1",
+          "type": "SlipRod",
+          "name": "_SlipRod_3",
+          "pt1": {
+             "x": 135.97337179873676,
+             "y": 270.1415593437364
+          },
+          "pt2": {
+             "x": 118.46029589514883,
+             "y": 469.37331427350443
+          }
+       },
+       {
+          "L": 200,
+          "px": 342.00317764282227,
+          "py": 173.18802642822266,
+          "driver": "_SlipRod_2",
+          "type": "SlipRod",
+          "name": "_SlipRod_4",
+          "pt1": {
+             "x": 256.53606036888823,
+             "y": 143.46510238936065
+          },
+          "pt2": {
+             "x": 445.43869004015255,
+             "y": 209.15982442455282
+          }
+       }
+    ]
+ }

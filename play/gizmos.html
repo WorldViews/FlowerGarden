@@ -6,13 +6,15 @@
       padding: 5px;
     }
 
-    #controls {
+    .controls {
       padding: 5px;
     }
   </style>
 </head>
+
 <body style="padding: 4px">
-  <div id="controls">
+  <h3>A study in crankshft and sliprod mechanisms</h3>
+  <div id="controls" class="controls">
     <input type="button" id="play" value="pause">
     &nbsp;
     <input type="button" id="delete" value="delete">
@@ -20,6 +22,7 @@
     <input type="checkbox" id="trails" checked> trails
     &nbsp;&nbsp;
     <input type="button" id="simple" value="simple">
+    &nbsp;
     <input type="button" id="fancy" value="fancy">
     <span id="status"></span>
     <br>
@@ -27,10 +30,66 @@
   <canvas id="myCanvas" width="500" height="550" style="border:1px solid #000000;">
   </canvas>
   <br>
-  <span id="pos"></span>
+  <div class="controls">
+    <button id="download">download</button>
+    &nbsp;
+    <span id="pos"></span>
+  </div>
   <script src="js/jquery-3.5.1.min.js"></script>
   <script src="js/Gizmos.js"></script>
   <script src="js/sprintf.js"></script>
+  <h3>Controls</h3>
+  <li>
+    Click on the center or circumferance of a crankshaft to select it.  Dragging
+    will then move or resize it.
+  </li>
+  <li>
+    Clicking on a sliprod collar point will select the sliprod.  The collar point
+    can be moved by dragging.   Clicking on the end of a sliprod to resize.  This
+    is easier when the model is paused.
+  </li>
+  <li>
+    Clicking away from any widgets will clear the selection.
+  </li>
+  <li>
+    When a widget is selected, shift-clicking someonere will add a new sliprod with
+    a collar at the specified point.   If no widget is selected, shift-clicking anywhere
+    will add a crankshaft at that point.
+  </li>
+  <li>
+    A mousewheel can be used to zoom in and out, and the right mouse can be used to pan
+    the view.
+  </li>
+  <!--
+  <li>
+    clicking the download button will save out a JSON file describing the current configuration.
+    A JSON file can be dragged onto the canvas to set the model to that configuration.
+  </li>
+  -->
+  <h3>Background</h3>
+  This page is a simple study in some mechanisms of a crankshaft and sliprods.  It was motivated
+  by seeing an toy on display at 
+  <a href="https://shop.reachandteach.com/">Reach & Teach</a>
+   that Derrick Kikuchi had constructed from origami
+  and k-nex widgets.   A dolphin was on the end of a rod following a graceful path that was evocative
+  of a dolphin jumping out of water.   The path was roughly curved, as it would be if it were following
+  a circular arc, but looked more natural. It was similar to the movement of the pigs shown in
+  <a href="https://www.instructables.com/Knex-Origami-Automata/">here</a>.
+     I suppose the path in such a case is better approximated by
+  a parabala, and by using the sliprod mechanism, a pleasing path was produced.   That got me interested
+  in what paths could be produced by this kind of mechansim.  Also, one end of the sliprod is driven
+  by a crankshaft, and is following exacly a circular path.  What path is traced by the other end?
+  Is it also a circle?
+  <p>
+    This tool is in now way a general physics engine or simulator.  But if you find this interesting
+    you should check out the delightful 2D engine called <a href="http://www.algodoo.com/">algodoo</a>
+    Also, note that the question of what trajectories could be produced by a suitable mechanism is similar
+    to how fourier series could approximate curves.  A good explorable explanation is
+    <a href="http://www.jezzamon.com/fourier/index.html">here</a>.
+    <br>
+    <a href="http://www.jezzamon.com/fourier/index.html">><img src="fourierdrawing.png" width="240"></a>
+  </p>
+<p></p>
 </body>
 
 </html>
