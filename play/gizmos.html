@@ -1,0 +1,36 @@
+<html>
+
+<head>
+  <style>
+    body {
+      padding: 5px;
+    }
+
+    #controls {
+      padding: 5px;
+    }
+  </style>
+</head>
+<body style="padding: 4px">
+  <div id="controls">
+    <input type="button" id="play" value="pause">
+    &nbsp;
+    <input type="button" id="delete" value="delete">
+    &nbsp;
+    <input type="checkbox" id="trails" checked> trails
+    &nbsp;&nbsp;
+    <input type="button" id="simple" value="simple">
+    <input type="button" id="fancy" value="fancy">
+    <span id="status"></span>
+    <br>
+  </div>
+  <canvas id="myCanvas" width="500" height="550" style="border:1px solid #000000;">
+  </canvas>
+  <br>
+  <span id="pos"></span>
+  <script src="js/jquery-3.5.1.min.js"></script>
+  <script src="js/Gizmos.js"></script>
+  <script src="js/sprintf.js"></script>
+</body>
+
+</html>
