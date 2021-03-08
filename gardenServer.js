@@ -19,6 +19,7 @@ var cors = require('cors');
 var fileupload = require('express-fileupload');
 var Quire = require("./js/Quire").Quire;
 var MUSENode = require("./js/MUSENode").MUSENode;
+var timesyncServer = require('timesync/server');
 
 function fixPath(pstr) {
     //console.log("fixPath", pstr)
@@ -125,6 +126,8 @@ app.get('/api/version', function (req, res) {
     res.send('Version ' + VERSION)
 });
 
+// handle timesync requests
+app.use('/api/timesync', timesyncServer.requestHandler);
 
 app.post('/update/*', function (request, response) {
     var obj = request.body;
