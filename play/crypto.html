@@ -1,0 +1,125 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <title>Garden Crypto</title>
+    <style>
+        .boxy {
+            width: 600;
+            border-style: solid;
+            border-width: 1px;
+        }
+        .charinput {
+            width: 20px;
+        }
+        td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Wecome to the Garden Crypto page</h3>
+    <p></p>
+    Cryptogram:
+    <div id="coded" class="boxy">
+        EIGCNXSXE  SZ  IVDMQ  NXADFSXE  QPN  ZJNYY
+
+        DW  QPSXEZ  EGDKSXE  SX  QPN  ZDSY,  ENQQSXE
+
+        CSGQF  KSQPDMQ  WNNYSXE  EMSYQF,  IXC
+
+        ENXNGIYYF  QILSXE  QPN  QSJN  QD  ZDIL  MO  I
+
+        YSQQYN  ONIRN  IXC  ZNGNXSQF
+    </div>
+    <p></p>
+    Clear:
+    <div id="clear" class="boxy">about</div>
+    <p></p>
+    Cypher:
+    <table>
+        <tr id="key">
+
+        </tr>
+    </table>
+    <p>
+    </p>
+    <button id="hint1">Hint1</button>
+    <script>
+        var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        var etxt = "";
+        var cypher = {};
+
+        function hint1() {
+            cypher['E'] = 'g';
+            cypher['I'] = 'a';
+            cypher['G'] = 'r';
+            cypher['C'] = 'd';
+            cypher['N'] = 'e';
+            cypher['X'] = 'n';
+            cypher['S'] = 'i';
+            updateCypherDisplay();
+            updateClear();
+        }
+
+        function decode(str) {
+            var chars = str.split('');
+            //console.log("chars", chars);
+            var ctxt = '';
+            for (var char of chars) {
+                var cchar = char;
+                if (cypher[char])
+                    cchar = cypher[char];
+                ctxt += cchar;
+            }
+            return ctxt;
+        }
+
+        function updateClear() {
+            etxt = $("#coded").html();
+            var txt = decode(etxt);
+            $("#clear").html(txt);
+        }
+
+        function updateCypherDisplay() {
+            for (var c of letters) {
+                var cv = cypher[c];
+                if (cv) {
+                    $("#cval"+c).val(cv);
+                }
+            }
+        }
+
+        function updateCypher() {
+            console.log("updateCode");
+            for (var c of letters) {
+                cval = $("#cval"+c).val();
+                console.log(c+":  "+cval);
+                cypher[c] = cval;
+            }
+            updateClear();
+        }
+
+        $(document).ready(() => {
+            var lettersStr = letters.join(" ");
+            $("#letters").html(lettersStr);
+            var key = $("#key");
+            for (var c of letters) {
+                var td = $("<td>").appendTo(key);
+                td.append(c+"<br>");
+                var cvi = $('<input class="charinput">');
+                cvi.attr('id', 'cval'+c);
+                td.append(cvi);
+            }
+            $(".charinput").on('input', updateCypher);
+            updateClear();
+            $("#hint1").click(hint1);
+         });
+    </script>
+</body>
+
+</html>
