@@ -9,24 +9,28 @@
     <style>
         body {
             background-color: rgb(151, 216, 151);
+            font-size: 20pt;
         }
         .boxy {
             width: 600;
             padding: 5px;
             border-style: solid;
             border-width: 1px;
+            font-family: monospace;
         }
         .charinput {
-            width: 20px;
+            width: 24px;
         }
         td {
             text-align: center;
         }
         .encrypted {
+            font-family: monospace;
             color: white;
         }
         .decoded {
             color: black;
+            font-family: monospace;
         }
     </style>
 </head>
@@ -113,6 +117,8 @@
             console.log("updateCode");
             for (var c of letters) {
                 cval = $("#cval"+c).val();
+                if (cval.length > 1)
+                    cval = cval.slice(0,1);
                 cval = cval.toUpperCase();
                 console.log(c+":  "+cval);
                 cypher[c] = cval;
