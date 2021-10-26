@@ -9,6 +9,7 @@ class GitGarden extends Garden {
         opts.height = opts.height || 100;
         super(opts);
         this.org = opts.organization || "WorldViews";
+        this.user = opts.user;
         this.targetURL = opts.targetURL;
         this.x0 = opts.x0 || 0;
         this.y0 = opts.y0 || 0;
@@ -18,7 +19,11 @@ class GitGarden extends Garden {
     }
 
     async getData() {
-        var url = sprintf("https://api.github.com/orgs/%s/repos", this.org);
+        var url;
+        if (this.user)
+            url = sprintf("https://api.github.com/users/%s/repos", this.user);
+        else
+            url = sprintf("https://api.github.com/orgs/%s/repos", this.org);
         console.log("GitGarden.getData", url);
         var obj = await loadJSON(url);
         console.log("org repos", obj);
