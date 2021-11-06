@@ -42,14 +42,20 @@ body {
   var gtool;
   var editor;
  
-  $(document).ready(function() {
+  async function setup() {
+    console.log("setup");
     //garden = new FlowerGarden();
     gtool = new GardenTool("flowerCanvas");
     gtool.start();
     gtool.setView(0, 0, 800);
-    var f = gtool.addFlower();
-    editor = new FlowerEditor(gtool, f);
-});
+    var f = await gtool.addFlower();
+    editor = new FlowerEditor(gtool, f);  
+  }
+
+  $(document).ready(() => {
+    console.log("document now ready...");
+    setup();
+  });
 
 </script>
 </body>
